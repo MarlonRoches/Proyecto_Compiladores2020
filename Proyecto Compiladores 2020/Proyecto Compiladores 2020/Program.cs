@@ -14,12 +14,8 @@ namespace Proyecto_Compiladores_2020
         {
             Console.WriteLine("Linea De Codigo Java");
             Data.Data.Instance.Sustituir("");
-            
 
-
-
-
-           //{ } [] () {}
+            //{ } [] () {}
             ////id		
             //TOKEN 1 = LETRA.(LETRA|DIGITO)*
             //json5

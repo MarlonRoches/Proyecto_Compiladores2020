@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Proyecto_Compiladores_2020.Data
 {
@@ -26,6 +27,15 @@ namespace Proyecto_Compiladores_2020.Data
         public void Sustituir(string code)
         {
 
+            Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|const|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
+            Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
+            Regex Boolean = new Regex("true|false");
+            Regex Digit = new Regex(@"^([0-9]+)*$");
+            Regex Hexadecimal = new Regex(@"^([0X|0x])([0-9A-Fa-f]+)$");
+            Regex Double = new Regex(@"^(([0-9]+.[0-9]+|.[0-9]+)|([0-9]+.(E|e)(-|\+)?[0-9]+))$");
+            Regex Identifier = new Regex(@"^([A-Za-z]+[0-9]*)$");
+
+
             var file = new StreamReader("Reservadas.txt");
             Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
@@ -36,7 +46,7 @@ namespace Proyecto_Compiladores_2020.Data
 
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
-            rawCode = rawCode.Replace($"{item}", $" {item} ");
+                rawCode = rawCode.Replace($"{item}", $" {item} ");
 
             }
             rawCode = rawCode.Replace("\r\n", " ").Replace("\t", " ").Replace(";", " ; ");
@@ -48,7 +58,7 @@ namespace Proyecto_Compiladores_2020.Data
             }
             rawCode = rawCode.Trim();
             string cadenaAux = "";
-             espacios = " ";
+            espacios = " ";
             for (int i = 2; i <= 100; i++)
             {
                 rawCode = rawCode.Replace(espacios, " ");
@@ -76,7 +86,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                 }*/
             }
-           var linea=  Console.ReadLine();
+            var linea = Console.ReadLine();
         }
 
     }
