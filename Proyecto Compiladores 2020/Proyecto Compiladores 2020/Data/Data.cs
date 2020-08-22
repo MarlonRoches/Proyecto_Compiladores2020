@@ -26,7 +26,7 @@ namespace Proyecto_Compiladores_2020.Data
 
         public void Sustituir(string code)
         {
-
+            var asds = "";
             Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|const|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
             Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
             Regex Boolean = new Regex("true|false");
@@ -47,7 +47,6 @@ namespace Proyecto_Compiladores_2020.Data
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
                 rawCode = rawCode.Replace($"{item}", $" {item} ");
-
             }
             rawCode = rawCode.Replace("\r\n", " ").Replace("\t", " ").Replace(";", " ; ");
             var espacios = "  ";
