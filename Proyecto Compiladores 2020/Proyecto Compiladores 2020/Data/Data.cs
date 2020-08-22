@@ -70,12 +70,45 @@ namespace Proyecto_Compiladores_2020.Data
             {
                 if (Reservadas_Sustitucion.ContainsKey(tokenActual))
                 {
+                    if (Keywords.IsMatch(tokenActual))
+                    {
+                        Console.WriteLine("Es una palabra reservada: " + tokenActual);
+                    }
+                    else if (Operadores.IsMatch(tokenActual))
+                    {
+                        Console.WriteLine("Es un operador: " + tokenActual);
+                    }
+                    else if (Boolean.IsMatch(tokenActual))
+                    {
+                        Console.WriteLine("Es un booleando: " + tokenActual);
+                    }
+                    else if (Digit.IsMatch(tokenActual))
+                    {
+                        Console.WriteLine("Es un digito: " + tokenActual);
+                    }
+                    else if (Hexadecimal.IsMatch(tokenActual))
+                    {
+                        Console.WriteLine("Es un hexadecimal: " + tokenActual);
+                    }
+                    else if (Double.IsMatch(tokenActual))
+                    {
+                        Console.WriteLine("Es un decimal: " + tokenActual);
+                    }
+                    else if (Identifier.IsMatch(tokenActual))
+                    {
+                        Console.WriteLine("Es un identificador: " + tokenActual);
+                    }
+                    else
+                    {
+                        // validar los errores junto a la linea y columna
+                    }
 
-                    Console.WriteLine($"Token {tokenActual}: T_{tokenActual} -> {Reservadas_Sustitucion[tokenActual]}");
+                    //Console.WriteLine($"Token {tokenActual}: T_{tokenActual} -> {Reservadas_Sustitucion[tokenActual]}");
 
                 }
                 else
                 {
+                        Console.WriteLine("No es un token");
                     //puede ser un id
                     //tabla de ids validarsintaxis_Id(tokenActual)
                     //puede tener error
@@ -86,6 +119,8 @@ namespace Proyecto_Compiladores_2020.Data
 
                 }*/
             }
+            
+            
             var linea = Console.ReadLine();
         }
 
