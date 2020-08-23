@@ -22,25 +22,25 @@ namespace Proyecto_Compiladores_2020.Data
         private static Dictionary<string, string> Comentarios = new Dictionary<string, string>();
         private int Comentarios_Index = 0;
         public string ValidarComentarios(string ruta)
-        { 
+        {
 
             var compressedCode = "";
 
             var file = new StreamReader("Reservadas.txt");
-           var Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
+            var Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
 
             var fileCode = new StreamReader("TestCode.txt");
 
             var linea = fileCode.ReadLine();
 
-            while (linea!= null)
+            while (linea != null)
             {
                 if (linea.Contains("//"))
                 {
                     //comentario unilinea
                     var comented = linea.IndexOf("//");
-                    Comentarios.Add($"æ{Comentarios_Index}",linea.Remove(0,comented));
+                    Comentarios.Add($"æ{Comentarios_Index}", linea.Remove(0, comented));
                     linea = linea.Replace(linea.Remove(0, comented), $"æ{Comentarios_Index}");
                     compressedCode += $"{linea}^l^";
                     Comentarios_Index++;
@@ -51,14 +51,14 @@ namespace Proyecto_Compiladores_2020.Data
                     while (!linea.Contains("*/"))
                     {
                         linea += $"{fileCode.ReadLine()}^l^";
-                        if (linea== null)
+                        if (linea == null)
                         {
                             //error de comentario no cerrado
                             break;
                         }
                     }
                     var comentarioMultilinea = linea.Remove(0, linea.IndexOf("/*"));
-                    comentarioMultilinea = comentarioMultilinea.Substring(0, comentarioMultilinea.IndexOf("*/")+2);
+                    comentarioMultilinea = comentarioMultilinea.Substring(0, comentarioMultilinea.IndexOf("*/") + 2);
                     Comentarios.Add($"æ{Comentarios_Index}æ", comentarioMultilinea);
                     linea = linea.Replace(comentarioMultilinea, $"æ{Comentarios_Index}");
                     Comentarios_Index++;
@@ -84,7 +84,7 @@ namespace Proyecto_Compiladores_2020.Data
                     }
                 }
                 linea = fileCode.ReadLine();
-                
+
             }
             fileCode.Close();
 
@@ -121,6 +121,23 @@ namespace Proyecto_Compiladores_2020.Data
             }
             rawCode = rawCode.Trim();
             return rawCode;
+        }
+
+        public void Error()
+        {
+            StreamReader streamReader = new StreamReader("TestCode.txt");
+            int line = 0;
+            int col = 0;
+            while (!streamReader.EndOfStream)
+            {
+                string readline = streamReader.ReadLine();
+                line++;
+                string[] validate = readline.Split();
+
+                //si se hace un substring se le puede hacer un col++  para poder saber la columna y su error
+
+            }
+
         }
     }
 }
