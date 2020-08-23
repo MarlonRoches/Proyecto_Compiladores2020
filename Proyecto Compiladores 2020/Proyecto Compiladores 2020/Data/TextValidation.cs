@@ -42,7 +42,7 @@ namespace Proyecto_Compiladores_2020.Data
                     var comented = linea.IndexOf("//");
                     Comentarios.Add($"æ{Comentarios_Index}", linea.Remove(0, comented));
                     linea = linea.Replace(linea.Remove(0, comented), $"æ{Comentarios_Index}");
-                    compressedCode += $"{linea}^l^";
+                    compressedCode += $"{linea}\n";
                     Comentarios_Index++;
                 }
                 else if (linea.Contains("/*"))
@@ -50,7 +50,7 @@ namespace Proyecto_Compiladores_2020.Data
                     //inicio de comentario multilinea
                     while (!linea.Contains("*/"))
                     {
-                        linea += $"{fileCode.ReadLine()}^l^";
+                        linea += $"{fileCode.ReadLine()}\n";
                         if (linea == null)
                         {
                             //error de comentario no cerrado
@@ -79,7 +79,7 @@ namespace Proyecto_Compiladores_2020.Data
                     else
                     {
                         // todo nitido
-                        compressedCode += $"{linea}^l^";
+                        compressedCode += $"{linea}\n";
 
                     }
                 }
@@ -123,21 +123,5 @@ namespace Proyecto_Compiladores_2020.Data
             return rawCode;
         }
 
-        public void Error()
-        {
-            StreamReader streamReader = new StreamReader("TestCode.txt");
-            int line = 0;
-            int col = 0;
-            while (!streamReader.EndOfStream)
-            {
-                string readline = streamReader.ReadLine();
-                line++;
-                string[] validate = readline.Split();
-
-                //si se hace un substring se le puede hacer un col++  para poder saber la columna y su error
-
-            }
-
-        }
     }
 }

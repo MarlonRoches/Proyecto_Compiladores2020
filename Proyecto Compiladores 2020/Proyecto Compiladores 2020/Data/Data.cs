@@ -78,7 +78,7 @@ namespace Proyecto_Compiladores_2020.Data
                
                     if (Keywords.IsMatch(tokenActual))
                     {
-                        Console.WriteLine("Es una palabra reservada: " + tokenActual);
+                        Console.WriteLine("Es una palabra reservada: " + tokenActual + LineAndColumns());
                     }
                     else if (Operadores.IsMatch(tokenActual))
                     {
@@ -125,6 +125,29 @@ namespace Proyecto_Compiladores_2020.Data
             }
             var linea = Console.ReadLine();
         }
+        public string LineAndColumns()
+        {
+            StreamReader streamReader = new StreamReader("TestCode.txt");
+            int line = 0;
+            int colstart = 0;
+            int colend = 0;
+
+            while (!streamReader.EndOfStream)
+            {
+                string readline = streamReader.ReadLine();
+                line++;
+                for (int i = 0; i < readline.Length; i++)
+                {
+                    string[] validate = readline.Split('\n');
+
+
+                }
+                
+            }
+
+            return "";
+        }
+
 
     }
 }
