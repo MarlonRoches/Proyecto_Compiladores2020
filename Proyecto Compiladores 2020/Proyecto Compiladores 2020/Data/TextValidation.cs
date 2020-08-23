@@ -40,8 +40,8 @@ namespace Proyecto_Compiladores_2020.Data
                 {
                     //comentario unilinea
                     var comented = linea.IndexOf("//");
-                    Comentarios.Add($"c[{Comentarios_Index}]",linea.Remove(0,comented));
-                    linea = linea.Replace(linea.Remove(0, comented), $"[c{Comentarios_Index}]");
+                    Comentarios.Add($"æ{Comentarios_Index}",linea.Remove(0,comented));
+                    linea = linea.Replace(linea.Remove(0, comented), $"æ{Comentarios_Index}");
                     compressedCode += $"{linea}^l^";
                     Comentarios_Index++;
                 }
@@ -59,8 +59,8 @@ namespace Proyecto_Compiladores_2020.Data
                     }
                     var comentarioMultilinea = linea.Remove(0, linea.IndexOf("/*"));
                     comentarioMultilinea = comentarioMultilinea.Substring(0, comentarioMultilinea.IndexOf("*/")+2);
-                    Comentarios.Add($"c[{Comentarios_Index}]", comentarioMultilinea);
-                    linea = linea.Replace(comentarioMultilinea, $"c[{Comentarios_Index}]");
+                    Comentarios.Add($"æ{Comentarios_Index}æ", comentarioMultilinea);
+                    linea = linea.Replace(comentarioMultilinea, $"æ{Comentarios_Index}");
                     Comentarios_Index++;
                     while (linea.Contains("//"))
                     {
@@ -94,10 +94,15 @@ namespace Proyecto_Compiladores_2020.Data
         string parseComentarioUnilinea(string linea)
         {
             var comented = linea.IndexOf("//");
-            Comentarios.Add($"c[{Comentarios_Index}]", linea.Remove(0, comented));
-            linea = linea.Replace(linea.Remove(0, comented), $"[c{Comentarios_Index}]");
+            Comentarios.Add($"æ{Comentarios_Index}", linea.Remove(0, comented));
+            linea = linea.Replace(linea.Remove(0, comented), $"æ{Comentarios_Index}");
             Comentarios_Index++;
             return linea;
+        }
+
+        void AgregarComentario(string linea)
+        {
+
         }
         string CleanCode(string rawCode)
         {
