@@ -20,7 +20,10 @@ namespace Proyecto_Compiladores_2020.Data
             }
         }
         private static Dictionary<string, string> Comentarios = new Dictionary<string, string>();
+        private static Dictionary<string, string> Cadenas = new Dictionary<string, string>();
+
         private int Comentarios_Index = 0;
+        private int Str_Index = 0;
         public string ValidarComentarios(string ruta)
         {
             var compressedCode = "";
@@ -120,8 +123,27 @@ namespace Proyecto_Compiladores_2020.Data
         public string ValidarStrings(string code)
         {
             var stringless = "";
+            var splitedCode = code.Split('\n');
 
+            foreach (var line in splitedCode)
+            {
+                if (line.Contains('"'))
+                {
 
+                    //primera comilla
+                    var PrimeraComilla = line.IndexOf('"')+1;
+                    var aux = line.Remove(0,PrimeraComilla);
+                    //segunda comilla
+                    var value = aux.Substring(0, aux.IndexOf('"') );
+                    stringless += $"{line.Replace($"{'"'}{value}{'"'}", $"▄{Str_Index}")}\n"; //alt+988
+                    Cadenas.Add($"▄{Str_Index}",value);
+                    Str_Index++;
+                }
+                else
+                {
+                    stringless += $"{line}\n";
+                }
+            }
             return stringless;
         }
         string parseComentarioUnilinea(string linea)

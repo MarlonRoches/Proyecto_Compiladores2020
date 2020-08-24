@@ -48,14 +48,9 @@ namespace Proyecto_Compiladores_2020.Data
             fileCode.Close();
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
-                if (item == "int")
-                {
-                    rawCode = rawCode.Replace(item, "int");
-                }
-                else
-                {
+               
                     rawCode = rawCode.Replace($"{item}", $" {Reservadas_Sustitucion[item]} ");
-                }
+                
             }
             rawCode = rawCode.Replace("\r\n", " ").Replace("\t", " ").Replace(";", " ; ");
             var espacios = "  ";
