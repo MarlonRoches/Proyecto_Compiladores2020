@@ -42,7 +42,8 @@ namespace Proyecto_Compiladores_2020.Data
             file.Close();
 
             var fileCode = new StreamReader("TestCode.txt");
-            var rawCode = fileCode.ReadToEnd();
+            var rawCode = code;
+            //var rawCode = fileCode.ReadToEnd();
 
             fileCode.Close();
             foreach (var item in Reservadas_Sustitucion.Keys)
@@ -53,12 +54,13 @@ namespace Proyecto_Compiladores_2020.Data
                 }
                 else
                 {
-                    rawCode = rawCode.Replace($"{item}", $" {item} ");
+                    rawCode = rawCode.Replace($"{item}", $" {Reservadas_Sustitucion[item]} ");
                 }
             }
             rawCode = rawCode.Replace("\r\n", " ").Replace("\t", " ").Replace(";", " ; ");
             var espacios = "  ";
             for (int i = 2; i <= 10; i++)
+
             {
                 rawCode = rawCode.Replace(espacios, " ");
                 espacios += " ";
@@ -79,6 +81,7 @@ namespace Proyecto_Compiladores_2020.Data
                     if (Keywords.IsMatch(tokenActual))
                     {
                         Console.WriteLine("Es una palabra reservada: " + tokenActual + LineAndColumns());
+                        //Linea Lineaand + T_palara
                     }
                     else if (Operadores.IsMatch(tokenActual))
                     {

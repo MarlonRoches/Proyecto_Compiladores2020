@@ -23,15 +23,11 @@ namespace Proyecto_Compiladores_2020.Data
         private int Comentarios_Index = 0;
         public string ValidarComentarios(string ruta)
         {
-
             var compressedCode = "";
-
             var file = new StreamReader("Reservadas.txt");
             var Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
-
             var fileCode = new StreamReader("TestCode.txt");
-
             var linea = fileCode.ReadLine();
 
             while (linea != null)
@@ -40,38 +36,48 @@ namespace Proyecto_Compiladores_2020.Data
                 {
                     //comentario unilinea
                     var comented = linea.IndexOf("//");
-                    Comentarios.Add($"æ{Comentarios_Index}", linea.Remove(0, comented));
-                    linea = linea.Replace(linea.Remove(0, comented), $"æ{Comentarios_Index}");
+                    Comentarios.Add($"█{Comentarios_Index}", linea.Remove(0, comented));
+                    linea = linea.Replace(linea.Remove(0, comented), $"█{Comentarios_Index}");
                     compressedCode += $"{linea}\n";
                     Comentarios_Index++;
                 }
                 else if (linea.Contains("/*"))
                 {
+                    var actual = "";
+                    var aux1 = linea.Remove(0, linea.IndexOf("/*"));
+                    linea = linea.Replace(aux1, $"█{Comentarios_Index}\n");
+                    AgregarComentario(aux1);
+                    actual += linea;
+                    linea = "";
                     //inicio de comentario multilinea
-                    var actual = linea;
                     while (!linea.Contains("*/"))
                     {
-                        linea += $"{fileCode.ReadLine()}";
-
-                        if (linea.Contains("/*"))
+                        linea = fileCode.ReadLine();
+                        if (linea=="")
                         {
-                            //contiene inicio de comentario
-                            //code ........... /*
-                            var aux = linea.Remove(0, linea.IndexOf("/*"));
-                            linea = linea.Replace(aux, $"æ{Comentarios_Index}\n");
-                            AgregarComentario(aux);
+                            actual += "\n";
+
                         }
                         else if (linea.Contains("*/"))
                         {
                             //contiene final de comentario
                             //*/  code......
-                            var aux = linea.Remove(linea.IndexOf("*/"), linea.Length - 1);
-
+                            var aux = linea.Substring(0, linea.IndexOf("*/")+2);
+                            linea = linea.Replace(aux, $"█{Comentarios_Index}");
+                            AgregarComentario(aux);
+                            actual += linea;
+                            linea = actual;
+                            break;
                         }
                         else
                         {
                             //Medio comentarios
-                            //agarrar todos los del medio
+                            //agarrar toda la linea 
+                            var aux = linea;
+                            linea = linea.Replace(linea, $"█{Comentarios_Index}\n");
+                            AgregarComentario(aux);
+                            actual += linea;
+                            linea = "";
 
                         }
                         if (linea == null)
@@ -83,15 +89,14 @@ namespace Proyecto_Compiladores_2020.Data
                     }
                     //var comentarioMultilinea = linea.Remove(0, linea.IndexOf("/*"));
                     //comentarioMultilinea = comentarioMultilinea.Substring(0, comentarioMultilinea.IndexOf("*/") + 2);
-                    //Comentarios.Add($"æ{Comentarios_Index}", comentarioMultilinea);
-                    //linea = linea.Replace(comentarioMultilinea, $"æ{Comentarios_Index}");
+                    //Comentarios.Add($"█{Comentarios_Index}", comentarioMultilinea);
+                    ///linea = linea.Replace(comentarioMultilinea, $"█{Comentarios_Index}");
                     //Comentarios_Index++;
                     while (linea.Contains("//"))
                     {
                         linea = parseComentarioUnilinea(linea);
                     }
                     compressedCode += $"{linea}";
-
                 }
                 else
                 {
@@ -104,65 +109,37 @@ namespace Proyecto_Compiladores_2020.Data
                     {
                         // todo nitido
                         compressedCode += $"{linea}\n";
-
                     }
                 }
                 linea = fileCode.ReadLine();
-
             }
             fileCode.Close();
-
-
             return compressedCode;
+        }
+
+        public string ValidarStrings(string code)
+        {
+            var stringless = "";
+
+
+            return stringless;
         }
         string parseComentarioUnilinea(string linea)
         {
             var comented = linea.IndexOf("//");
-            Comentarios.Add($"æ{Comentarios_Index}", linea.Remove(0, comented));
-            linea = linea.Replace(linea.Remove(0, comented), $"æ{Comentarios_Index}");
-            Comentarios_Index++;
+            //Comentarios.Add($"█{Comentarios_Index}", linea.Remove(0, comented));
+            var aux = linea.Remove(0, comented);
+            linea = linea.Replace(aux, $"█{Comentarios_Index}");
+            AgregarComentario(aux);
+
             return linea;
         }
 
         void AgregarComentario(string comentario)
         {
-            Comentarios.Add($"æ{Comentarios_Index}", comentario);
+            Comentarios.Add($"█{Comentarios_Index}", comentario);
             Comentarios_Index++;
         }
-        string CleanCode(string rawCode)
-        {
-            var file = new StreamReader("Reservadas.txt");
-            var Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
-            file.Close();
 
-            foreach (var item in Reservadas_Sustitucion.Keys)
-            {
-                rawCode = rawCode.Replace($"{item}", $" {item} ");
-            }
-            rawCode = rawCode.Replace("\r\n", "  ").Replace("\t", "  ").Replace(";", " ; ");
-            while (rawCode.Contains("  "))
-            {
-                rawCode = rawCode.Replace("  ", " ");
-            }
-            rawCode = rawCode.Trim();
-            return rawCode;
-        }
-
-        public void Error()
-        {
-            StreamReader streamReader = new StreamReader("TestCode.txt");
-            int line = 0;
-            int col = 0;
-            while (!streamReader.EndOfStream)
-            {
-                string readline = streamReader.ReadLine();
-                line++;
-                string[] validate = readline.Split();
-
-                //si se hace un substring se le puede hacer un col++  para poder saber la columna y su error
-
-            }
-
-        }
     }
 }
