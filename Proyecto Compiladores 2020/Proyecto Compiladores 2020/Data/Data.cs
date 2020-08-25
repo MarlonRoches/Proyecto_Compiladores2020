@@ -61,6 +61,7 @@ namespace Proyecto_Compiladores_2020.Data
             int line = 0;
             int ColEnd = 0;
             string token = "";
+            bool flag = true;
             var CodeArray = rawCode.Split('\n');
             //aqui se hace la validación de tokens
             foreach (var tokenActual in CodeArray)
@@ -72,9 +73,8 @@ namespace Proyecto_Compiladores_2020.Data
                 foreach (var item1 in tokenActual)
                 {
 
-                    if (Convert.ToString(item1) != " " && Convert.ToString(item1) != "\t" || Identifier.IsMatch(Convert.ToString(item1)))
+                    if (Convert.ToString(item1) != " " && Convert.ToString(item1) != "\t")
                     {
-                        
                         if (Reservadas_Sustitucion.ContainsValue(Convert.ToString(item1)))
                         {
                             //se valida las palabras reservadas 
@@ -91,65 +91,24 @@ namespace Proyecto_Compiladores_2020.Data
                                 Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " T_" + token);
                                 colStart = 0;
                             }
-                            
-                        }
-                        //se valida los digitos
-                        else if (Digit.IsMatch(Convert.ToString(item1)))
-                        {
-                            id += item1;
-                            if (!Digit.IsMatch(Convert.ToString(item1)))
+                            //validación de booleanos
+                            else if (Boolean.IsMatch(token = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key))
                             {
-                                Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " is " + " T_" + "(value = " + token + ")");
+                                Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " T_" + "Boolean");
                                 colStart = 0;
                             }
-                            
+
                         }
-                        //se valida los double
-                       
-                        else if (Identifier.IsMatch(Convert.ToString(item1)))
-                        {
-                            id += item1;
-                            if (!Identifier.IsMatch(Convert.ToString(id)))
-                            {
-                                //se valida los booleanos
-                                if (Boolean.IsMatch(Convert.ToString(id)))
-                                {
-                                    Console.WriteLine(Convert.ToString(id) + " linea: " + line + " Columna: " + colStart + "-" + ColEnd + " T_" + "Boolean");
-                                    colStart = 0;
-                                    id = "";
-                                }
-                                //se valida los identificadores
-                                else
-                                {
-                                    Console.WriteLine(Convert.ToString(id) + " linea: " + line + " Columna: " + colStart + "-" + ColEnd + " T_" + "identifier");
-                                    colStart = 0;
-                                    id = "";
-                                }
-                                
-                            }
-                        
-                        }
-                        //se valida los hexadecimales
-                        else if (Convert.ToString(item1) == "0" || Convert.ToString(item1) == "x" || Convert.ToString(item1) == "X")
-                        {
-                            id += item1;
-                            if (Convert.ToString(id) == "x" || Convert.ToString(id) == "x")
-                            {
-                                
-                            }
-                        }
-                        
                     }
                     else if (Convert.ToString(item1) == "\t")
                     {
-                        colStart = colStart + 8;  
+                        colStart = colStart + 8;
                     }
                     else
                     {
                         colStart++;
                     }
                 }
-  
 
             }
             var linea = Console.ReadLine();
