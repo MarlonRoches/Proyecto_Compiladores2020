@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace Proyecto_Compiladores_2020.Data
 {
@@ -24,6 +25,8 @@ namespace Proyecto_Compiladores_2020.Data
         private static Dictionary<string, string> Reservadas_Sustitucion = new Dictionary<string, string>();
         //void int double boolean string class const interface null this extends implements for while if else return break New System out printl
         private static Dictionary<string, string> Variables_Sustitucion = new Dictionary<string, string>();
+        Dictionary<string, string> Comentarios = TextValidation.Comentarios;
+        Dictionary<string, string> Cadenas = TextValidation.Cadenas;
 
         public void Sustituir(string code)
         {
@@ -54,83 +57,104 @@ namespace Proyecto_Compiladores_2020.Data
             }
 
             //aqui split por enters
+            int colStart = 1;
+            int line = 0;
+            int ColEnd = 0;
+            string token = "";
             var CodeArray = rawCode.Split('\n');
+            //aqui se hace la validación de tokens
             foreach (var tokenActual in CodeArray)
             {
-               
-                    if (Keywords.IsMatch(tokenActual))
+                line++;
+                ColEnd = 0;
+                colStart = 0;
+                string id = "";
+                foreach (var item1 in tokenActual)
+                {
+
+                    if (Convert.ToString(item1) != " " && Convert.ToString(item1) != "\t" || Identifier.IsMatch(Convert.ToString(item1)))
                     {
-                        Console.WriteLine("Es una palabra reservada: " + tokenActual + LineAndColumns());
-                        //Linea Lineaand + T_palara
+                        
+                        if (Reservadas_Sustitucion.ContainsValue(Convert.ToString(item1)))
+                        {
+                            //se valida las palabras reservadas 
+                            if (Keywords.IsMatch(token = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key))
+                            {
+                                int length = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key.Length;
+                                ColEnd += colStart + length;
+                                Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " T_" + token);
+                                colStart = 0;
+                            }
+                            //se valida los operadores
+                            else if (Operadores.IsMatch(token = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key))
+                            {
+                                Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " T_" + token);
+                                colStart = 0;
+                            }
+                            
+                        }
+                        //se valida los digitos
+                        else if (Digit.IsMatch(Convert.ToString(item1)))
+                        {
+                            id += item1;
+                            if (!Digit.IsMatch(Convert.ToString(item1)))
+                            {
+                                Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " is " + " T_" + "(value = " + token + ")");
+                                colStart = 0;
+                            }
+                            
+                        }
+                        //se valida los double
+                       
+                        else if (Identifier.IsMatch(Convert.ToString(item1)))
+                        {
+                            id += item1;
+                            if (!Identifier.IsMatch(Convert.ToString(id)))
+                            {
+                                //se valida los booleanos
+                                if (Boolean.IsMatch(Convert.ToString(id)))
+                                {
+                                    Console.WriteLine(Convert.ToString(id) + " linea: " + line + " Columna: " + colStart + "-" + ColEnd + " T_" + "Boolean");
+                                    colStart = 0;
+                                    id = "";
+                                }
+                                //se valida los identificadores
+                                else
+                                {
+                                    Console.WriteLine(Convert.ToString(id) + " linea: " + line + " Columna: " + colStart + "-" + ColEnd + " T_" + "identifier");
+                                    colStart = 0;
+                                    id = "";
+                                }
+                                
+                            }
+                        
+                        }
+                        //se valida los hexadecimales
+                        else if (Convert.ToString(item1) == "0" || Convert.ToString(item1) == "x" || Convert.ToString(item1) == "X")
+                        {
+                            id += item1;
+                            if (Convert.ToString(id) == "x" || Convert.ToString(id) == "x")
+                            {
+                                
+                            }
+                        }
+                        
                     }
-                    else if (Operadores.IsMatch(tokenActual))
+                    else if (Convert.ToString(item1) == "\t")
                     {
-                        Console.WriteLine("Es un operador: " + tokenActual);
-                    }
-                    else if (Boolean.IsMatch(tokenActual))
-                    {
-                        Console.WriteLine("Es un booleando: " + tokenActual);
-                    }
-                    else if (Digit.IsMatch(tokenActual))
-                    {
-                        Console.WriteLine("Es un digito: " + tokenActual);
-                    }
-                    else if (Hexadecimal.IsMatch(tokenActual))
-                    {
-                        Console.WriteLine("Es un hexadecimal: " + tokenActual);
-                    }
-                    else if (Double.IsMatch(tokenActual))
-                    {
-                        Console.WriteLine("Es un decimal: " + tokenActual);
-                    }
-                    else if (Identifier.IsMatch(tokenActual))
-                    {
-                        Console.WriteLine("Es un identificador: " + tokenActual);
+                        colStart = colStart + 8;  
                     }
                     else
                     {
-                        // validar los errores junto a la linea y columna
+                        colStart++;
                     }
+                }
+  
 
-                    //Console.WriteLine($"Token {tokenActual}: T_{tokenActual} -> {Reservadas_Sustitucion[tokenActual]}");
-                
-                //else
-                //{
-                //        Console.WriteLine("No es un token");
-                //    //puede ser un id
-                //    //tabla de ids validarsintaxis_Id(tokenActual)
-                //    //puede tener error
-
-                //}
-                /*if (Reservadas_Sustitucion.ContainsKey(item))
-               
-                }*/
             }
             var linea = Console.ReadLine();
         }
-        public string LineAndColumns()
-        {
-            StreamReader streamReader = new StreamReader("TestCode.txt");
-            int line = 0;
-            int colstart = 0;
-            int colend = 0;
-
-            while (!streamReader.EndOfStream)
-            {
-                string readline = streamReader.ReadLine();
-                line++;
-                for (int i = 0; i < readline.Length; i++)
-                {
-                    string[] validate = readline.Split('\n');
-
-
-                }
-                
-            }
-
-            return "";
-        }
-
+       
 
     }
 }

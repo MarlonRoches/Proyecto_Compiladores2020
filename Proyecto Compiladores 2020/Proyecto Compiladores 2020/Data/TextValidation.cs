@@ -19,8 +19,8 @@ namespace Proyecto_Compiladores_2020.Data
                 return _instance;
             }
         }
-        private static Dictionary<string, string> Comentarios = new Dictionary<string, string>();
-        private static Dictionary<string, string> Cadenas = new Dictionary<string, string>();
+        public static Dictionary<string, string> Comentarios = new Dictionary<string, string>();
+        public static Dictionary<string, string> Cadenas = new Dictionary<string, string>();
 
         private int Comentarios_Index = 0;
         private int Str_Index = 0;
