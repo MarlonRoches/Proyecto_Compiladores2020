@@ -62,8 +62,8 @@ namespace Proyecto_Compiladores_2020.Data
             }
 
             //aqui split por enters
-            int colStart = 1;
-            int line = 0;
+            int colStart = 0;
+            
             int ColEnd = 0;
             string token = "";
             bool flag = true;
@@ -71,11 +71,8 @@ namespace Proyecto_Compiladores_2020.Data
             //aqui se hace la validación de tokens
             for (int i = 0; i < codigoArray.Length; i++)
             {
-                Console.WriteLine($"Linea no. {i}");
-                if (i==26)
-                {
+                int line = i+1;
 
-                }
                 var indexer = 0;
                 var LineaActual = codigoArray[i].Replace("\r", "");
                 var sobras = "";
@@ -91,6 +88,7 @@ namespace Proyecto_Compiladores_2020.Data
                             if (item.ToString() == "\t")
                             {
                                 LineaActual = LineaActual.Remove(0, 1);
+                                colStart = colStart + 8;
 
                             }
                             else if (item.ToString() == "\r")
@@ -101,6 +99,7 @@ namespace Proyecto_Compiladores_2020.Data
                             else
                             {
                                 LineaActual = LineaActual.Remove(0, 1);
+                                colStart++;
 
                             }
                             //indexer++;
@@ -109,27 +108,29 @@ namespace Proyecto_Compiladores_2020.Data
                         {
                             if (DiccionarioInvertido.ContainsKey(item.ToString()))
                             {
-                                if (Keywords.IsMatch(DiccionarioInvertido[item.ToString()]) )                               
+                                if (Keywords.IsMatch(DiccionarioInvertido[item.ToString()]))
                                 {
-                                        Console.ForegroundColor = ConsoleColor.Cyan;
-                                        Console.WriteLine($"    {DiccionarioInvertido[item.ToString()]} ->  TT-KeyWord_{DiccionarioInvertido[item.ToString()]}");
-                                        Console.ForegroundColor = ConsoleColor.White;
+                                    int lenghtKey = DiccionarioInvertido[item.ToString()].Length;
+                                    ColEnd = ColEnd + lenghtKey;
+                                    Console.ForegroundColor = ConsoleColor.Cyan;
+                                    Console.WriteLine($"    {DiccionarioInvertido[item.ToString()]} line {line} cols {colStart}-{ColEnd} T_{DiccionarioInvertido[item.ToString()]}");
+                                    Console.ForegroundColor = ConsoleColor.White;
 
-                                        LineaActual = LineaActual.Remove(0, 1);
+                                    LineaActual = LineaActual.Remove(0, 1);
                                 }
-                                else if(Operadores.IsMatch(DiccionarioInvertido[item.ToString()]))
+                                else if (Operadores.IsMatch(DiccionarioInvertido[item.ToString()]))
                                 {
                                     Console.ForegroundColor = ConsoleColor.DarkRed;
                                     Console.WriteLine($"    {DiccionarioInvertido[item.ToString()]} - >     T-Operador_{DiccionarioInvertido[item.ToString()]}");
                                     Console.ForegroundColor = ConsoleColor.White;
 
                                     LineaActual = LineaActual.Remove(0, 1);
-                                } 
+                                }
 
                                 //caracter especial
                                 //el valor el largo etc etc
                                 //aqui contas colmuns y filas etc ect
-                               
+
 
 
                             }
@@ -145,7 +146,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                                     Console.BackgroundColor = ConsoleColor.White;
 
-                                    Console.WriteLine($" - >     T-Comentario{comentarios}");
+                                    Console.WriteLine($"{TextValidation.Instance.GetComentario(comentarios)}- >     T-Comentario{comentarios}");
                                     Console.BackgroundColor = ConsoleColor.Black;
 
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -163,7 +164,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     LineaActual = LineaActual.Remove(0, 3);
                                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                                     Console.BackgroundColor = ConsoleColor.White;
-                                    Console.WriteLine($" - >     T-Stringr_{Cadena}");
+                                    Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)} - >     T-Stringr_{Cadena}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     //al diccionario 
@@ -203,7 +204,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.WriteLine($"    {idActual} - >     T-Boolean_{idActual}");
                                     Console.ForegroundColor = ConsoleColor.White;
 
-                                   // LineaActual = LineaActual.Remove(0, idActual.Length-1);
+                                    // LineaActual = LineaActual.Remove(0, idActual.Length-1);
                                 }
                                 else if (Identifier.IsMatch(idActual))
                                 {
@@ -211,7 +212,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.WriteLine($"    {idActual} - >     T-Id_{idActual}");
                                     Console.ForegroundColor = ConsoleColor.White;
 
-                                   // LineaActual = LineaActual.Remove(0, idActual.Length);
+                                    // LineaActual = LineaActual.Remove(0, idActual.Length);
                                 }
                                 else if (IntegerRegx.IsMatch(idActual))
                                 {
@@ -219,7 +220,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.WriteLine($"    {idActual} - >     T-Integer_{idActual}");
                                     Console.ForegroundColor = ConsoleColor.White;
 
-                                   // LineaActual = LineaActual.Remove(0, idActual.Length-1);
+                                    // LineaActual = LineaActual.Remove(0, idActual.Length-1);
                                 }
                                 else if (DoubleRegx.IsMatch(idActual))
                                 {
@@ -241,14 +242,11 @@ namespace Proyecto_Compiladores_2020.Data
 
                 }
 
-                Console.WriteLine($"-------------------------");
-                Console.WriteLine($"------------[{i}]------------");
-
                 Console.WriteLine($"");
             }
 
         }
-       
+
 
     }
 }

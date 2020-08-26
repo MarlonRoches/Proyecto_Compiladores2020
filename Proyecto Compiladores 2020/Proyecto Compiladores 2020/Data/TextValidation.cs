@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace Proyecto_Compiladores_2020.Data
 {
     class TextValidation
@@ -22,6 +24,8 @@ namespace Proyecto_Compiladores_2020.Data
         public static Dictionary<string, string> Comentarios = new Dictionary<string, string>();
         public static Dictionary<string, string> Cadenas = new Dictionary<string, string>();
 
+
+
         private int Comentarios_Index = 0;
         private int Str_Index = 0;
         public string ValidarComentarios(string ruta)
@@ -32,6 +36,8 @@ namespace Proyecto_Compiladores_2020.Data
             file.Close();
             var fileCode = new StreamReader("TestCode.txt");
             var linea = fileCode.ReadLine();
+
+
 
             while (linea != null)
             {
@@ -56,16 +62,18 @@ namespace Proyecto_Compiladores_2020.Data
                     while (!linea.Contains("*/"))
                     {
                         linea = fileCode.ReadLine();
-                        if (linea=="")
+                        if (linea == "")
                         {
                             actual += "\n";
+
+
 
                         }
                         else if (linea.Contains("*/"))
                         {
                             //contiene final de comentario
                             //*/  code......
-                            var aux = linea.Substring(0, linea.IndexOf("*/")+2);
+                            var aux = linea.Substring(0, linea.IndexOf("*/") + 2);
                             linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
                             AgregarComentario(aux);
                             actual += linea;
@@ -77,15 +85,19 @@ namespace Proyecto_Compiladores_2020.Data
                             //Medio comentarios
                             //agarrar toda la linea 
                             var aux = linea;
-                            linea = linea.Replace(linea, "█"+$"{Comentarios_Index}".PadLeft(2, '0')+"\n");
+                            linea = linea.Replace(linea, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
                             AgregarComentario(aux);
                             actual += linea;
                             linea = "";
+
+
 
                         }
                         if (linea == null)
                         {
                             //error de comentario no cerrado
+
+
 
                             break;
                         }
@@ -115,26 +127,34 @@ namespace Proyecto_Compiladores_2020.Data
             return compressedCode;
         }
 
+
+
         public string ValidarStrings(string code)
         {
             var stringless = "";
             var splitedCode = code.Split('\n');
+
+
 
             foreach (var line in splitedCode)
             {
                 if (line.Contains('"'))
                 {
 
+
+
                     //PENDIENTE
                     //MIENTRAS LA LINEA NO CONTENGA MAS COMILLAS
 
+
+
                     //primera comilla
-                    var PrimeraComilla = line.IndexOf('"')+1;
-                    var aux = line.Remove(0,PrimeraComilla);
+                    var PrimeraComilla = line.IndexOf('"') + 1;
+                    var aux = line.Remove(0, PrimeraComilla);
                     //segunda comilla
-                    var value = aux.Substring(0, aux.IndexOf('"') );
-                    stringless += $"{line.Replace($"{'"'}{value}{'"'}", "▄" + $"{Str_Index}".PadLeft(2, '0'))}" +"\n"; //alt+988
-                    Cadenas.Add("▄"+$"{Str_Index}".PadLeft(2,'0'),value);
+                    var value = aux.Substring(0, aux.IndexOf('"'));
+                    stringless += $"{line.Replace($"{'"'}{value}{'"'}", "▄" + $"{Str_Index}".PadLeft(2, '0'))}" + "\n"; //alt+988
+                    Cadenas.Add("▄" + $"{Str_Index}".PadLeft(2, '0'), $"\"{value}\"");
                     Str_Index++;
                 }
                 else
@@ -152,20 +172,26 @@ namespace Proyecto_Compiladores_2020.Data
             linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
             AgregarComentario(aux);
 
+
+
             return linea;
         }
 
+
+
         void AgregarComentario(string comentario)
         {
-            Comentarios.Add("█"+$"{Comentarios_Index}".PadLeft(2, '0'), comentario);
+            Comentarios.Add("█" + $"{Comentarios_Index}".PadLeft(2, '0'), comentario);
             Comentarios_Index++;
         }
 
-        string GetComentario(string Code)
+
+
+        public string GetComentario(string Code)
         {
             return Comentarios[Code];
         }
-        string GetString(string Code)
+        public string GetString(string Code)
         {
             return Cadenas[Code];
 
