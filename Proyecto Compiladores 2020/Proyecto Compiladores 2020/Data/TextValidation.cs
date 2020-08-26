@@ -39,8 +39,8 @@ namespace Proyecto_Compiladores_2020.Data
                 {
                     //comentario unilinea
                     var comented = linea.IndexOf("//");
-                    Comentarios.Add($"█{Comentarios_Index}", linea.Remove(0, comented));
-                    linea = linea.Replace(linea.Remove(0, comented), $"█{Comentarios_Index}");
+                    Comentarios.Add("█" + $"{Comentarios_Index}".PadLeft(2, '0'), linea.Remove(0, comented));
+                    linea = linea.Replace(linea.Remove(0, comented), "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
                     compressedCode += $"{linea}\n";
                     Comentarios_Index++;
                 }
@@ -48,7 +48,7 @@ namespace Proyecto_Compiladores_2020.Data
                 {
                     var actual = "";
                     var aux1 = linea.Remove(0, linea.IndexOf("/*"));
-                    linea = linea.Replace(aux1, $"█{Comentarios_Index}\n");
+                    linea = linea.Replace(aux1, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
                     AgregarComentario(aux1);
                     actual += linea;
                     linea = "";
@@ -66,7 +66,7 @@ namespace Proyecto_Compiladores_2020.Data
                             //contiene final de comentario
                             //*/  code......
                             var aux = linea.Substring(0, linea.IndexOf("*/")+2);
-                            linea = linea.Replace(aux, $"█{Comentarios_Index}");
+                            linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
                             AgregarComentario(aux);
                             actual += linea;
                             linea = actual;
@@ -77,7 +77,7 @@ namespace Proyecto_Compiladores_2020.Data
                             //Medio comentarios
                             //agarrar toda la linea 
                             var aux = linea;
-                            linea = linea.Replace(linea, $"█{Comentarios_Index}\n");
+                            linea = linea.Replace(linea, "█"+$"{Comentarios_Index}".PadLeft(2, '0')+"\n");
                             AgregarComentario(aux);
                             actual += linea;
                             linea = "";
@@ -130,13 +130,16 @@ namespace Proyecto_Compiladores_2020.Data
                 if (line.Contains('"'))
                 {
 
+                    //PENDIENTE
+                    //MIENTRAS LA LINEA NO CONTENGA MAS COMILLAS
+
                     //primera comilla
                     var PrimeraComilla = line.IndexOf('"')+1;
                     var aux = line.Remove(0,PrimeraComilla);
                     //segunda comilla
                     var value = aux.Substring(0, aux.IndexOf('"') );
-                    stringless += $"{line.Replace($"{'"'}{value}{'"'}", $"▄{Str_Index}")}\n"; //alt+988
-                    Cadenas.Add($"▄{Str_Index}",value);
+                    stringless += $"{line.Replace($"{'"'}{value}{'"'}", "▄" + $"{Str_Index}".PadLeft(2, '0'))}" +"\n"; //alt+988
+                    Cadenas.Add("▄"+$"{Str_Index}".PadLeft(2,'0'),value);
                     Str_Index++;
                 }
                 else
@@ -151,7 +154,7 @@ namespace Proyecto_Compiladores_2020.Data
             var comented = linea.IndexOf("//");
             //Comentarios.Add($"█{Comentarios_Index}", linea.Remove(0, comented));
             var aux = linea.Remove(0, comented);
-            linea = linea.Replace(aux, $"█{Comentarios_Index}");
+            linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
             AgregarComentario(aux);
 
             return linea;
@@ -159,7 +162,7 @@ namespace Proyecto_Compiladores_2020.Data
 
         void AgregarComentario(string comentario)
         {
-            Comentarios.Add($"█{Comentarios_Index}", comentario);
+            Comentarios.Add("█"+$"{Comentarios_Index}".PadLeft(2, '0'), comentario);
             Comentarios_Index++;
         }
 

@@ -18,6 +18,10 @@ namespace Proyecto_Compiladores_2020
             
             Data.Data.Instance.Sustituir(Data.TextValidation.Instance.ValidarStrings( Data.TextValidation.Instance.ValidarComentarios("")));
 
+
+            Console.WriteLine($"------------EOFN§§§§§");
+            Console.ReadLine();
+
             //{ } [] () {}
             ////id		
             //TOKEN 1 = LETRA.(LETRA|DIGITO)*
