@@ -90,11 +90,6 @@ namespace Proyecto_Compiladores_2020.Data
                             break;
                         }
                     }
-                    //var comentarioMultilinea = linea.Remove(0, linea.IndexOf("/*"));
-                    //comentarioMultilinea = comentarioMultilinea.Substring(0, comentarioMultilinea.IndexOf("*/") + 2);
-                    //Comentarios.Add($"█{Comentarios_Index}", comentarioMultilinea);
-                    ///linea = linea.Replace(comentarioMultilinea, $"█{Comentarios_Index}");
-                    //Comentarios_Index++;
                     while (linea.Contains("//"))
                     {
                         linea = parseComentarioUnilinea(linea);
@@ -166,5 +161,14 @@ namespace Proyecto_Compiladores_2020.Data
             Comentarios_Index++;
         }
 
+        string GetComentario(string Code)
+        {
+            return Comentarios[Code];
+        }
+        string GetString(string Code)
+        {
+            return Cadenas[Code];
+
+        }
     }
 }
