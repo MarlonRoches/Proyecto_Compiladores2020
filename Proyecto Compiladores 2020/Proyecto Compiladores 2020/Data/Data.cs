@@ -46,6 +46,7 @@ namespace Proyecto_Compiladores_2020.Data
 
             var fileCode = new StreamReader("TestCode.txt");
             var rawCode = code;
+            var dictionaryinvert = new Dictionary<string, string>();
             //var rawCode = fileCode.ReadToEnd();
 
             fileCode.Close();
@@ -54,6 +55,10 @@ namespace Proyecto_Compiladores_2020.Data
                
                     rawCode = rawCode.Replace($"{item}", $" {Reservadas_Sustitucion[item]} ");
                 
+            }
+            foreach (var invert in Reservadas_Sustitucion)
+            {
+                dictionaryinvert.Add(invert.Value,invert.Key);
             }
 
             //aqui split por enters
@@ -69,49 +74,92 @@ namespace Proyecto_Compiladores_2020.Data
                 line++;
                 ColEnd = 0;
                 colStart = 0;
-                string id = "";
+                var indexer = 0;
                 foreach (var item1 in tokenActual)
                 {
 
-                    if (Convert.ToString(item1) != " " && Convert.ToString(item1) != "\t")
+                    if (Convert.ToString(item1) == " " || Convert.ToString(item1) == "\t"  || Convert.ToString(item1) == "\r")
                     {
-                        if (Reservadas_Sustitucion.ContainsValue(Convert.ToString(item1)))
+                        if (Convert.ToString(item1) == " ")
                         {
-                            //se valida las palabras reservadas 
+                            colStart++;
+                            indexer++;
+                        }
+                        else if (Convert.ToString(item1) == "\t")
+                        {
+                            colStart = colStart + 8;
+                            indexer++;
+                        }
+                    }
+                    else
+                    {
+                        if (dictionaryinvert.ContainsKey(item1.ToString()))
+                        {
                             if (Keywords.IsMatch(token = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key))
                             {
                                 int length = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key.Length;
                                 ColEnd += colStart + length;
                                 Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " T_" + token);
                                 colStart = 0;
+                                indexer++;
                             }
-                            //se valida los operadores
                             else if (Operadores.IsMatch(token = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key))
                             {
+                                int lenghtoperator = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key.Length;
+                                ColEnd += colStart + lenghtoperator;
                                 Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " T_" + token);
                                 colStart = 0;
+                                indexer++;
                             }
-                            //validación de booleanos
                             else if (Boolean.IsMatch(token = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key))
                             {
+                                int lenghtboolean = Reservadas_Sustitucion.Where(p => p.Value == Convert.ToString(item1)).FirstOrDefault().Key.Length;
+                                ColEnd += colStart + lenghtboolean;
                                 Console.WriteLine(token + " line:" + line + " Columna: " + colStart + "-" + ColEnd + " T_" + "Boolean");
                                 colStart = 0;
+                                indexer++;
                             }
-
+                           
                         }
+                        else
+                        {
+                            var prueba = tokenActual.Length;
+                            var aux = tokenActual.Remove(0, indexer);
+                            
+                            var id = "";
+                            
+                            foreach (var actualCharacter in aux)
+                            {
+
+                                if (actualCharacter.ToString() == " " || actualCharacter.ToString() == "\t" || actualCharacter.ToString() == "\n" || actualCharacter.ToString() == "\r" || dictionaryinvert.ContainsKey(actualCharacter.ToString()))
+                                {
+                                    if (Convert.ToString(actualCharacter) == " ")
+                                    {
+                                        colStart++;
+                                        indexer++;
+                                        
+                                    }
+                                    else if (Convert.ToString(actualCharacter) == "\t")
+                                    {
+                                        colStart = colStart + 8;
+                                        indexer++;
+                                        
+                                    }
+                                    break;
+                                }
+                                else
+                                {
+                                    id += actualCharacter;
+                                } 
+                            }
+                        }
+
                     }
-                    else if (Convert.ToString(item1) == "\t")
-                    {
-                        colStart = colStart + 8;
-                    }
-                    else
-                    {
-                        colStart++;
-                    }
+                   
                 }
 
             }
-            var linea = Console.ReadLine();
+            
         }
        
 
