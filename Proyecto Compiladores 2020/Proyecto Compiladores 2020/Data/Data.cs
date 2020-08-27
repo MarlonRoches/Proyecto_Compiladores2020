@@ -35,11 +35,10 @@ namespace Proyecto_Compiladores_2020.Data
             Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
             Regex Boolean = new Regex("true|false");
             Regex IntegerRegx = new Regex(@"^([0-9]+)*$");
-            Regex DoubleRegx = new Regex(@"^(0[xX]).([0-9a-fA-F]+)$");
+            Regex HexaRegx = new Regex(@"^(0[xX]).([0-9a-fA-F]+)$");
             Regex Double = new Regex(@"^(([0-9]+.[0-9]+|.[0-9]+)|([0-9]+.(E|e)(-|\+)?[0-9]+))$");
-            Regex Identifier = new Regex(@"^([A-Za-z]+[0-9]*)$");
-
-            var file = new StreamReader("Reservadas.txt");
+            Regex Identifier = new Regex(@"^([A-Za-z]|[$])?.([A-Za-z]|[0-9]|[$])*$");
+           var file = new StreamReader("Reservadas.txt");
             Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
 
@@ -228,7 +227,7 @@ namespace Proyecto_Compiladores_2020.Data
                                 foreach (var characterActual in auxiiar)
                                 {
 
-                                    if (characterActual.ToString() == " " || characterActual.ToString() == "\t" || characterActual.ToString() == "\n" || characterActual.ToString() == "\r" || DiccionarioInvertido.ContainsKey(characterActual.ToString()) || characterActual.ToString() == "█" || characterActual.ToString() == "▄")
+                                    if (characterActual.ToString() == " " || characterActual.ToString() == "\t" || characterActual.ToString() == "\n" || characterActual.ToString() == "\r" || characterActual.ToString() == "\t" || characterActual.ToString() == "\n" || characterActual.ToString() == "█"|| DiccionarioInvertido.ContainsKey(characterActual.ToString()) || item.ToString() == "█" || item.ToString() == "█" || item.ToString() == "▄" || item.ToString() == "┘" || item.ToString() == "┌" || item.ToString() == "¦")
                                     {
                                         //saltamos
                                         ////sumas 1 si es espacio 8 si es \t
@@ -236,7 +235,6 @@ namespace Proyecto_Compiladores_2020.Data
                                         {
                                             LineaActual = LineaActual.Remove(0, 1);
                                             colStart = colStart + 8;
-
                                         }
                                         //else if (item.ToString() == "\r")
                                         //{
@@ -271,6 +269,8 @@ namespace Proyecto_Compiladores_2020.Data
                                     colStart += lenghtBoolean;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
+                                    LineaActual = LineaActual.Remove(0, idActual.Length);
+                                    indexer = 0; break;
 
                                     // LineaActual = LineaActual.Remove(0, idActual.Length-1);
                                 }
@@ -298,10 +298,11 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     LineaActual = LineaActual.Remove(0, idActual.Length);
-                                    indexer = 0;
+                                    indexer = 0; break;
+
                                     // LineaActual = LineaActual.Remove(0, idActual.Length-1);
                                 }
-                                else if (DoubleRegx.IsMatch(idActual))
+                                else if (HexaRegx.IsMatch(idActual))
                                 {
                                     int lenghtDoubleRegx = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtDoubleRegx;
@@ -310,6 +311,9 @@ namespace Proyecto_Compiladores_2020.Data
                                     colStart += lenghtDoubleRegx;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
+                                    LineaActual = LineaActual.Remove(0, idActual.Length);
+                                    indexer = 0; break;
+
                                 }
                                 else if (Double.IsMatch(idActual))
                                 {
@@ -320,6 +324,9 @@ namespace Proyecto_Compiladores_2020.Data
                                     colStart += lenghtDouble;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
+                                    LineaActual = LineaActual.Remove(0, idActual.Length);
+                                    indexer = 0; break;
+
                                 }
                                 else
                                 {
@@ -330,21 +337,24 @@ namespace Proyecto_Compiladores_2020.Data
                                         validation += idActual[j];
                                         if (!Identifier.IsMatch(validation))
                                         {
-                                            //mostramos error
-                                            aux = validation.Substring(0, validation.Length);
-                                            Console.WriteLine($"El caracter {aux} no fue reconocido");
-                                            idActual = aux;
-                                            indexer = 0;
-                                            LineaActual = LineaActual.Remove(0,idActual.Length);
-                                            break;
+                                          
+                                                //mostramos error
+                                                aux = validation.Substring(0, validation.Length);
+                                                Console.WriteLine($"El caracter {aux} no fue reconocido");
+                                                idActual = aux;
+                                                indexer = 0;
+                                                LineaActual = LineaActual.Remove(0,idActual.Length);
+                                                break;
+
                                         }
                                     }
                                     
                                     break;
                                 }
-
+                                    
                                 //Console.ForegroundColor = ConsoleColor.DarkYellow;
-                               
+
+
                             }
 
 
