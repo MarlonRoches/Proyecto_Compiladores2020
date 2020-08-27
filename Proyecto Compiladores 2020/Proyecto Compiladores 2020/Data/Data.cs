@@ -136,7 +136,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                             }
                             //comentarios y comentarios
-                            else if (item.ToString() == "█" || item.ToString() == "▄" || item.ToString() == "┘" || item.ToString() == "┌")
+                            else if (item.ToString() == "█" || item.ToString() == "▄" || item.ToString() == "┘" || item.ToString() == "┌" || item.ToString() == "¦")
                             {
                                 //mandar a traer el comentarios
                                 if (item.ToString() == "█")//alt +987
@@ -206,6 +206,18 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.White;
                                     break;
                                 }
+                                else if (item.ToString() == "¦")//┌ 986
+                                {
+                                    var Cadena = LineaActual.Substring(0, 3);
+                                    LineaActual = LineaActual.Remove(0, 3);
+                                    var ErrorEOF = TextValidation.Instance.GetError(Cadena);
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.BackgroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine($"{ErrorEOF}");
+                                    Console.BackgroundColor = ConsoleColor.Black;
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+                                }
 
                             }
                             else
@@ -233,7 +245,7 @@ namespace Proyecto_Compiladores_2020.Data
                                         //}
                                         else if (characterActual.ToString() == " ")
                                         {
-                                            LineaActual = LineaActual.Remove(0, 1);
+                                           // LineaActual = LineaActual.Remove(0, 1);
                                             colStart++;
 
                                         }
@@ -242,6 +254,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     }
                                     else
                                     {
+
                                         idActual += characterActual;
                                     }
                                 }
@@ -305,6 +318,28 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
                                 }
+                                else
+                                {
+                                    var validation = "";
+                                    var aux = "";
+                                    for (int j = 0; j < idActual.Length; j++)
+                                    {
+                                        validation += idActual[j];
+                                        if (!Identifier.IsMatch(validation))
+                                        {
+                                            //mostramos error
+                                            aux = validation.Substring(0, validation.Length);
+                                            Console.WriteLine($"El caracter {aux} no fue reconocido");
+                                            idActual = aux;
+                                            indexer = 0;
+                                            LineaActual = LineaActual.Replace($"{idActual}", "");
+                                            break;
+                                        }
+                                    }
+                                    
+                                    break;
+                                }
+
                                 //Console.ForegroundColor = ConsoleColor.DarkYellow;
                                 LineaActual = LineaActual.Remove(0, (indexer + idActual.Length) - 1);
                                 indexer = 0;

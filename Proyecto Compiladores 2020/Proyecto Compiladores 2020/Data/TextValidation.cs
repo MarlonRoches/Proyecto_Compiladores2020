@@ -36,7 +36,7 @@ namespace Proyecto_Compiladores_2020.Data
             var file = new StreamReader("Reservadas.txt");
             var Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
-            var fileCode = new StreamReader("TestCode.txt");
+            var fileCode = new StreamReader(ruta);
             var linea = fileCode.ReadLine();
 
 
@@ -64,51 +64,65 @@ namespace Proyecto_Compiladores_2020.Data
                     while (!linea.Contains("*/"))
                     {
                         linea = fileCode.ReadLine();
-                        if (linea == "")
+                        if (linea == null)
                         {
-                            actual += "\n";
-
-
-
-                        }
-                        else if (linea.Contains("*/"))
-                        {
-                            //contiene final de comentario
-                            //*/  code......
-                            var aux = linea.Substring(0, linea.IndexOf("*/") + 2);
-                            linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
-                            AgregarComentario(aux);
-                            actual += linea;
-                            linea = actual;
+                            //EOF EN COMENTARIO
+                            Errores.Add("¦" + $"{Error_Index}".PadLeft(2, '0'), "EOF en un comentario");
+                            compressedCode += "¦" + $"{Error_Index}".PadLeft(2, '0');
+                            Error_Index++;
                             break;
                         }
                         else
                         {
-                            //Medio comentarios
-                            //agarrar toda la linea 
-                            var aux = linea;
-                            linea = linea.Replace(linea, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
-                            AgregarComentario(aux);
-                            actual += linea;
-                            linea = "";
+
+
+                            if (linea == "")
+                            {
+                                actual += "\n";
+                            }
+                            else if (linea.Contains("*/"))
+                            {
+                                //contiene final de comentario
+                                //*/  code......
+                                var aux = linea.Substring(0, linea.IndexOf("*/") + 2);
+                                linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
+                                AgregarComentario(aux);
+                                actual += linea;
+                                linea = actual;
+                                break;
+                            }
+                            else
+                            {
+                                //Medio comentarios
+                                //agarrar toda la linea 
+                                var aux = linea;
+                                linea = linea.Replace(linea, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
+                                AgregarComentario(aux);
+                                actual += linea;
+                                linea = "";
 
 
 
-                        }
-                        if (linea == null)
-                        {
-                            //error de comentario no cerrado
+                            }
+                            if (linea == null)
+                            {
+                                //error de comentario no cerrado
 
 
 
-                            break;
+                                break;
+                            }
                         }
                     }
-                    while (linea.Contains("//"))
+                    if (linea!=null)
                     {
-                        linea = parseComentarioUnilinea(linea);
+
+                        while (linea.Contains("//"))
+                        {
+                            linea = parseComentarioUnilinea(linea);
+                        }
+                        compressedCode += $"{linea}";
                     }
-                    compressedCode += $"{linea}";
                 }
                 else
                 {
