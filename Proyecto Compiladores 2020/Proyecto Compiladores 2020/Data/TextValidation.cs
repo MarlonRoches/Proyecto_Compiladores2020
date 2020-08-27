@@ -116,6 +116,11 @@ namespace Proyecto_Compiladores_2020.Data
                     if (linea.Contains("*/"))
                     {
                         //cierre de comentario
+                        var fixedLine = linea.Replace("*/", "┘" + $"{Error_Index}".PadLeft(2, '0'));
+                        Errores.Add("┘" + $"{Error_Index}".PadLeft(2, '0'), "*/");
+                        Error_Index++;
+                        compressedCode += $"{fixedLine}\n";
+
                     }
                     else
                     {

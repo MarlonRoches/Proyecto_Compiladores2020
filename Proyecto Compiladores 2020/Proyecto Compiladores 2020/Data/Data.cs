@@ -185,15 +185,26 @@ namespace Proyecto_Compiladores_2020.Data
                                 {
                                     var Cadena = LineaActual.Substring(0, 3);
                                     LineaActual = LineaActual.Remove(0, 3);
-                                    var comentarioSinCerrar = TextValidation.Instance.GetError(Cadena);
-                                    
+                                    var comentarioSinabrir = TextValidation.Instance.GetError(Cadena);
+                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                    Console.BackgroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine($"ERROR DE COMENTARIO SIN ABRIR {comentarioSinabrir}");
+                                    Console.BackgroundColor = ConsoleColor.Black;
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+
                                 }
                                 else if (item.ToString() == "┌")//┌ 986
                                 {
                                     var Cadena = LineaActual.Substring(0, 3);
                                     LineaActual = LineaActual.Remove(0, 3);
-                                    var comentarioSinCerrar = TextValidation.Instance.GetError(Cadena);
-
+                                    var stringSinCerrar = TextValidation.Instance.GetError(Cadena);
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.BackgroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine($"ERROR DE CADENA SIN CERRAR {stringSinCerrar}");
+                                    Console.BackgroundColor = ConsoleColor.Black;
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
                                 }
 
                             }
