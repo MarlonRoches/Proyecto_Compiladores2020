@@ -24,9 +24,7 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private static Dictionary<string, string> Reservadas_Sustitucion = new Dictionary<string, string>();
         private static Dictionary<string, string> Variables_Sustitucion = new Dictionary<string, string>();
-        Dictionary<string, string> Comentarios = TextValidation.Comentarios;
-        Dictionary<string, string> Cadenas = TextValidation.Cadenas;
-
+       
         public void Sustituir(string code)
         {
             var asds = "";
@@ -42,16 +40,12 @@ namespace Proyecto_Compiladores_2020.Data
             Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
 
-            var fileCode = new StreamReader("TestCode.txt");
-            var rawCode = code.TrimEnd();
+            code = code.TrimEnd();
             var DiccionarioInvertido = new Dictionary<string, string>();
 
-            //var rawCode = fileCode.ReadToEnd();
-
-            fileCode.Close();
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
-                rawCode = rawCode.Replace($"{item}", $"{Reservadas_Sustitucion[item]}"); //revisar esta parte
+                code = code.Replace($"{item}", $"{Reservadas_Sustitucion[item]}"); //revisar esta parte
 
             }
             foreach (var invert in Reservadas_Sustitucion)
@@ -61,7 +55,7 @@ namespace Proyecto_Compiladores_2020.Data
 
             //aqui split por enters
 
-            var codigoArray = rawCode.Split('\n');
+            var codigoArray = code.Split('\n');
             //aqui se hace la validación de tokens
             for (int i = 0; i < codigoArray.Length; i++)
             {
@@ -169,7 +163,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtCadena;
                                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                                     Console.BackgroundColor = ConsoleColor.White;
-                                    Console.WriteLine($"\"{TextValidation.Instance.GetString(Cadena)}\"  line {line} cols {colStart}-{ColEnd} is (value = \"{TextValidation.Instance.GetString(Cadena)}\"");
+                                    Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     colStart += lenghtCadena;
@@ -259,6 +253,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                                         }
                                         indexer++;
+                                        //aqui ver lo de los raritos x0ajonadnjd
                                         break;
                                     }
                                     else
