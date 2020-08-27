@@ -1,1 +1,64 @@
-# Proyecto_Compiladores2020
+# Mini-Java (Analizador Léxico)
+
+## Descripción
+
+Es un analizador léxico para una mini compilador creado en C# para el lenguaje de programación Java. Su función se lleva acabo en esta fase es la parte del análisis léxico y consiste en reconocer tokens segun el orden de lectura del archivo, y en base a expresiones regulares el programa separará los tokens como correctos o errores.
+
+## Fase 1
+
+#### Objetivo General
+En el primer proyecto de programación en clase de Compiladores, ustedes iniciarán su compilador con la aplicación del análisis léxico. Para la primera tarea del front-end, crearán un escáner para el lenguaje de programación asignado. El escáner irá reconociendo los tokens en el orden en que se leen, hasta el final del archivo.  Para cada lenguaje, el escáner determinará sus atributos adecuadamente (estos eventualmente serán utilizados por otros componentes de su compilador) para que la información sobre cada símbolo deba estar correctamente impresa. 
+
+## Estructura Lexicográfica
+#### Palabras Reservadas
+    ● void,int,double,boolean,string,class,const,interface,null,this,extends,implements,for,while,if,else,return,break,New,System,out,println
+#### Identificadores
+    ● Un identificador es una secuencia de letras, dígitos y signo dólar. Puede comenzar con cualquiera excepto un número. 
+Ejemplos de Identificadores Correctos e Incorrectos
+
+    ●Correctos: 
+        ○ flag
+        ○ aux1
+        ○ item1
+    ●Incorrectos:
+        ○ 20item
+        ○ _listGrades
+
+#### Case Sensitive 
+    ● El mini compilador detecta si una palabra reservada esta en mayuscula; ya sea mayuscula esta palabra sera un identificador y si esta en minusculas se detectará como palabra reservada. 
+    Por Ejemplo:
+    ● else es una palabra reservada, pero ELSE es un identificador
+#### Espacios en Blanco
+    ● Son los espacios, tabuladores y saltos de línea que sirven para separar los tokens deseados. Para las palabras claves y los identificadores deben de  separarse por espacios en blanco o señalando que no es ni palabra reservada ni un identificador. 
+    Por Ejemplo:
+    ● "if ( 23 this se escanea como cuatro tokens, al igual que if(23this"
+####  Comentarios (Varias Lineas)
+    ● Si se inica con "/*" y termina con "*/" cualquier texto o codigo se permite en un comentario, excepto el de secuencia */ que pone fin al comentario actual. Estos comentarios de varias lineas no se anidan.
+#### Comentarios (Una sola línea)
+    ● Si se inicia con "//" para comentar todo lo que este en esa linea, permite simbolos dentro de estos.
+    
+## Constantes    
+#### Operadores
+    ● + - * / % < <= > >= = == != && || ! ; , . [ ] ( ) { } [] () {}
+#### Booleanas
+    ● true o false
+#### Enteros (Base 10 o Base 16)
+    ● Se expresa en decimal(Base 10)
+        ○ Es una secuencia de digitos decimales (0-9).
+        
+    ● Se expresa en Hexadecimales(Base 16)
+        ○ Un entero Hexadecimal se comienza por un 0x o 0X, seguido por una secuencia de digitos hexadecimales, en los cuales los digitos hexadecimales incluyen los digitos y las letras de la "a" a la "f"(ya sea en minúsculas o mayúsculas). 
+#### Double
+    ● Es una secuencia de digitos seguidos de un punto("."), seguido de otra secuencia de digitos o nada.
+        ○ Por Ejemplo: 20. y 0.22.
+    ● En las constantes dobles en la notación cientifica, el punto(".") es requerido y el signo del exponente es opcional, ya que si no se especifica el signo se agarra como "+".
+#### String o Cadena de Caracteres
+    ● Es una secuencia de caracteres que estan dentro de unas comillas dobles "". 
+      El string no puede contener una linea nueva, doble comillas o un carácter nulo.
+      Un constante string debe comenzar y finalar en una misma línea, y no puede partirse en líneas múltiples.
+        ○ Por Ejemplo: "Está es una cadena de caracteres que no tiene su doble comilla; Esta no es parte de la cadena de arriba // Todos deben ser identificadores
+## Programadores
+    ○ Marlon Roches
+    ○ Alexander Villatoro
+## Creado en 
+    ● Aplicación en Consola y en .NET Framework Version 4.7.2
