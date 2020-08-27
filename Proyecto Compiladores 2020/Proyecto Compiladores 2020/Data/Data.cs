@@ -283,7 +283,9 @@ namespace Proyecto_Compiladores_2020.Data
                                     colStart += lenghtIdentifier;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
-
+                                    LineaActual = LineaActual.Remove(0,idActual.Length);
+                                    indexer = 0;
+                                    break;
                                     // LineaActual = LineaActual.Remove(0, idActual.Length);
                                 }
                                 else if (IntegerRegx.IsMatch(idActual))
@@ -295,7 +297,8 @@ namespace Proyecto_Compiladores_2020.Data
                                     colStart += lenghtInteger;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
-
+                                    LineaActual = LineaActual.Remove(0, idActual.Length);
+                                    indexer = 0;
                                     // LineaActual = LineaActual.Remove(0, idActual.Length-1);
                                 }
                                 else if (DoubleRegx.IsMatch(idActual))
@@ -332,7 +335,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             Console.WriteLine($"El caracter {aux} no fue reconocido");
                                             idActual = aux;
                                             indexer = 0;
-                                            LineaActual = LineaActual.Replace($"{idActual}", "");
+                                            LineaActual = LineaActual.Remove(0,idActual.Length);
                                             break;
                                         }
                                     }
@@ -341,9 +344,7 @@ namespace Proyecto_Compiladores_2020.Data
                                 }
 
                                 //Console.ForegroundColor = ConsoleColor.DarkYellow;
-                                LineaActual = LineaActual.Remove(0, (indexer + idActual.Length) - 1);
-                                indexer = 0;
-                                break;
+                               
                             }
 
 
