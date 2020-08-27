@@ -43,7 +43,7 @@ namespace Proyecto_Compiladores_2020.Data
             file.Close();
 
             var fileCode = new StreamReader("TestCode.txt");
-            var rawCode = code;
+            var rawCode = code.TrimEnd();
             var DiccionarioInvertido = new Dictionary<string, string>();
 
             //var rawCode = fileCode.ReadToEnd();
@@ -173,6 +173,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     colStart += lenghtCadena;
+
                                     ColEnd = 0;
                                     //al diccionario 
                                     //.length
@@ -200,7 +201,17 @@ namespace Proyecto_Compiladores_2020.Data
                                     var stringSinCerrar = TextValidation.Instance.GetError(Cadena);
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.WriteLine($"ERROR DE CADENA SIN CERRAR {stringSinCerrar}");
+
+                                    if (i== codigoArray.Length-1)
+                                    {
+                                        Console.WriteLine($"EOF ERROR DE CADENA SIN CERRAR");
+
+                                    }
+                                    else
+                                    {
+
+                                        Console.WriteLine($"ERROR DE CADENA SIN CERRAR {stringSinCerrar}");
+                                    }
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     break;
@@ -279,7 +290,20 @@ namespace Proyecto_Compiladores_2020.Data
                                     int lenghtIdentifier = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtIdentifier;
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine($" {idActual}     line {line} cols {colStart+1}-{ColEnd} is T_Identifier");
+                                    if (idActual.Length>=31)
+                                    {
+                                        var trucado = idActual.Substring(0, 31);
+                                    // MOSTRAR ERROR POR CARACTER MUY LARGO
+
+                                    Console.BackgroundColor= ConsoleColor.White;
+                                        Console.WriteLine($" {trucado}     line {line} cols {colStart+1}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
+                                    Console.BackgroundColor= ConsoleColor.Black;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($" {idActual}     line {line} cols {colStart+1}-{ColEnd} is T_Identifier");
+
+                                    }
                                     colStart += lenghtIdentifier;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -337,13 +361,20 @@ namespace Proyecto_Compiladores_2020.Data
                                         validation += idActual[j];
                                         if (!Identifier.IsMatch(validation))
                                         {
-                                          
+                                            //if (idActual.)
+                                            //{
+
+                                            //}
+                                            //else
+                                            //{
+
                                                 //mostramos error
                                                 aux = validation.Substring(0, validation.Length);
                                                 Console.WriteLine($"El caracter {aux} no fue reconocido");
                                                 idActual = aux;
                                                 indexer = 0;
                                                 LineaActual = LineaActual.Remove(0,idActual.Length);
+                                            //}
                                                 break;
 
                                         }
@@ -364,7 +395,6 @@ namespace Proyecto_Compiladores_2020.Data
 
                 }
 
-                Console.WriteLine($"");
             }
 
         }
