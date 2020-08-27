@@ -136,7 +136,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                             }
                             //comentarios y comentarios
-                            else if (item.ToString() == "█" || item.ToString() == "▄")
+                            else if (item.ToString() == "█" || item.ToString() == "▄" || item.ToString() == "┘" || item.ToString() == "┌")
                             {
                                 //mandar a traer el comentarios
                                 if (item.ToString() == "█")//alt +987
@@ -161,7 +161,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     //mostrar
                                     break;
                                 }
-                                else //▄ 988
+                                else if (item.ToString() == "▄")//▄ 988
                                 {
                                     //mandamos a traer el string, medimos el largo 
                                     var Cadena = LineaActual.Substring(0, 3);
@@ -181,6 +181,21 @@ namespace Proyecto_Compiladores_2020.Data
                                     break;
 
                                 }
+                                else if (item.ToString() == "┘")//┘ 985 
+                                {
+                                    var Cadena = LineaActual.Substring(0, 3);
+                                    LineaActual = LineaActual.Remove(0, 3);
+                                    var comentarioSinCerrar = TextValidation.Instance.GetError(Cadena);
+                                    
+                                }
+                                else if (item.ToString() == "┌")//┌ 986
+                                {
+                                    var Cadena = LineaActual.Substring(0, 3);
+                                    LineaActual = LineaActual.Remove(0, 3);
+                                    var comentarioSinCerrar = TextValidation.Instance.GetError(Cadena);
+
+                                }
+
                             }
                             else
                             {

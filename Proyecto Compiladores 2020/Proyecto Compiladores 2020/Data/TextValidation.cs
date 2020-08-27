@@ -135,6 +135,8 @@ namespace Proyecto_Compiladores_2020.Data
                 if (arrayPost[i].Contains("*/"))
                 {
                     arrayPost[i] = arrayPost[i].Replace("*/", "┘" + $"{Error_Index}".PadLeft(2, '0'));
+                    Errores.Add("┘" + $"{Error_Index}".PadLeft(2, '0'),"*/");
+                    Error_Index++;
                 }
                 compressedCode += $"{arrayPost[i]}\n";
             }
@@ -165,11 +167,26 @@ namespace Proyecto_Compiladores_2020.Data
                     //primera comilla
                     var PrimeraComilla = line.IndexOf('"') + 1;
                     var aux = line.Remove(0, PrimeraComilla);
-                    //segunda comilla
-                    var value = aux.Substring(0, aux.IndexOf('"'));
-                    stringless += $"{line.Replace($"{'"'}{value}{'"'}", "▄" + $"{Str_Index}".PadLeft(2, '0'))}" + "\n"; //alt+988
-                    Cadenas.Add("▄" + $"{Str_Index}".PadLeft(2, '0'), $"\"{value}\"");
-                    Str_Index++;
+                    if (aux.IndexOf('"')==-1)
+                    {
+                        var value = $"\"{aux}";
+                        stringless += $"{line.Replace($"{value}", "┌" + $"{Error_Index}".PadLeft(2, '0'))}" + "\n"; //alt+988
+                        Errores.Add("┌" + $"{Error_Index}".PadLeft(2, '0'), $"{value}");
+                        Error_Index++;
+
+                       
+                    }
+                    else
+                    {
+                        //segunda comilla
+                        var value = aux.Substring(0, aux.IndexOf('"'));
+                        stringless += $"{line.Replace($"{'"'}{value}{'"'}", "▄" + $"{Str_Index}".PadLeft(2, '0'))}" + "\n"; //alt+988
+                        Cadenas.Add("▄" + $"{Str_Index}".PadLeft(2, '0'), $"\"{value}\"");
+                        Str_Index++;
+
+                    }
+
+                   
                 }
                 else
                 {
@@ -199,7 +216,10 @@ namespace Proyecto_Compiladores_2020.Data
             Comentarios_Index++;
         }
 
-
+        public string GetError(string Code)
+        {
+            return Errores[Code];
+        }
 
         public string GetComentario(string Code)
         {
