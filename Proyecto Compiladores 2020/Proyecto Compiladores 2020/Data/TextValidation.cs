@@ -23,8 +23,10 @@ namespace Proyecto_Compiladores_2020.Data
         }
         public static Dictionary<string, string> Comentarios = new Dictionary<string, string>();
         public static Dictionary<string, string> Cadenas = new Dictionary<string, string>();
+        public static Dictionary<string, string> Errores = new Dictionary<string, string>();
 
 
+        private int Error_Index = 0;
 
         private int Comentarios_Index = 0;
         private int Str_Index = 0;
@@ -124,6 +126,18 @@ namespace Proyecto_Compiladores_2020.Data
                 linea = fileCode.ReadLine();
             }
             fileCode.Close();
+
+            var arrayPost = compressedCode.Split('\n');
+
+            compressedCode = "";
+            for (int i = 0; i < arrayPost.Length; i++)
+            {
+                if (arrayPost[i].Contains("*/"))
+                {
+                    arrayPost[i] = arrayPost[i].Replace("*/", "┘" + $"{Error_Index}".PadLeft(2, '0'));
+                }
+                compressedCode += $"{arrayPost[i]}\n";
+            }
             return compressedCode;
         }
 
