@@ -35,13 +35,11 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
 
 
-        private static Regex DoubleRegx = new Regex(@"^([0-9])+([.])([0-9]+)?((([e]|[E])[+])[0-9]+)?$");
+        private static Regex DoubleRegx = new Regex(@"^([0-9])+([.])([0-9]+)?((([e]|[E])[+]?)[0-9]+)?$");
 
        
         public void Sustituir(string code)
         {
-            var asds = "";
-
            var file = new StreamReader("Reservadas.txt");
             Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
@@ -51,7 +49,6 @@ namespace Proyecto_Compiladores_2020.Data
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
                 code = code.Replace($"{item}", $"{Reservadas_Sustitucion[item]}"); //revisar esta parte
-
             }
             foreach (var invert in Reservadas_Sustitucion)
             {
@@ -59,9 +56,9 @@ namespace Proyecto_Compiladores_2020.Data
             }
 
             //aqui split por enters
-
             var codigoArray = code.Split('\n');
             int line = 0;
+
             //aqui se hace la validación de tokens
             for (int i = 0; i < codigoArray.Length; i++)
             {
@@ -251,7 +248,8 @@ namespace Proyecto_Compiladores_2020.Data
                                             {
                                                 idActual += "ª";
                                                 var lol = DoubleProces(idActual, LineaActual);
-                                                if (LineaActual == lol.Split('^')[1])
+                                                var arr = lol.Split('^')[1];
+                                                if (LineaActual == arr)
                                                 {
                                                     var idActualaux = idActual.Substring(0, idActual.IndexOf('ª'));
                                                     LineaActual = $"ª{LineaActual.Replace(idActual,"")}";
@@ -430,17 +428,10 @@ namespace Proyecto_Compiladores_2020.Data
                                             break;
                                         }
                                     }
-                                    
                                     break;
                                 }
-                                    
                                 //Console.ForegroundColor = ConsoleColor.DarkYellow;
-
-
                             }
-
-
-
                         }
                     }
 
@@ -472,6 +463,7 @@ namespace Proyecto_Compiladores_2020.Data
         {
             var doubleStr = "";
             var traducida = TraducirLinea(resto);
+            var PostE = "";
 
             if (traducida.IndexOf(".")!= -1)
             {
@@ -492,7 +484,6 @@ namespace Proyecto_Compiladores_2020.Data
 
                     }
 
-
                     for (int i = 0; i < traducida.Length; i++)
                     {
                         var xd = traducida[i];
@@ -503,9 +494,10 @@ namespace Proyecto_Compiladores_2020.Data
                         }
                         else
                         {
-                            doubleStr += xd;
+                            PostE += xd;
                         }
                     }
+
                 }
                 else
                 {
@@ -513,7 +505,7 @@ namespace Proyecto_Compiladores_2020.Data
                     for (int i = 0; i < traducida.Length; i++)
                     {
                         var xd = traducida[i];
-                        if (Reservadas_Sustitucion.ContainsKey(xd.ToString()))
+                        if (Reservadas_Sustitucion.ContainsKey(xd.ToString()) || xd.ToString() == " " || xd.ToString() == "\t" || xd.ToString() == "\n" || xd.ToString() == "\r" || xd.ToString() == "\t" || xd.ToString() == "\n" || xd.ToString() == "█" || DiccionarioInvertido.ContainsKey(xd.ToString()) || xd.ToString() == "█" || xd.ToString() == "█" || xd.ToString() == "▄" || xd.ToString() == "┘" || xd.ToString() == "┌" || xd.ToString() == "¦")
                         {
                             traducida = traducida.Remove(0, traducida.IndexOf(xd.ToString()));
                             break;
@@ -525,11 +517,29 @@ namespace Proyecto_Compiladores_2020.Data
                     }
                 }
 
+                
                 if (DoubleRegx.IsMatch(doubleStr))
                 {
                     actual = doubleStr;
                     resto = resto.Remove(0, resto.Length - traducida.Length);
                     return $"{actual}^{resto}";
+                }
+                else if(PostE =="")
+                {
+                    if (doubleStr.Contains("E"))
+                    {
+                    actual = doubleStr.Substring(0,doubleStr.IndexOf("E"));
+
+                    }
+                    else
+                    {
+                        actual = doubleStr.Substring(0,doubleStr.IndexOf("e"));
+
+                    }
+
+                    resto = resto.Remove(0, resto.Length - actual.Length);
+                    return $"{actual}^{resto}";
+             
                 }
                 else
                 {
