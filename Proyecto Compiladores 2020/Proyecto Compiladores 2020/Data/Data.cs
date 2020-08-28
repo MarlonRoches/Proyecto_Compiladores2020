@@ -69,8 +69,8 @@ namespace Proyecto_Compiladores_2020.Data
                 {
                     line = line + 1;
                 }
-                int colStart = 0;
-                int ColEnd = 0;
+                int colStart = 1;
+                int ColEnd = 1;
                 var indexer = 0;
                 var LineaActual = codigoArray[i].Replace("\r", "");
                 while (LineaActual != "")
@@ -91,7 +91,6 @@ namespace Proyecto_Compiladores_2020.Data
                             else if (item.ToString() == "\r")
                             {
                                 LineaActual = LineaActual.Remove(0, 1);
-
                             }
                             else
                             {
@@ -110,7 +109,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     int lenghtKey = DiccionarioInvertido[item.ToString()].Length;
                                     ColEnd = colStart + lenghtKey;
                                     Console.ForegroundColor = ConsoleColor.Cyan;
-                                    Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart+1}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
+                                    Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtKey;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -311,7 +310,7 @@ namespace Proyecto_Compiladores_2020.Data
                                 else if (Identifier.IsMatch(idActual))
                                 {
                                     int lenghtIdentifier = idActual.ToString().Length;
-                                    ColEnd = colStart + lenghtIdentifier;
+                                    ColEnd = colStart + lenghtIdentifier -1;
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     if (idActual.Length>=31)
                                     {
@@ -319,12 +318,12 @@ namespace Proyecto_Compiladores_2020.Data
                                     // MOSTRAR ERROR POR CARACTER MUY LARGO
 
                                     Console.BackgroundColor= ConsoleColor.White;
-                                        Console.WriteLine($" {trucado}     line {line} cols {colStart+1}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
+                                        Console.WriteLine($" {trucado}     line {line} cols {colStart}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
                                     Console.BackgroundColor= ConsoleColor.Black;
                                     }
                                     else
                                     {
-                                        Console.WriteLine($" {idActual}     line {line} cols {colStart+1}-{ColEnd} is T_Identifier");
+                                        Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_Identifier");
 
                                     }
                                     colStart += lenghtIdentifier;
@@ -423,7 +422,7 @@ namespace Proyecto_Compiladores_2020.Data
                                         {
                                             //mostramos error
                                             aux = validation.Substring(0, validation.Length);
-                                            Console.WriteLine($"El caracter {aux} no fue reconocido");
+                                            Console.WriteLine($"*** line {line}.*** Unrecognized char: '{aux}'");
                                             idActual = aux;
                                             indexer = 0;
                                             LineaActual = LineaActual.Remove(0, idActual.Length);
