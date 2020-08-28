@@ -399,6 +399,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             }
                                             fact = fact.Substring(0, fact.Length - 1);
                                             LineaActual = LineaActual.Remove(0, fact.Length);
+                                            idActual = fact;
                                             indexer = 0;
                                             //FACTORIADO en string
 
@@ -421,6 +422,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             LineaActual = LineaActual.Remove(0, fact.Length);
                                             indexer = 0;
                                             //FACTORIADO en string
+                                            idActual = fact;
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                            /// Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
