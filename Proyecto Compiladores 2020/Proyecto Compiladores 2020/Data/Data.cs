@@ -186,7 +186,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     var comentarioSinabrir = TextValidation.Instance.GetError(Cadena);
                                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                                     Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.WriteLine($"Unmatched end of comment {comentarioSinabrir}");
+                                    Console.WriteLine($" ***line {line}.***  Unmatched end of comment {comentarioSinabrir}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     break;
@@ -202,7 +202,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                                     if (i== codigoArray.Length-1)
                                     {
-                                        Console.WriteLine($"EOF ERROR DE CADENA SIN CERRAR");
+                                        Console.WriteLine($" ***line {line}.*** EOF ERROR DE CADENA SIN CERRAR");
                                     }
                                     else
                                     {
