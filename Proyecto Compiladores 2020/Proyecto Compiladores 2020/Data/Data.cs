@@ -35,7 +35,7 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
 
 
-        private static Regex DoubleRegx = new Regex(@"^([0-9])+([.])([0-9]+)?((([e]|[E])[+]?)[0-9]+)?$");
+        private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
 
        
         public void Sustituir(string code)
@@ -136,6 +136,9 @@ namespace Proyecto_Compiladores_2020.Data
                             //comentarios y comentarios
                             else if (item.ToString() == "█" || item.ToString() == "▄" || item.ToString() == "┘" || item.ToString() == "┌" || item.ToString() == "¦")
                             {
+                                //-------------------------- ERRORES -------------------------------
+
+
                                 //mandar a traer el comentarios
                                 if (item.ToString() == "█")//alt +987
                                 {
@@ -267,11 +270,6 @@ namespace Proyecto_Compiladores_2020.Data
                                             LineaActual = LineaActual.Remove(0, 1);
                                             colStart = colStart + 8;
                                         }
-                                        //else if (item.ToString() == "\r")
-                                        //{
-                                        //    LineaActual = LineaActual.Remove(0, 1);
-
-                                        //}
                                         else if (characterActual.ToString() == " ")
                                         {
                                            // LineaActual = LineaActual.Remove(0, 1);
@@ -393,7 +391,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             fact = fact.Substring(0, fact.Length - 1);
                                             LineaActual = LineaActual.Remove(0, fact.Length);
                                             indexer = 0;
-
+                                            //FACTORIADO en string
                                             Console.WriteLine($"FACTORIZADO {fact}");
 
                                                 break;
@@ -411,6 +409,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             fact = fact.Substring(0, fact.Length - 1);
                                             LineaActual = LineaActual.Remove(0, fact.Length);
                                             indexer = 0;
+                                            //FACTORIADO en string
 
                                             Console.WriteLine($"FACTORIZADO {fact}");
 
@@ -434,33 +433,12 @@ namespace Proyecto_Compiladores_2020.Data
                             }
                         }
                     }
-
                 }
-
-             }
-
-        }
-        void Factorizar(string factor) 
-        {
-            if (Identifier.IsMatch(factor[0].ToString()))
-            {
-
             }
-            else if (IntegerRegx.IsMatch(factor[0].ToString()))
-            {
-
-            }
-            else
-            {
-
-            }
-
-
         }
 
-
-            string DoubleProces(string actual, string resto)
-        {
+        string DoubleProces(string actual, string resto)
+            {
             var doubleStr = "";
             var traducida = TraducirLinea(resto);
             var PostE = "";
@@ -515,6 +493,7 @@ namespace Proyecto_Compiladores_2020.Data
                             doubleStr += xd;
                         }
                     }
+
                 }
 
                 
@@ -537,7 +516,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                     }
 
-                    resto = resto.Remove(0, resto.Length - actual.Length);
+                    resto = resto.Remove(0, actual.Length);
                     return $"{actual}^{resto}";
              
                 }
@@ -553,56 +532,15 @@ namespace Proyecto_Compiladores_2020.Data
                     return $"{actual}^{resto}";
             }
 
-            //actual = actual.Replace("ª", ".");
-            //var postt = resto.Remove(0,actual.Length);
-
-            //for (int i = 0; i < postt.Length; i++)
-            //{
-            //    var xd = postt[i];
-            //    if (DiccionarioInvertido.ContainsKey(xd.ToString())|| xd =='E' || xd == 'e')
-            //    {
-
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        if (IntegerRegx.IsMatch($"{xd}"))
-            //        {
-            //        actual += xd;
-
-            //        }
-            //    }
-            //}
-
-            //for (int i = 0; i < postt.Length; i++)
-            //{
-            //    var xd = postt[i];
-            //    if (DiccionarioInvertido.ContainsKey(xd.ToString()) || xd == 'E' || xd == 'e')
-            //    {
-
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        if (IntegerRegx.IsMatch($"{xd}"))
-            //        {
-            //            actual += xd;
-
-            //        }
-            //    }
-            //}
-
-            //return $"{actual}-{resto}";
         }
 
-        string TraducirLinea(string linea)
+        private string TraducirLinea(string linea)
         {
             foreach (var item in DiccionarioInvertido)
             {
                 if (linea.Contains(item.Key.ToString()))
                 {
                 linea = linea.Replace($"{item.Key}", DiccionarioInvertido[$"{item.Key}"]);
-
                 }
             }
             return linea;
