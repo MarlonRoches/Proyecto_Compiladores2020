@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -208,7 +207,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     else
                                     {
 
-                                        Console.WriteLine($"ERROR DE CADENA SIN CERRAR {stringSinCerrar}");
+                                        Console.WriteLine($" ***line {line}.*** ERROR DE CADENA SIN CERRAR {stringSinCerrar}");
                                     }
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
