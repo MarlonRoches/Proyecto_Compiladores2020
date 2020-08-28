@@ -149,7 +149,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.BackgroundColor = ConsoleColor.White;
                                     int lenghtComent = TextValidation.Instance.GetComentario(comentarios).Length;
                                     ColEnd = colStart + lenghtComent;
-                                    Console.WriteLine($"\"{TextValidation.Instance.GetComentario(comentarios)}\"    line {line} cols {colStart}-{ColEnd} is  (value = \"{TextValidation.Instance.GetComentario(comentarios)}\"");
+                                    Console.WriteLine($"{TextValidation.Instance.GetComentario(comentarios)}    line {line} cols {colStart}-{ColEnd} is  (value = {TextValidation.Instance.GetComentario(comentarios)}");
                                     colStart += lenghtComent;
                                     ColEnd = 0;
                                     Console.BackgroundColor = ConsoleColor.Black;
