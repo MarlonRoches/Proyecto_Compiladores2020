@@ -24,25 +24,32 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private static Dictionary<string, string> Reservadas_Sustitucion = new Dictionary<string, string>();
         private static Dictionary<string, string> Variables_Sustitucion = new Dictionary<string, string>();
+        private static Dictionary<string, string> DiccionarioInvertido = new Dictionary<string, string>();
+        private static Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|const|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
+        private static Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
+        private static Regex Boolean = new Regex("true|false");
+        private static Regex IntegerRegx = new Regex(@"^([0-9]+)*$");
+        private static Regex Identifier = new Regex(@"^([A-z]|[$])+([A-z0-9$])*$");
+        private static Regex Number = new Regex(@"^([0-9])+$");
+    
+        private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
+
+
+
+
+
+        private static Regex DoubleRegx = new Regex(@"^([0-9])+([.])([0-9]+)?((([e]|[E])[+])[0-9]+)?$");
+
        
         public void Sustituir(string code)
         {
             var asds = "";
 
-            Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|const|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
-            Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
-            Regex Boolean = new Regex("true|false");
-            Regex IntegerRegx = new Regex(@"^([0-9]+)*$");
-            Regex Identifier = new Regex(@"^([A-z]|[$])+([A-z0-9$])*$");
-
-            Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
-            Regex Double = new Regex(@"^(([0-9]+.[0-9]+|.[0-9]+)|([0-9]+.(E|e)(-|\+)?[0-9]+))$");
            var file = new StreamReader("Reservadas.txt");
             Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
             var xd = "asdasdasd";
             code = code.TrimEnd();
-            var DiccionarioInvertido = new Dictionary<string, string>();
 
             
             //for (int i = 0; i < codigoArray.Length; i++)
@@ -250,6 +257,26 @@ namespace Proyecto_Compiladores_2020.Data
                                     {
                                         //saltamos
                                         ////sumas 1 si es espacio 8 si es \t
+
+                                        if (characterActual.ToString() == "ª")
+                                            {
+                                            if (IntegerRegx.IsMatch(idActual))
+                                            {
+                                                idActual += "ª";
+                                                var lol = DoubleProces(idActual, LineaActual);
+                                                if (LineaActual == lol.Split('^')[1])
+                                                {
+                                                    var idActualaux = idActual.Substring(0, idActual.IndexOf('ª'));
+                                                    LineaActual = $"ª{LineaActual.Replace(idActual,"")}";
+                                                    idActual = idActualaux;
+                                                }
+                                                else
+                                                {   
+                                                idActual = lol.Split('^')[0];
+                                                LineaActual = lol.Split('^')[1];
+                                                }
+                                            }
+                                        }
                                         if (item.ToString() == "\t")
                                         {
                                             LineaActual = LineaActual.Remove(0, 1);
@@ -334,7 +361,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     indexer = 0; break;
 
                                 }
-                                else if (Double.IsMatch(idActual))
+                                else if (DoubleRegx.IsMatch(idActual))
                                 {
                                     int lenghtDouble = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtDouble;
@@ -343,7 +370,6 @@ namespace Proyecto_Compiladores_2020.Data
                                     colStart += lenghtDouble;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
-                                    LineaActual = LineaActual.Remove(0, idActual.Length);
                                     indexer = 0; break;
 
                                 }
@@ -370,12 +396,12 @@ namespace Proyecto_Compiladores_2020.Data
                                         validation += idActual[j];
                                         if (!Identifier.IsMatch(validation))
                                         {
-                                            //if (idActual.)
-                                            //{
-
-                                            //}
-                                            //else
-                                            //{
+                                            if (validation.Length>1)
+                                            {
+                                                //factorizar
+                                            }
+                                            else
+                                            {
 
                                                 //mostramos error
                                                 aux = validation.Substring(0, validation.Length);
@@ -383,7 +409,7 @@ namespace Proyecto_Compiladores_2020.Data
                                                 idActual = aux;
                                                 indexer = 0;
                                                 LineaActual = LineaActual.Remove(0,idActual.Length);
-                                            //}
+                                            }
                                                 break;
 
                                         }
@@ -404,10 +430,128 @@ namespace Proyecto_Compiladores_2020.Data
 
                 }
 
-            }
+             }
 
         }
 
+        string DoubleProces(string actual, string resto)
+        {
+            var doubleStr = "";
+            var traducida = TraducirLinea(resto);
 
+            if (traducida.IndexOf(".")!= -1)
+            {
+                doubleStr += traducida.Substring(0, traducida.IndexOf(".")+1);
+                traducida = traducida.Replace(doubleStr, "");
+                if (traducida.IndexOf("E+") != -1 || traducida.IndexOf("e+") != -1)
+                {
+                    doubleStr += traducida.Substring(0, traducida.IndexOf("E+") + 2);
+                    traducida = traducida.Remove(0, (traducida.Substring(0, traducida.IndexOf("E+") + 2)).Length);
+
+
+                    for (int i = 0; i < traducida.Length; i++)
+                    {
+                        var xd = traducida[i];
+                        if (Reservadas_Sustitucion.ContainsKey(xd.ToString()) )
+                        {
+                            traducida = traducida.Remove(0, traducida.IndexOf(xd.ToString()));
+                            break;
+                        }
+                        else
+                        {
+                            doubleStr += xd;
+                        }
+                    }
+                }
+                else
+                {
+                    // no tiene potencia
+                    for (int i = 0; i < traducida.Length; i++)
+                    {
+                        var xd = traducida[i];
+                        if (Reservadas_Sustitucion.ContainsKey(xd.ToString()))
+                        {
+                            traducida = traducida.Remove(0, traducida.IndexOf(xd.ToString()));
+                            break;
+                        }
+                        else
+                        {
+                            doubleStr += xd;
+                        }
+                    }
+                }
+
+                if (DoubleRegx.IsMatch(doubleStr))
+                {
+                    actual = doubleStr;
+                    resto = resto.Remove(0, resto.Length - traducida.Length);
+                    return $"{actual}^{resto}";
+                }
+                else
+                {
+                    return $"{actual}^{resto}";
+
+                }
+
+            }
+            else
+            {
+                    return $"{actual}^{resto}";
+            }
+
+            //actual = actual.Replace("ª", ".");
+            //var postt = resto.Remove(0,actual.Length);
+
+            //for (int i = 0; i < postt.Length; i++)
+            //{
+            //    var xd = postt[i];
+            //    if (DiccionarioInvertido.ContainsKey(xd.ToString())|| xd =='E' || xd == 'e')
+            //    {
+
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        if (IntegerRegx.IsMatch($"{xd}"))
+            //        {
+            //        actual += xd;
+
+            //        }
+            //    }
+            //}
+
+            //for (int i = 0; i < postt.Length; i++)
+            //{
+            //    var xd = postt[i];
+            //    if (DiccionarioInvertido.ContainsKey(xd.ToString()) || xd == 'E' || xd == 'e')
+            //    {
+
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        if (IntegerRegx.IsMatch($"{xd}"))
+            //        {
+            //            actual += xd;
+
+            //        }
+            //    }
+            //}
+
+            //return $"{actual}-{resto}";
+        }
+
+        string TraducirLinea(string linea)
+        {
+            foreach (var item in DiccionarioInvertido)
+            {
+                if (linea.Contains(item.Key.ToString()))
+                {
+                linea = linea.Replace($"{item.Key}", DiccionarioInvertido[$"{item.Key}"]);
+
+                }
+            }
+            return linea;
+        }
     }
 }
