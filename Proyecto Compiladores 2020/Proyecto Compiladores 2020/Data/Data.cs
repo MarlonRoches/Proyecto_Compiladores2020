@@ -33,13 +33,20 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex Number = new Regex(@"^([0-9])+$");
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
         private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
-
+ 
        
-        public void Sustituir(string code)
+        public void Sustituir(string code, string ruta)
         {
            var file = new StreamReader("Reservadas.txt");
             Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
+
+            var pathNew = $"{Path.GetDirectoryName(ruta)}\\{Path.GetFileNameWithoutExtension(ruta)}.out";
+
+            var OutPut = new FileStream(pathNew, FileMode.Create);
+            var writer = new StreamWriter(OutPut);
+            
+            
             var xd = "asdasdasd";
             code = code.TrimEnd();
 
@@ -100,10 +107,12 @@ namespace Proyecto_Compiladores_2020.Data
                             {
                                 if (Keywords.IsMatch(DiccionarioInvertido[item.ToString()]))
                                 {
+                                    //palabra Clave
                                     int lenghtKey = DiccionarioInvertido[item.ToString()].Length;
                                     ColEnd = colStart + lenghtKey;
                                     Console.ForegroundColor = ConsoleColor.Cyan;
-                                    Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
+                                    writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
+                                    ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtKey;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -112,22 +121,18 @@ namespace Proyecto_Compiladores_2020.Data
                                 }
                                 else if (Operadores.IsMatch(DiccionarioInvertido[item.ToString()]))
                                 {
+                                    // 
                                     int lenghtOperator = DiccionarioInvertido[item.ToString()].Length;
                                     ColEnd = colStart + lenghtOperator;
                                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart+1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
+                                    writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart + 1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
+                                    ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart+1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtOperator;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
 
                                     LineaActual = LineaActual.Remove(0, 1);
                                 }
-
-                                //caracter especial
-                                //el valor el largo etc etc
-                                //aqui contas colmuns y filas etc ect
-
-
 
                             }
                             //comentarios y comentarios
@@ -146,7 +151,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.BackgroundColor = ConsoleColor.White;
                                     int lenghtComent = TextValidation.Instance.GetComentario(comentarios).Length;
                                     ColEnd = colStart + lenghtComent;
-                                    Console.WriteLine($"{TextValidation.Instance.GetComentario(comentarios)}    line {line} cols {colStart}-{ColEnd} is  (value = {TextValidation.Instance.GetComentario(comentarios)}");
+                                    ///Console.WriteLine($"{TextValidation.Instance.GetComentario(comentarios)}    line {line} cols {colStart}-{ColEnd} is  (value = {TextValidation.Instance.GetComentario(comentarios)}");
                                     colStart += lenghtComent;
                                     ColEnd = 0;
                                     Console.BackgroundColor = ConsoleColor.Black;
@@ -168,7 +173,8 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtCadena;
                                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                                     Console.BackgroundColor = ConsoleColor.White;
-                                    Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
+                                    writer.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
+                                    ///Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     colStart += lenghtCadena;
@@ -187,7 +193,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     var comentarioSinabrir = TextValidation.Instance.GetError(Cadena);
                                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                                     Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.WriteLine($"ERROR DE COMENTARIO SIN ABRIR {comentarioSinabrir}");
+                                    Console.WriteLine($"Unmatched end of comment {comentarioSinabrir}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     break;
@@ -204,7 +210,6 @@ namespace Proyecto_Compiladores_2020.Data
                                     if (i== codigoArray.Length-1)
                                     {
                                         Console.WriteLine($"EOF ERROR DE CADENA SIN CERRAR");
-
                                     }
                                     else
                                     {
@@ -291,7 +296,8 @@ namespace Proyecto_Compiladores_2020.Data
                                     int lenghtBoolean = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtBoolean;
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_Boolean");
+                                    writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
+                                    ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
                                     colStart += lenghtBoolean;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -311,12 +317,17 @@ namespace Proyecto_Compiladores_2020.Data
                                     // MOSTRAR ERROR POR CARACTER MUY LARGO
 
                                     Console.BackgroundColor= ConsoleColor.White;
-                                        Console.WriteLine($" {trucado}     line {line} cols {colStart}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
+                                        writer.WriteLine();
+
+                                        writer.WriteLine($" {trucado}          line {line} cols {colStart}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
+                                        ///Console.WriteLine($" {trucado}          line {line} cols {colStart}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
                                     Console.BackgroundColor= ConsoleColor.Black;
                                     }
                                     else
                                     {
-                                        Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_Identifier");
+                                        writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
+
+                                        ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
 
                                     }
                                     colStart += lenghtIdentifier;
@@ -333,7 +344,10 @@ namespace Proyecto_Compiladores_2020.Data
                                     int lenghtDoubleRegx = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtDoubleRegx;
                                     Console.ForegroundColor = ConsoleColor.Yellow;
-                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
+
+
+                                    writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
+                                    //Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
                                     colStart += lenghtDoubleRegx;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -346,7 +360,9 @@ namespace Proyecto_Compiladores_2020.Data
                                     int lenghtDouble = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtDouble;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_{idActual}");
+                                    writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
+
+                                    ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
                                     colStart += lenghtDouble;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -358,7 +374,9 @@ namespace Proyecto_Compiladores_2020.Data
                                     int lenghtInteger = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtInteger;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
+                                    writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
+
+                                    ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                     colStart += lenghtInteger;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -384,20 +402,15 @@ namespace Proyecto_Compiladores_2020.Data
                                                 fact += idActual[k];
                                                 k++;
                                             }
-                                              
-
-
-
-
-
-
                                             fact = fact.Substring(0, fact.Length - 1);
                                             LineaActual = LineaActual.Remove(0, fact.Length);
                                             indexer = 0;
                                             //FACTORIADO en string
-                                            Console.WriteLine($"FACTORIZADO {fact}");
 
-                                                break;
+                                            writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_Identifier (value = {idActual})");
+                                            ///Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
+
+                                            break;
                                         }
                                         else if(IntegerRegx.IsMatch(validation[0].ToString()))
                                         {
@@ -414,7 +427,8 @@ namespace Proyecto_Compiladores_2020.Data
                                             indexer = 0;
                                             //FACTORIADO en string
 
-                                            Console.WriteLine($"FACTORIZADO {fact}");
+                                            writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
+                                           /// Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 
                                             break;
                                         }
@@ -438,6 +452,8 @@ namespace Proyecto_Compiladores_2020.Data
                     }
                 }
             }
+            writer.Close();
+            OutPut.Close();
         }
 
         string DoubleProces(string actual, string resto)

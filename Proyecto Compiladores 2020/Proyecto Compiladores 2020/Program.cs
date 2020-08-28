@@ -15,8 +15,8 @@ namespace Proyecto_Compiladores_2020
         {
             Console.WriteLine("Linea De Codigo Java");
 
-            
-            Data.Data.Instance.Sustituir(Data.TextValidation.Instance.ValidarStrings( Data.TextValidation.Instance.ValidarComentarios(Console.ReadLine())));
+            var ruta =Console.ReadLine();
+            Data.Data.Instance.Sustituir(Data.TextValidation.Instance.ValidarStrings( Data.TextValidation.Instance.ValidarComentarios(ruta)), ruta);
 
 
             Console.WriteLine($"------------EOFN§§§§§");
