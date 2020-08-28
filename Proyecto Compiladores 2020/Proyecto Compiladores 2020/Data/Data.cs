@@ -29,7 +29,7 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
         private static Regex Boolean = new Regex("true|false");
         private static Regex IntegerRegx = new Regex(@"^([0-9]+)*$");
-        private static Regex Identifier = new Regex(@"^([A-z]|[$])+([A-z0-9$])*$");
+        private static Regex Identifier = new Regex(@"^([A-Z]|[a-z]|[$])?([A-Z]|[a-z]|[$]|[0-9])*$");
         private static Regex Number = new Regex(@"^([0-9])+$");
     
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
