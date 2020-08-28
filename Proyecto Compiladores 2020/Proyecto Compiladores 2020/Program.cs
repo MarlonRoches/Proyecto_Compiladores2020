@@ -13,13 +13,35 @@ namespace Proyecto_Compiladores_2020
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Linea De Codigo Java");
+            Console.WriteLine("Alexander Villatoro / Marlon Roches");
+            Console.WriteLine("Compiladores 2020");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.Write("MINI");
+            Console.Write(" ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("JAVA");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor= ConsoleColor.White;
+            Console.Write("\n");
+
+            Console.WriteLine("Drag 'n Drop el Codigo de Mini Java");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"↓");
+            Console.Write($" ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"~");
+            Console.ForegroundColor = ConsoleColor.White;
 
             var ruta =Console.ReadLine();
+            Console.Clear();
             Data.Data.Instance.Sustituir(Data.TextValidation.Instance.ValidarStrings( Data.TextValidation.Instance.ValidarComentarios(ruta)), ruta);
 
-
-            Console.WriteLine($"------------EOFN§§§§§");
+            Console.WriteLine($"#   #   #   #   #   ERRORES    #   #   #   #   #");
+            Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
             Console.ReadLine();
 
             //{ } [] () {}

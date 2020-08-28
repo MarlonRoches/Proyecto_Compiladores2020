@@ -42,7 +42,6 @@ namespace Proyecto_Compiladores_2020.Data
             var pathNew = $"{Path.GetDirectoryName(ruta)}\\{Path.GetFileNameWithoutExtension(ruta)}.out";
             var OutPut = new FileStream(pathNew, FileMode.Create);
             var writer = new StreamWriter(OutPut);
-            var xd = "asdasdasd";
             code = code.TrimEnd();
 
             foreach (var item in Reservadas_Sustitucion.Keys)
@@ -449,6 +448,7 @@ namespace Proyecto_Compiladores_2020.Data
                     }
                 }
             }
+            
             writer.Close();
             OutPut.Close();
         }
