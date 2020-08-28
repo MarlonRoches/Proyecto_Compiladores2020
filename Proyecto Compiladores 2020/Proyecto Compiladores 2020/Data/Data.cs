@@ -394,24 +394,28 @@ namespace Proyecto_Compiladores_2020.Data
                                     for (int j = 0; j < idActual.Length; j++)
                                     {
                                         validation += idActual[j];
-                                        if (!Identifier.IsMatch(validation))
+                                        var fff = IntegerRegx.IsMatch(validation);
+                                        if ( Identifier.IsMatch(validation[0].ToString()))
                                         {
-                                            if (validation.Length>1)
-                                            {
-                                                //factorizar
-                                            }
-                                            else
-                                            {
+                                           
 
-                                                //mostramos error
-                                                aux = validation.Substring(0, validation.Length);
-                                                Console.WriteLine($"El caracter {aux} no fue reconocido");
-                                                idActual = aux;
-                                                indexer = 0;
-                                                LineaActual = LineaActual.Remove(0,idActual.Length);
-                                            }
-                                                break;
+                                                
 
+                                        }
+                                        else if(IntegerRegx.IsMatch(validation[0].ToString()))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            //mostramos error
+                                            aux = validation.Substring(0, validation.Length);
+                                            Console.WriteLine($"El caracter {aux} no fue reconocido");
+                                            idActual = aux;
+                                            indexer = 0;
+                                            LineaActual = LineaActual.Remove(0, idActual.Length);
+
+                                            break;
                                         }
                                     }
                                     
@@ -433,8 +437,26 @@ namespace Proyecto_Compiladores_2020.Data
              }
 
         }
+        void Factorizar(string factor) 
+        {
+            if (Identifier.IsMatch(factor[0].ToString()))
+            {
 
-        string DoubleProces(string actual, string resto)
+            }
+            else if (IntegerRegx.IsMatch(factor[0].ToString()))
+            {
+
+            }
+            else
+            {
+
+            }
+
+
+        }
+
+
+            string DoubleProces(string actual, string resto)
         {
             var doubleStr = "";
             var traducida = TraducirLinea(resto);
