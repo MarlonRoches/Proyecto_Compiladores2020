@@ -4,6 +4,14 @@
 
 Es un analizador léxico para una mini compilador creado en C# para el lenguaje de programación Java. Su función se lleva acabo en esta fase es la parte del análisis léxico y consiste en reconocer tokens segun el orden de lectura del archivo, y en base a expresiones regulares el programa separará los tokens como correctos o errores.
 
+## Flujo del Programa
+        ●Pasos
+        1. Se inicia la consola con el nombre de minij.exe
+        2. Se hace un Drag 'n Drop del archivo que contenga el codigo de mini-java o se escribe la ruta de donde este el archivo.
+        3. Despues se da un "enter" para poder ejecutar el programa.
+        4. Se muestra la lista de los errores en consola si en el caso del archivo contenga alguno, de lo contrario no demostraría ningún error.
+        5. Se creará un archivo de salida que contenga el mismo nombre del archivo que contiene el código de mini-java, con la diferencia de 
+           que este archivo de salida va a contener la extensión ".out" en la misma ruta de donde esté el archivo de prueba.
 ## Fase 1
 
 #### Objetivo General
