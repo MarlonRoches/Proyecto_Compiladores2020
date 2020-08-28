@@ -220,7 +220,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     var ErrorEOF = TextValidation.Instance.GetError(Cadena);
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.WriteLine($"{ErrorEOF}");
+                                    Console.WriteLine($"*** line {line}.*** {ErrorEOF}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     break;
