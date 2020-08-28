@@ -31,10 +31,7 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex IntegerRegx = new Regex(@"^([0-9]+)*$");
         private static Regex Identifier = new Regex(@"^([A-Z]|[a-z]|[$])([A-Z]|[a-z]|[$]|[0-9])*$");
         private static Regex Number = new Regex(@"^([0-9])+$");
-    
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
-
-
         private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
 
        
