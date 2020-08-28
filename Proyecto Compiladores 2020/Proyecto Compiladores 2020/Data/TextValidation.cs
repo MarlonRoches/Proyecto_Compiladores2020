@@ -227,8 +227,6 @@ namespace Proyecto_Compiladores_2020.Data
             return linea;
         }
 
-
-
         void AgregarComentario(string comentario)
         {
             Comentarios.Add("█" + $"{Comentarios_Index}".PadLeft(2, '0'), comentario);

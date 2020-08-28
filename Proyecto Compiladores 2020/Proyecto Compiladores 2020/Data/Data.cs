@@ -33,16 +33,30 @@ namespace Proyecto_Compiladores_2020.Data
             Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
             Regex Boolean = new Regex("true|false");
             Regex IntegerRegx = new Regex(@"^([0-9]+)*$");
-            Regex HexaRegx = new Regex(@"^(0[xX]).([0-9a-fA-F]+)$");
+            Regex Identifier = new Regex(@"^([A-z]|[$])+([A-z0-9$])*$");
+
+            Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
             Regex Double = new Regex(@"^(([0-9]+.[0-9]+|.[0-9]+)|([0-9]+.(E|e)(-|\+)?[0-9]+))$");
-            Regex Identifier = new Regex(@"^([A-Za-z]|[$])?.([A-Za-z]|[0-9]|[$])*$");
            var file = new StreamReader("Reservadas.txt");
             Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
             file.Close();
-
+            var xd = "asdasdasd";
             code = code.TrimEnd();
             var DiccionarioInvertido = new Dictionary<string, string>();
 
+            
+            //for (int i = 0; i < codigoArray.Length; i++)
+            //{
+            //    var lineaActual = codigoArray[i];
+            //    var token = "";
+            //    while (lineaActual!="")
+            //    {
+            //        foreach (var item in lineaActual)
+            //        {
+
+            //        }
+            //    }
+            //}
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
                 code = code.Replace($"{item}", $"{Reservadas_Sustitucion[item]}"); //revisar esta parte
@@ -265,7 +279,6 @@ namespace Proyecto_Compiladores_2020.Data
                                 //el id {idActual} colmna tal y row tal
                                 // sub cadena la mandas a ER
                                 //explresiones regulares irian aqui
-
                                 if (Boolean.IsMatch(idActual))
                                 {
                                     int lenghtBoolean = idActual.ToString().Length;
@@ -307,26 +320,13 @@ namespace Proyecto_Compiladores_2020.Data
                                     break;
                                     // LineaActual = LineaActual.Remove(0, idActual.Length);
                                 }
-                                else if (IntegerRegx.IsMatch(idActual))
-                                {
-                                    int lenghtInteger = idActual.ToString().Length;
-                                    ColEnd = colStart + lenghtInteger;
-                                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
-                                    colStart += lenghtInteger;
-                                    ColEnd = 0;
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    LineaActual = LineaActual.Remove(0, idActual.Length);
-                                    indexer = 0; break;
-
-                                    // LineaActual = LineaActual.Remove(0, idActual.Length-1);
-                                }
+                               
                                 else if (HexaRegx.IsMatch(idActual))
                                 {
                                     int lenghtDoubleRegx = idActual.ToString().Length;
                                     ColEnd = colStart + lenghtDoubleRegx;
-                                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_{idActual}");
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
                                     colStart += lenghtDoubleRegx;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -346,6 +346,20 @@ namespace Proyecto_Compiladores_2020.Data
                                     LineaActual = LineaActual.Remove(0, idActual.Length);
                                     indexer = 0; break;
 
+                                }
+                                else if (IntegerRegx.IsMatch(idActual))
+                                {
+                                    int lenghtInteger = idActual.ToString().Length;
+                                    ColEnd = colStart + lenghtInteger;
+                                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                    Console.WriteLine($" {idActual}     line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
+                                    colStart += lenghtInteger;
+                                    ColEnd = 0;
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    LineaActual = LineaActual.Remove(0, idActual.Length);
+                                    indexer = 0; break;
+
+                                    // LineaActual = LineaActual.Remove(0, idActual.Length-1);
                                 }
                                 else
                                 {
