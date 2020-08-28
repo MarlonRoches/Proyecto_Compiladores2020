@@ -397,14 +397,39 @@ namespace Proyecto_Compiladores_2020.Data
                                         var fff = IntegerRegx.IsMatch(validation);
                                         if ( Identifier.IsMatch(validation[0].ToString()))
                                         {
-                                           
+                                            var fact = validation[0].ToString();
+                                            var k = j+1;
+                                            while (Identifier.IsMatch(fact))
+                                            {
+                                                fact += idActual[k];
+                                                k++;
+                                            }
 
-                                                
+                                            fact = fact.Substring(0, fact.Length - 1);
+                                            LineaActual = LineaActual.Remove(0, fact.Length);
+                                            indexer = 0;
 
+                                            Console.WriteLine($"FACTORIZADO {fact}");
+
+                                                break;
                                         }
                                         else if(IntegerRegx.IsMatch(validation[0].ToString()))
                                         {
+                                            var fact = validation[0].ToString();
+                                            var k = j + 1;
+                                            while (IntegerRegx.IsMatch(fact))
+                                            {
+                                                fact += idActual[k];
+                                                k++;
+                                            }
 
+                                            fact = fact.Substring(0, fact.Length - 1);
+                                            LineaActual = LineaActual.Remove(0, fact.Length);
+                                            indexer = 0;
+
+                                            Console.WriteLine($"FACTORIZADO {fact}");
+
+                                            break;
                                         }
                                         else
                                         {
@@ -467,8 +492,18 @@ namespace Proyecto_Compiladores_2020.Data
                 traducida = traducida.Replace(doubleStr, "");
                 if (traducida.IndexOf("E+") != -1 || traducida.IndexOf("e+") != -1)
                 {
-                    doubleStr += traducida.Substring(0, traducida.IndexOf("E+") + 2);
-                    traducida = traducida.Remove(0, (traducida.Substring(0, traducida.IndexOf("E+") + 2)).Length);
+                    if (traducida.IndexOf("E+") != -1)
+                    {
+                        doubleStr += traducida.Substring(0, traducida.IndexOf("E+") + 2);
+                        traducida = traducida.Remove(0, (traducida.Substring(0, traducida.IndexOf("E+") + 2)).Length);
+
+                    }
+                    else 
+                    {
+                        doubleStr += traducida.Substring(0, traducida.IndexOf("e+") + 2);
+                        traducida = traducida.Remove(0, (traducida.Substring(0, traducida.IndexOf("e+") + 2)).Length);
+
+                    }
 
 
                     for (int i = 0; i < traducida.Length; i++)
