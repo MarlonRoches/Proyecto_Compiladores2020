@@ -35,9 +35,6 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
 
 
-
-
-
         private static Regex DoubleRegx = new Regex(@"^([0-9])+([.])([0-9]+)?((([e]|[E])[+])[0-9]+)?$");
 
        
@@ -51,19 +48,6 @@ namespace Proyecto_Compiladores_2020.Data
             var xd = "asdasdasd";
             code = code.TrimEnd();
 
-            
-            //for (int i = 0; i < codigoArray.Length; i++)
-            //{
-            //    var lineaActual = codigoArray[i];
-            //    var token = "";
-            //    while (lineaActual!="")
-            //    {
-            //        foreach (var item in lineaActual)
-            //        {
-
-            //        }
-            //    }
-            //}
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
                 code = code.Replace($"{item}", $"{Reservadas_Sustitucion[item]}"); //revisar esta parte
@@ -77,10 +61,14 @@ namespace Proyecto_Compiladores_2020.Data
             //aqui split por enters
 
             var codigoArray = code.Split('\n');
+            int line = 0;
             //aqui se hace la validación de tokens
             for (int i = 0; i < codigoArray.Length; i++)
             {
-                int line = i+1;
+                if (codigoArray[i] != "")
+                {
+                    line = line + 1;
+                }
                 int colStart = 0;
                 int ColEnd = 0;
                 var indexer = 0;
