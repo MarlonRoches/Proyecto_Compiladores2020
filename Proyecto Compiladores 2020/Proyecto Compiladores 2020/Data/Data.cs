@@ -387,6 +387,12 @@ namespace Proyecto_Compiladores_2020.Data
                                                 fact += idActual[k];
                                                 k++;
                                             }
+                                              
+
+
+
+
+
 
                                             fact = fact.Substring(0, fact.Length - 1);
                                             LineaActual = LineaActual.Remove(0, fact.Length);
