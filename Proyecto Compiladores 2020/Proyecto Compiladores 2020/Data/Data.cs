@@ -37,16 +37,11 @@ namespace Proyecto_Compiladores_2020.Data
        
         public void Sustituir(string code, string ruta)
         {
-           var file = new StreamReader("Reservadas.txt");
-            Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
-            file.Close();
-
+          
+            Reservadas_Sustitucion = DictionarySymbols();
             var pathNew = $"{Path.GetDirectoryName(ruta)}\\{Path.GetFileNameWithoutExtension(ruta)}.out";
-
             var OutPut = new FileStream(pathNew, FileMode.Create);
             var writer = new StreamWriter(OutPut);
-            
-            
             var xd = "asdasdasd";
             code = code.TrimEnd();
 
@@ -454,6 +449,62 @@ namespace Proyecto_Compiladores_2020.Data
             }
             writer.Close();
             OutPut.Close();
+        }
+
+
+        public Dictionary<string, string> DictionarySymbols()
+        {
+            Dictionary<string, string> Reservadas_Sustitución = new Dictionary<string, string>();
+            Reservadas_Sustitución.Add("void", "◙");
+            Reservadas_Sustitución.Add("println", "▼");
+            Reservadas_Sustitución.Add("double", "♀");
+            Reservadas_Sustitución.Add("boolean", "♪");
+            Reservadas_Sustitución.Add("string", "♫");
+            Reservadas_Sustitución.Add("class", "☼");
+            Reservadas_Sustitución.Add("const", "►");
+            Reservadas_Sustitución.Add("interface", "◄");
+            Reservadas_Sustitución.Add("null", "↕");
+            Reservadas_Sustitución.Add("this", "‼");
+            Reservadas_Sustitución.Add("extends", "¶");
+            Reservadas_Sustitución.Add("implements", "§");
+            Reservadas_Sustitución.Add("for", "▬");
+            Reservadas_Sustitución.Add("while", "↨");
+            Reservadas_Sustitución.Add("if", "↑");
+            Reservadas_Sustitución.Add("else", "↓");
+            Reservadas_Sustitución.Add("return", "→");
+            Reservadas_Sustitución.Add("break", "←");
+            Reservadas_Sustitución.Add("New", "∟");
+            Reservadas_Sustitución.Add("System", "↔");
+            Reservadas_Sustitución.Add("out", "▲");
+            Reservadas_Sustitución.Add("+", "Ç");
+            Reservadas_Sustitución.Add("-", "ü");
+            Reservadas_Sustitución.Add("*", "â");
+            Reservadas_Sustitución.Add("/", "å");
+            Reservadas_Sustitución.Add("%", "ë");
+            Reservadas_Sustitución.Add("==", "ô");
+            Reservadas_Sustitución.Add("!=", "û");
+            Reservadas_Sustitución.Add("<=", "Å");
+            Reservadas_Sustitución.Add(">=", "╜");
+            Reservadas_Sustitución.Add("&&", "ÿ");
+            Reservadas_Sustitución.Add("||", "Ö");
+            Reservadas_Sustitución.Add("!", "¢");
+            Reservadas_Sustitución.Add(";", "₧");
+            Reservadas_Sustitución.Add(",", "ƒ");
+            Reservadas_Sustitución.Add(".", "ª");
+            Reservadas_Sustitución.Add("[]", "╣");
+            Reservadas_Sustitución.Add("()", "╗");
+            Reservadas_Sustitución.Add("{}", "╝");
+            Reservadas_Sustitución.Add("int", "♂");
+            Reservadas_Sustitución.Add("[", "⌐");
+            Reservadas_Sustitución.Add("]", "½");
+            Reservadas_Sustitución.Add("(", "¼");
+            Reservadas_Sustitución.Add(")", "«");
+            Reservadas_Sustitución.Add("{", "»");
+            Reservadas_Sustitución.Add("}", "╕");
+            Reservadas_Sustitución.Add(">", "æ");
+            Reservadas_Sustitución.Add("<", "Ä");
+            Reservadas_Sustitución.Add("=", "Æ");
+            return Reservadas_Sustitución;
         }
 
         string DoubleProces(string actual, string resto)

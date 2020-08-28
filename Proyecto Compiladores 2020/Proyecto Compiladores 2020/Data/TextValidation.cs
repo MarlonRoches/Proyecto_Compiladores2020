@@ -33,9 +33,7 @@ namespace Proyecto_Compiladores_2020.Data
         public string ValidarComentarios(string ruta)
         {
             var compressedCode = "";
-            var file = new StreamReader("Reservadas.txt");
-            var Reservadas_Sustitucion = JsonConvert.DeserializeObject<Dictionary<string, string>>(file.ReadToEnd());
-            file.Close();
+            //var Reservadas_Sustitucion = Data.Instance.DictionarySymbols();
             var fileCode = new StreamReader(ruta);
             var linea = fileCode.ReadLine();
 
