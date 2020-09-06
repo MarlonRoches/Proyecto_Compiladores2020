@@ -32,8 +32,8 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex Number = new Regex(@"^([0-9])+$");
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
         private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
- 
-       
+        private static List<string> OutoutTokens = new List<string>();
+
         public void Sustituir(string code, string ruta)
         {
           
@@ -451,8 +451,6 @@ namespace Proyecto_Compiladores_2020.Data
             writer.Close();
             OutPut.Close();
         }
-
-
         public Dictionary<string, string> DictionarySymbols()
         {
             Dictionary<string, string> Reservadas_Sustitución = new Dictionary<string, string>();
@@ -507,7 +505,6 @@ namespace Proyecto_Compiladores_2020.Data
             Reservadas_Sustitución.Add("=", "Æ");
             return Reservadas_Sustitución;
         }
-
         string DoubleProces(string actual, string resto)
             {
             var doubleStr = "";
@@ -605,7 +602,6 @@ namespace Proyecto_Compiladores_2020.Data
             }
 
         }
-
         private string TraducirLinea(string linea)
         {
             foreach (var item in DiccionarioInvertido)
