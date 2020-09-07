@@ -44,6 +44,7 @@ namespace Proyecto_Compiladores_2020
             Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
             Console.ReadLine();
 
+            Data.GrammarValidation.Instance.Lab1();
             //{ } [] () {}
             ////id		
             //TOKEN 1 = LETRA.(LETRA|DIGITO)*

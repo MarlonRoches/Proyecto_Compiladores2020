@@ -27,5 +27,5 @@ E->F E’
 E’->+F E’|-F E’|ε
 F->G F’
 F’->*G F’|%G F’|/G F’ |  ε
-G-> !H | H
-H->(Expr)|Constant|LValue|this|New(ident)|- Expr
+G-> !Expr|-Expr| H 
+H->(Expr)|Constant|LValue|this|New(ident)|
