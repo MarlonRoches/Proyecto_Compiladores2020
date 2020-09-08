@@ -42,7 +42,7 @@ namespace Proyecto_Compiladores_2020
 
             Console.WriteLine($"#   #   #   #   #   ERRORES    #   #   #   #   #");
             Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
-            Console.ReadLine();
+           // Console.ReadLine();
 
             Data.GrammarValidation.Instance.Lab1();
             //{ } [] () {}
