@@ -38,24 +38,24 @@ namespace Proyecto_Compiladores_2020.Data
                 if (lookahead == expectedToken)
                 {
                     contador++;
-                    lookahead = outPutTokens[contador].Item1;
+                    lookahead = outPutTokens[contador].Key;
                 }
                 else
                 {
                     if (lookahead == "$")
                     {
-                        errores.Add($"Error sintactico: se esperaba ' {expectedToken} ' y ya no se tenian tokens.");
+                        sintaxError.Add($"*** Se esperaba ' {expectedToken} '.");
                     }
                     else
                     {
-                        errores.Add($"Error sintactico: se esperaba ' {expectedToken} ' y se tenia ' {lookahead} '. {ObtenerUbicacion(tokens[contador == 0 ? contador : contador - 1].Item2)}");
+                        sintaxError.Add($"*** Se esperaba ' {expectedToken} ' y tenemos ' {lookahead} '.");
                     }
 
                 }
             }
             catch (Exception)
             {
-                // se terminaron los tokens a leer 
+                // final 
                 throw;
             }
         }
@@ -63,9 +63,9 @@ namespace Proyecto_Compiladores_2020.Data
 
 
 
-        public void pushIntoList(string token)
+        public void pushIntoList(string type, string dato)
         {
-            outPutTokens.Add(token);
+            outPutTokens.Add(new KeyValuePair<string, string>(type,dato));
         }
     }
 
