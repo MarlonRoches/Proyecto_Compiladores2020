@@ -28,6 +28,10 @@ namespace Proyecto_Compiladores_2020.Data
         }
 
 
+
+
+
+
         public void pushIntoList(string token)
         {
             outPutTokens.Add(token);

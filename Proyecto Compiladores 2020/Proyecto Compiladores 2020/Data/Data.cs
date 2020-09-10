@@ -33,8 +33,7 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
         private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
 
-        
-
+       
 
         public void Sustituir(string code, string ruta)
         {
@@ -325,7 +324,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     else
                                     {
                                         writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
-                                        GrammarValidation.Instance.pushIntoList("LValue");
+                                        GrammarValidation.Instance.pushIntoList("ident");
 
                                         ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
 
@@ -414,7 +413,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             //FACTORIADO en string
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_Identifier (value = {idActual})");
-                                            GrammarValidation.Instance.pushIntoList("LValue");
+                                            GrammarValidation.Instance.pushIntoList("ident");
 
                                             ///Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 
