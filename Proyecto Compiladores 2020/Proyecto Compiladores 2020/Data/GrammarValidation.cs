@@ -38,6 +38,9 @@ namespace Proyecto_Compiladores_2020.Data
             {
                 if (Actual_LookAhead == expectedToken)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Token: {Actual_LookAhead} ta nitido                 {tokenList[Indexer].Value}");
+                    Console.ForegroundColor = ConsoleColor.White;
                     Indexer++;
                     Actual_LookAhead = tokenList[Indexer].Key;
                 }
@@ -45,11 +48,14 @@ namespace Proyecto_Compiladores_2020.Data
                 {
                     if (Actual_LookAhead == "$")
                     {
+                        //aqui se acabaron los tokens pero sigue esperando
                         Console.WriteLine($"* Se esperaba ' {expectedToken} '.");
                     }
                     else
                     {
                         Console.WriteLine($"* Se esperaba ' {expectedToken} ' y tenemos ' {Actual_LookAhead} '.");
+                        //amonos al siguiente ->->->
+                        
                     }
 
                 }
@@ -62,23 +68,32 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool Program_()
         {
+            //while (Actual_LookAhead != "$")
+            //{
+            //   var xd = Decl() && Program_Prime();
+
+            //}
+            //hacia aqui
+            var lol = 0;
+            var l3l = 3;
 
             return Decl() && Program_Prime();
-
         }
         private bool Program_Prime()
         {
             if (Actual_LookAhead != "$")
             {
-                return true;
+                return false;
             }
             else
-            {
-                return false;
+            { 
+                //#line 70
+                return true;
             }
         }
         private bool Decl()
         {
+            
             return VariableDecl() || FunctionDecl();
         }
         private bool VariableDecl()
@@ -90,7 +105,7 @@ namespace Proyecto_Compiladores_2020.Data
             }
             else
             {
-                //Error no cumple con la gramatica
+                //No pertenece a esta VariableDecl
                 return false;
             }
 
@@ -98,6 +113,7 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool Variable()
         {
+           
             if (Type())
             {
                 MatchToken("ident");
@@ -126,12 +142,12 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("string");
                 return Type_Prime();
             }
-            else if (Actual_LookAhead == "ident")
-            {
-                MatchToken("ident");
-                return Type_Prime();
+            //else if (Actual_LookAhead == "ident")
+            //{
+            //    MatchToken("ident");
+            //    return Type_Prime();
 
-            }
+            //}
             else
             {
                 return false;
@@ -152,6 +168,8 @@ namespace Proyecto_Compiladores_2020.Data
         {
             if (Type())
             {
+
+                //de Aqui
                 MatchToken("ident");
                 MatchToken("(");
                 if (Formals())
@@ -203,13 +221,20 @@ namespace Proyecto_Compiladores_2020.Data
         {
             if (Variable())
             {
+                
                 Variable_Prime();
-                MatchToken(",");
+
+                if (Actual_LookAhead != ")")
+                {
+               MatchToken(",");
+
+                }
+                
                 return true;
             }
             else
             {//eps
-                return true;
+                return true;      
             }
 
         }
@@ -271,10 +296,19 @@ namespace Proyecto_Compiladores_2020.Data
         //propias
         private bool Stmt()
         {
+            //Stmt			-> Stmt' Stmt |ϵ fixear
             if (Stmt_Prime())
             {
-                Stmt();
+                if (Actual_LookAhead == "$")
+                {
                 return true;
+
+                }
+                else
+                {
+                return Stmt();
+
+                }
             }
             else
             {
@@ -285,18 +319,18 @@ namespace Proyecto_Compiladores_2020.Data
         {
             if (Actual_LookAhead == "while")
             {
-                //if
+                //while
                 return WhileStement();
             }
             else if (Actual_LookAhead == "if")
             {
-                //while
+                //if
                 return ifStatement();
             }
             else if (Expr())
             {
                 // falta expr
-                Expr();
+             
                 MatchToken(";");
                 return true;
 
@@ -341,80 +375,51 @@ namespace Proyecto_Compiladores_2020.Data
 
         private bool IfStmt()
         {
-            MatchToken("else");
-            if (Stmt())
+            if (Actual_LookAhead =="else")
             {
-                return true;
+
+                MatchToken("else");
+                if (Stmt())
+                {
+                    return true;
+                }
             }
             return true;
         }
 
         private bool Expr()
         {
-            //Expr 			-> B Expr'
-
-            if (B())
-            {
-                Expr_Prime();
-
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-            // para hacer backtraking
-            //IndexerAux = Indexer;
-
-            //if (Lvalue())
-            //{
-            //    if (Actual_LookAhead == "=")
-            //    {
-            //        MatchToken("=");
-            //        if (P())
-            //        {
-            //            return true;
-            //        }
-            //        else { return false; }
-            //    }
-            //    else
-            //    {
-            //        Indexer = IndexerAux;
-            //        return P();
-
-            //    }
-
-            //}
-            //else
-            //{
-            //    return P();
-            //}
+            var lola = B();
+            var lolo = Expr_Prime();
+            //Expr  -> B Expr'
+            return lola||lolo;
+            
         }
         //tiene recursividad infinita con Lvalue y con Expr
         #region Expr Prop
         private bool Expr_Prime()
         {
-            //Expr'			-> || B Expr' | ϵ
-            MatchToken("||");
-            if (B())
+            if (Actual_LookAhead == "||")
             {
-                Expr_Prime();
-                return Expr_Prime();
-            }
-            else { return true; }
-        }
-        private bool B()
-        {//B				-> C B'
-            if (C())
-            {
-                return B_Prime();
+
+                //Expr'			-> || B Expr' | ϵ
+                MatchToken("||");
+                if (B())
+                {
+                    Expr_Prime();
+                    return Expr_Prime();
+                }
+                else { return true; }
             }
             else
             {
-                return false;
-
+                return true;
             }
+        }
+        private bool B()
+        {//B				-> C B'
+            return C()|| B_Prime();
+           
         }
         private bool B_Prime()
         { //B'				-> && C | ϵ
@@ -432,15 +437,8 @@ namespace Proyecto_Compiladores_2020.Data
 
         private bool C()
         {
-            if (D())
-            {
-                return C_Prime();
-            }
-            else
-            {
-                return false;
-
-            }
+            return D()|| C_Prime();
+            
         }
         private bool C_Prime()
         {
@@ -476,15 +474,8 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool D()
         {
-            if (E())
-            {
-                return D_Prime();
-            }
-            else
-            {
-                return false;
-
-            }
+            return E()|| D_Prime();
+          
         }
         private bool D_Prime()
         {
@@ -544,15 +535,8 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool E()
         {
-            if (F())
-            {
-                return E_Prime();
-            }
-            else
-            {
-                return false;
-
-            }
+            return F()|| E_Prime();
+            
         }
         private bool E_Prime()
         {
@@ -588,16 +572,7 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool F()
         {
-            if (G())
-            {
-                return F_Prime();
-            }
-            else
-            {
-                return false;
-
-            }
-            return false;
+            return G() || F_Prime();
         }
         private bool F_Prime()
         {
@@ -662,15 +637,8 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool H()
         {
-            if (I())
-            {
-                return H_Prime();
-            }
-            else
-            {
-                return false;
+            return I() || H_Prime();
 
-            }
         }
         private bool H_Prime()
         {
@@ -702,7 +670,7 @@ namespace Proyecto_Compiladores_2020.Data
             }
             else
             {
-                return H();
+                return true;
             }
         }
         private bool I()

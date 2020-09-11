@@ -13,6 +13,7 @@ namespace Proyecto_Compiladores_2020
     {
         static void Main(string[] args)
         {
+
             Console.WriteLine("Alexander Villatoro / Marlon Roches");
             Console.WriteLine("Compiladores 2020");
             Console.WriteLine("");
@@ -43,9 +44,11 @@ namespace Proyecto_Compiladores_2020
             Console.WriteLine($"#   #   #   #   #   ERRORES    #   #   #   #   #");
             Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
            // Console.ReadLine();
+            Console.WriteLine("");
+            
 
             Data.GrammarValidation.Instance.LabA_Parser();
-            
+            Console.ReadLine();
         }
     }
 }
