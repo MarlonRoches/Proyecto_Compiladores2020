@@ -24,6 +24,7 @@ namespace Proyecto_Compiladores_2020.Data
         private bool backExpr = false;
         private static int Indexer = 0;
         private static string Actual_LookAhead = "";
+        #region Pre hechas
 
         public void LabA_Parser()
         {
@@ -230,323 +231,6 @@ namespace Proyecto_Compiladores_2020.Data
 
             return true;
         }
-        private bool Stmt()
-        {
-            if (Stmt_Options())
-            {
-                Stmt();
-                return true;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private bool Stmt_Options()
-        {
-            if (Actual_LookAhead == "while")
-            {
-                //if
-                return WhileStement();
-            }
-            else if (Actual_LookAhead == "if")
-            {
-                //while
-                return ifStatement();
-            }
-            else if (Expr())
-            {
-                // falta expr
-                Expr();
-                MatchToken(";");
-                return true;
-
-            }
-            else
-            {
-                return false;
-
-            }
-        }
-        private bool WhileStement()
-        {
-            MatchToken("for");
-            MatchToken("(");
-
-            if (ExprP())
-            {
-                MatchToken(";");
-            }
-            else { MatchToken(";"); }
-            if (Expr())
-            {
-                MatchToken(";");
-            }
-            else { MatchToken(";"); }
-            if (ExprP())
-            {
-                MatchToken(";");
-            }
-            else { MatchToken(";"); }
-            MatchToken(")");
-            if (Stmt())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-
-
-        }
-        private bool ifStatement()
-        {
-            MatchToken("return");
-            if (ExprP())
-            {
-                MatchToken(";");
-                return true;
-            }
-            else
-            {
-                MatchToken(";");
-                return true;
-            }
-        }
-
-        private bool ExprP()
-        {
-            //if (Expr())
-            //{
-            //    return true;
-            //}
-            //else { return false; }
-            return true;
-        }
-        private bool Expr()
-        {
-            // para hacer backtraking
-            //IndexerAux = Indexer;
-
-            //if (Lvalue())
-            //{
-            //    if (Actual_LookAhead == "=")
-            //    {
-            //        MatchToken("=");
-            //        if (P())
-            //        {
-            //            return true;
-            //        }
-            //        else { return false; }
-            //    }
-            //    else
-            //    {
-            //        Indexer = IndexerAux;
-            //        return P();
-
-            //    }
-
-            //}
-            //else
-            //{
-            //    return P();
-            //}
-            return true;
-        }
-        //tiene recursividad infinita con Lvalue y con Expr
-        #region Expr Prop
-        private bool P()
-        {
-            return T() && P();
-        }
-        private bool PP()
-        {
-            if (Actual_LookAhead == "||")
-            {
-                MatchToken("||");
-                return T() && PP();
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private bool T()
-        {
-            return H() && TP();
-        }
-        private bool TP()
-        {
-            if (Actual_LookAhead == "&&")
-            {
-                MatchToken("&&");
-                return H() && TP();
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private bool H()
-        {
-            return F() && HP();
-        }
-        private bool HP()
-        {
-            if (Actual_LookAhead == "==")
-            {
-                MatchToken("==");
-                F();
-                HP();
-                return true;
-            }
-            else if (Actual_LookAhead == "!=")
-            {
-                MatchToken("!=");
-                F();
-                HP();
-                return true;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private bool F()
-        {
-            return L() && FP();
-        }
-        private bool FP()
-        {
-            if (Actual_LookAhead == "<")
-            {
-                MatchToken("<");
-                FP();
-                return true;
-            }
-            else if (Actual_LookAhead == ">")
-            {
-                MatchToken(">");
-                FP();
-                return true;
-
-            }
-            else if (Actual_LookAhead == "<=")
-            {
-                MatchToken("<=");
-                FP();
-                return true;
-            }
-            else if (Actual_LookAhead == ">=")
-            {
-                MatchToken(">=");
-                FP();
-                return true;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private bool L()
-        {
-            return M() && LP();
-        }
-        private bool LP()
-        {
-            if (Actual_LookAhead == "+")
-            {
-                MatchToken("+");
-                LP();
-                return true;
-            }
-            else if (Actual_LookAhead == "-")
-            {
-                MatchToken("-");
-                LP();
-                return true;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private bool M()
-        {
-            return N() && MP();
-        }
-        private bool MP()
-        {
-            if (Actual_LookAhead == "*")
-            {
-                MatchToken("*");
-                MP();
-                return true;
-            }
-            else if (Actual_LookAhead == "/")
-            {
-                MatchToken("/");
-                MP();
-                return true;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private bool N()
-        {
-            if (Actual_LookAhead == "-")
-            {
-                MatchToken("-");
-                // duda si el return se podria poner expre
-                Expr();
-                return true;
-            }
-            else if (Actual_LookAhead == "!")
-            {
-                MatchToken("!");
-                // duda si el return se podria poner expre
-                Expr();
-                return true;
-            }
-            else
-            {
-                return G();
-            }
-        }
-        private bool G()
-        {
-
-            if (Actual_LookAhead == "(")
-            {
-                MatchToken("(");
-                Expr();
-                MatchToken(")");
-                return true;
-            }
-            else if (Actual_LookAhead == "this")
-            {
-                MatchToken("this");
-                return true;
-            }
-            else if (Actual_LookAhead == "New")
-            {
-                // duad sobre si se haria backtraking
-                MatchToken("New");
-                MatchToken("(");
-                MatchToken("ident");
-                MatchToken(")");
-                return true;
-            }
-            else
-            {
-                return Constant();
-            }
-        }
-        #endregion
         private bool Constant()
         {
             if (Actual_LookAhead == "intCostant")
@@ -579,6 +263,262 @@ namespace Proyecto_Compiladores_2020.Data
                 return false;
             }
         }
+        #endregion
+
+
+
+
+        //propias
+        private bool Stmt()
+        {
+            if (Stmt_Prime())
+            {
+                Stmt();
+                return true;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        private bool Stmt_Prime()
+        {
+            if (Actual_LookAhead == "while")
+            {
+                //if
+                return WhileStement();
+            }
+            else if (Actual_LookAhead == "if")
+            {
+                //while
+                return ifStatement();
+            }
+            else if (Expr())
+            {
+                // falta expr
+                Expr();
+                MatchToken(";");
+                return true;
+
+            }
+            else
+            {
+                return false;
+
+            }
+        }
+        private bool WhileStement()
+        {
+            MatchToken("while");
+            MatchToken("(");
+
+            if (Expr())
+            {
+                MatchToken(")");
+                Stmt();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool ifStatement()
+        {
+            MatchToken("if");
+            MatchToken("(");
+            if (Expr())
+            {
+                MatchToken(")");
+                if (Stmt())
+                {
+                    IfStmt();
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool IfStmt()
+        {
+            MatchToken("else");
+            if (Stmt())
+            {
+                return true;
+            }
+            return true;
+        }
+
+        private bool Expr()
+        {
+            //Expr 			-> B Expr'
+
+            if (B())
+            {
+                Expr_Prime();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            // para hacer backtraking
+            //IndexerAux = Indexer;
+
+            //if (Lvalue())
+            //{
+            //    if (Actual_LookAhead == "=")
+            //    {
+            //        MatchToken("=");
+            //        if (P())
+            //        {
+            //            return true;
+            //        }
+            //        else { return false; }
+            //    }
+            //    else
+            //    {
+            //        Indexer = IndexerAux;
+            //        return P();
+
+            //    }
+
+            //}
+            //else
+            //{
+            //    return P();
+            //}
+        }
+        //tiene recursividad infinita con Lvalue y con Expr
+        #region Expr Prop
+        private bool Expr_Prime()
+        {
+            //Expr'			-> || B Expr' | ϵ
+            MatchToken("||");
+            if (B())
+            {
+                Expr_Prime();
+                return Expr_Prime();
+            }
+            else { return true; }
+        }
+        private bool B()
+        {//B				-> C B'
+            if (C())
+            {
+                return B_Prime();
+            }
+            else
+            {
+                return false;
+
+            }
+        }
+        private bool B_Prime()
+        { //B'				-> && C | ϵ
+            MatchToken("&&");
+            if (C())
+            {
+                return true;
+            }
+            else
+            {
+
+                return true;
+            }
+        }
+
+        private bool C()
+        {
+            if (D())
+            {
+                return C_Prime();
+            }
+            else
+            {
+                return false;
+
+            }
+        }
+        private bool C_Prime()
+        {
+            //C'				-> == D C' | != D C' | ϵ
+            if (Actual_LookAhead == "==")
+            {
+                MatchToken("==");
+                if (D())
+                {
+                    return C_Prime();
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else if (Actual_LookAhead == "!=")
+            {
+                MatchToken("!=");
+                if (D())
+                {
+                    return C_Prime();
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+        private bool D()
+        {
+            return false;
+        }
+        private bool D_Prime()
+        {
+            return false;
+        }
+        private bool E()
+        {
+            return false;
+        }
+        private bool E_Prime()
+        {
+            return false;
+        }
+        private bool F()
+        {
+            return false;
+        }
+        private bool F_Prime()
+        {
+            return false;
+        }
+        private bool G()
+        {
+            return false;
+        }
+        private bool H()
+        {
+            return false;
+        }
+        private bool H_Prime()
+        {
+            return false;
+        }
+        private bool I()
+        {
+            return false;
+        }
+        private bool Igual_Prime()
+        {
+            return false;
+        }
+        #endregion
         public void pushIntoList(string type, string dato)
         {
             tokenList.Add(new KeyValuePair<string, string>(type, dato));
