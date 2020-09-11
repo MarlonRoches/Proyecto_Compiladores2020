@@ -1,31 +1,32 @@
-Program->Decl Program’
-Program’->Program | ε
-Decl->VariableDecl | FunctionDecl
-VariableDecl->Variable ;
-Variable->Type ident
-Type->int Type’ | double Type’| bool Type’| string Type’ | ident Type’ 
-Type’->[]| ε
-FuntionDecl->Type ident ( Formals ) Stmt* | void  ident ( Formals ) Stmt*
-Formals->Variable Variable’ , |  ε
-Variable’->Formals | ε
-Stmt->if Stmt | While Stmt | Expr ; 
-IfStmt->if ( Expr ) Stmt ifStmt’
-IfStmt’->else Stmt | ε
-WhileStmt->while ( Expr ) Stmt
-LValue->ident | Expr .  ident | Expr [ Expr ]
-Constant->intCostant | doubleConstant | boolConstant | stringConstant | null
-Expr->LValue = A | A
-A->B A’ 
-A’->|| B A’ | ε
-B->C B’
-B->&& C B’|  ε
-C->D C’
-C’->== D C’ | != D C’ |  ε
-D->E D’
-D’-><=  E D’ | >=  E D’| <  E D’ | >  E D’|  ε
-E->F E’
-E’->+F E’|-F E’|ε
-F->G F’
-F’->*G F’|%G F’|/G F’ |  ε
-G-> !Expr|-Expr| H 
-H->(Expr)|Constant|LValue|this|New(ident)|
+Program			-> Decl Program’
+Program’		-> Program | ε
+Decl			-> VariableDecl | FunctionDecl
+VariableDecl	-> Variable ;
+Variable		-> Type ident
+Type			-> int Type’ | double Type’| bool Type’| string Type’ | ident Type’ 
+Type’			-> []| ε
+FuntionDecl		-> Type ident ( Formals ) Stmt* | void  ident ( Formals ) Stmt
+Formals			-> Variable Variable’ , |  ε
+Variable’		-> Formals | ε
+Stmt			-> if Stmt | While Stmt | Expr ; | ϵ
+IfStmt			-> if ( Expr ) Stmt if Stmt’
+IfStmt’			-> else Stmt | ε
+WhileStmt		-> while ( Expr ) Stmt
+Expr 			-> B Expr'
+Expr'			-> || B Expr' | ϵ
+B				-> C B'
+B'				-> && C | ϵ
+C				-> D C'
+C'				-> == D C' | !=D C' | ϵ
+D				-> E D' 
+D'				-> <E D' | <=E D' | >E D' | >=E D' | ϵ  
+E				-> F E'
+E'				-> +F E' | -F E' | ϵ 
+F				-> G F' 
+F'				-> *G F' | /G F' | %G F' | ϵ 
+G				-> !Expr | -Expr | H
+H				-> I H' 
+H'				-> [Expr] Igual' H' | .ident Igual' H' | ϵ
+I 				-> (Expr) | New(ident) | Constant | ident Igual' | this 
+Igual' 			-> = Expr | ϵ
+Constant		-> intCostant | doubleConstant | boolConstant | stringConstant | null

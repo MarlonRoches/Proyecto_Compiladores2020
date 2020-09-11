@@ -170,7 +170,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                                     Console.BackgroundColor = ConsoleColor.White;
                                     writer.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
-                                    GrammarValidation.Instance.pushIntoList("string", Cadena);
+                                    GrammarValidation.Instance.pushIntoList("stringConstant", Cadena);
                                     ///Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -294,7 +294,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtBoolean;
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
-                                    GrammarValidation.Instance.pushIntoList("bool", idActual);
+                                    GrammarValidation.Instance.pushIntoList("boolConstant", idActual);
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
                                     colStart += lenghtBoolean;
                                     ColEnd = 0;
@@ -347,7 +347,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
 
-                                    GrammarValidation.Instance.pushIntoList("hexagecimal", idActual);
+                                    GrammarValidation.Instance.pushIntoList("hexagecimalCostant", idActual);
 
                                     //Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
                                     colStart += lenghtDoubleRegx;
@@ -363,7 +363,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtDouble;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
-                                    GrammarValidation.Instance.pushIntoList("double", idActual);
+                                    GrammarValidation.Instance.pushIntoList("doubleConstant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
                                     colStart += lenghtDouble;
@@ -378,7 +378,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtInteger;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
-                                    GrammarValidation.Instance.pushIntoList("int", idActual);
+                                    GrammarValidation.Instance.pushIntoList("intCostant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                     colStart += lenghtInteger;
@@ -436,7 +436,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             idActual = fact;
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
-                                            GrammarValidation.Instance.pushIntoList("int", fact);
+                                            GrammarValidation.Instance.pushIntoList("intCostant", fact);
 
                                             /// Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 

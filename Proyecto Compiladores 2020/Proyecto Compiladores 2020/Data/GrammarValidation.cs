@@ -18,37 +18,37 @@ namespace Proyecto_Compiladores_2020.Data
                 return _instance;
             }
         }
-        private static List<KeyValuePair<string,string>> outPutTokens = new List<KeyValuePair<string, string>>();
+        private static List<KeyValuePair<string, string>> tokenList = new List<KeyValuePair<string, string>>();
         private static List<string> sintaxError = new List<string>();
-        
-        private static int contador = 0;
-        private static string lookahead="";
-        public void Lab1()
-        {
-            for (int i = 0; i < outPutTokens.Count; i++)
-            {
-                var lol = outPutTokens[i];
-            }
-        }
+        private int IndexerAux = 0;
+        private bool backExpr = false;
+        private static int Indexer = 0;
+        private static string Actual_LookAhead = "";
 
+        public void LabA_Parser()
+        {
+            tokenList.Add(new KeyValuePair<string, string>("$", ""));
+            Actual_LookAhead = tokenList[Indexer].Key;
+            Program_();
+        }
         private void MatchToken(string expectedToken)
         {
             try
             {
-                if (lookahead == expectedToken)
+                if (Actual_LookAhead == expectedToken)
                 {
-                    contador++;
-                    lookahead = outPutTokens[contador].Key;
+                    Indexer++;
+                    Actual_LookAhead = tokenList[Indexer].Key;
                 }
                 else
                 {
-                    if (lookahead == "$")
+                    if (Actual_LookAhead == "$")
                     {
-                        sintaxError.Add($"*** Se esperaba ' {expectedToken} '.");
+                        Console.WriteLine($"* Se esperaba ' {expectedToken} '.");
                     }
                     else
                     {
-                        sintaxError.Add($"*** Se esperaba ' {expectedToken} ' y tenemos ' {lookahead} '.");
+                        Console.WriteLine($"* Se esperaba ' {expectedToken} ' y tenemos ' {Actual_LookAhead} '.");
                     }
 
                 }
@@ -59,14 +59,12 @@ namespace Proyecto_Compiladores_2020.Data
                 throw;
             }
         }
-
-
-
-
-        public void pushIntoList(string type, string dato)
+        private bool Program_()
         {
-            outPutTokens.Add(new KeyValuePair<string, string>(type,dato));
-        }
-    }
 
+            return Decl() && Program_Prime();
+
+        }
+       
+    }
 }
