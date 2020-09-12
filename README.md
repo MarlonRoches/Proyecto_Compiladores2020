@@ -100,13 +100,9 @@ Ejemplos de Identificadores Correctos e Incorrectos
 
                 Variable’        -> , Variable | ε
 
-                 //
-
                 Stmt            -> Stmt' Stmt |ϵ
 
                 Stmt'              -> if Stmt | While Stmt | Expr ;
-
-                //
 
                 IfStmt            -> if ( Expr ) Stmt ifStmt’
 
@@ -150,7 +146,7 @@ Ejemplos de Identificadores Correctos e Incorrectos
 
                 Constant        -> intCostant | doubleConstant | boolConstant | stringConstant | null
 
-                              
+####  Manejo de Erroes           
 
 
 ## Programadores
