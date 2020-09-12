@@ -80,75 +80,75 @@ Ejemplos de Identificadores Correctos e Incorrectos
     Deberán hacer uso de su analizador léxico de la fase anterior. La finalidad es poder determinar que el programa fuente escrito está sintácticamente correcto utilizando   
     este metodo.
 ### Gramática de Mini-Java
-        Program            -> Decl Program’
+                Program            -> Decl Program’
 
-        Program’        -> Program | ε
+                Program’        -> Program | ε
 
-        Decl            -> VariableDecl | FunctionDecl
+                Decl            -> VariableDecl | FunctionDecl
 
-        VariableDecl    -> Variable ; 
+                VariableDecl    -> Variable ; 
 
-         Variable        -> Type ident
+                 Variable        -> Type ident
 
-        Type            -> int Type’ | double Type’| boolean Type’| string Type’ | ident Type’ 
+                Type            -> int Type’ | double Type’| boolean Type’| string Type’ | ident Type’ 
 
-        Type’            -> [] Type’ | ε
+                Type’            -> [] Type’ | ε
 
-        FunctionDecl    -> Type ident ( Formals ) Stmt | void  ident ( Formals ) Stmt
+                FunctionDecl    -> Type ident ( Formals ) Stmt | void  ident ( Formals ) Stmt
 
-        Formals            -> Variable Variable’ |  ε
+                Formals            -> Variable Variable’ |  ε
 
-        Variable’        -> , Variable | ε
+                Variable’        -> , Variable | ε
 
-         //
+                 //
 
-        Stmt            -> Stmt' Stmt |ϵ
+                Stmt            -> Stmt' Stmt |ϵ
 
-        Stmt'              -> if Stmt | While Stmt | Expr ;
+                Stmt'              -> if Stmt | While Stmt | Expr ;
 
-        //
+                //
 
-        IfStmt            -> if ( Expr ) Stmt ifStmt’
+                IfStmt            -> if ( Expr ) Stmt ifStmt’
 
-        IfStmt’            -> else Stmt | ε
+                IfStmt’            -> else Stmt | ε
 
-         WhileStmt        -> while ( Expr ) Stmt
+                 WhileStmt        -> while ( Expr ) Stmt
 
-        Expr             -> B Expr'
+                Expr             -> B Expr'
 
-        Expr'            -> || B Expr' | ϵ
+                Expr'            -> || B Expr' | ϵ
 
-        B                -> C B'
+                B                -> C B'
 
-        B'                -> && C | ϵ
+                B'                -> && C | ϵ
 
-        C                -> D C'
+                C                -> D C'
 
-        C'                -> == D C' | !=D C' | ϵ
+                C'                -> == D C' | !=D C' | ϵ
 
-        D                -> E D' 
+                D                -> E D' 
 
-        D'                -> <E D' | <=E D' | >E D' | >=E D' | ϵ  
+                D'                -> <E D' | <=E D' | >E D' | >=E D' | ϵ  
 
-        E                -> F E'
+                E                -> F E'
 
-        E'                -> +F E' | -F E' | ϵ 
+                E'                -> +F E' | -F E' | ϵ 
 
-        F                -> G F' 
+                F                -> G F' 
 
-        F'                -> *G F' | /G F' | %G F' | ϵ 
+                F'                -> *G F' | /G F' | %G F' | ϵ 
 
-        G                -> !Expr | -Expr | H
+                G                -> !Expr | -Expr | H
 
-        H                -> I H' 
+                H                -> I H' 
 
-        H'                -> [Expr] Igual' H' | . ident Igual' H' | ϵ
+                H'                -> [Expr] Igual' H' | . ident Igual' H' | ϵ
 
-        I                 -> (Expr) | New(ident) | Constant | ident Igual' | this 
- 
-        Igual'             -> = Expr | ϵ
+                I                 -> (Expr) | New(ident) | Constant | ident Igual' | this 
 
-        Constant        -> intCostant | doubleConstant | boolConstant | stringConstant | null
+                Igual'             -> = Expr | ϵ
+
+                Constant        -> intCostant | doubleConstant | boolConstant | stringConstant | null
 
                               
 
