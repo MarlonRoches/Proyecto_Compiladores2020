@@ -190,7 +190,17 @@ void Metodo2 (boolean numero, string lol , string xd, int flag) if ( flag3 && tr
 boolean flag4;
  void Metodo3 (int flag) while(a + b) if ( flag3 && true == false % !flag4 && -true % false );
  ```
- 
+ ```java
+ void Metodo(boolean numero, string lol , string xd, int flag) 
+if ( flag || true || false ) else if ( flag || true || false ) a + c;
+ ```
+ ```java
+ Car[] Mercedez hola; //tira error por que tiene un hola de mas, se irá mas adelante a la siguiente produccin y dirá lo que esperaba
+string Prueba;
+string[] PruebaArr;
+int[] numeroArr ;int numero ;
+boolean flag;boolean []flagArr;
+```
 ## Programadores ✒️
     ○ Marlon Roches
     ○ Alexander Villatoro
