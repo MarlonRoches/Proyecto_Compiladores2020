@@ -32,7 +32,7 @@ namespace Proyecto_Compiladores_2020.Data
             Actual_LookAhead = tokenList[Indexer].Key;
             Program_();
         }
-        private void MatchToken(string expectedToken)
+        private bool MatchToken(string expectedToken)
         {
             try
             {
@@ -43,6 +43,7 @@ namespace Proyecto_Compiladores_2020.Data
                     Console.ForegroundColor = ConsoleColor.White;
                     Indexer++;
                     Actual_LookAhead = tokenList[Indexer].Key;
+                    return true;
                 }
                 else
                 {
@@ -58,6 +59,8 @@ namespace Proyecto_Compiladores_2020.Data
                         Console.Write($"EOF");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write($".\n");
+                        return false;
+
                     }
                     else
                     {
@@ -73,6 +76,8 @@ namespace Proyecto_Compiladores_2020.Data
                         //amonos al siguiente ->->->
                         Indexer++;
                         Actual_LookAhead = tokenList[Indexer].Key;
+
+                        return false;
                     }
 
                 }
@@ -85,16 +90,7 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool Program_()
         {
-            //while (Actual_LookAhead != "$")
-            //{
-            //   var xd = Decl() && Program_Prime();
-
-            //}
-            //hacia aqui
-            var lol = Decl();
-            var l3l = Program_Prime();
-
-            return lol && l3l;
+            return Decl() && Program_Prime();
         }
         private bool Program_Prime()
         {
@@ -110,15 +106,23 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool Decl()
         {
-            
-            return VariableDecl() || FunctionDecl();
+
+            var flag1 = VariableDecl();
+            if (flag1==false)
+            {//no pertenece, hacer el backtracking
+                Console.Clear();   
+                Indexer = 0;
+                Actual_LookAhead = tokenList[Indexer].Key;
+            }
+            var flag2 = FunctionDecl();
+            return flag1 || flag2;
         }
         private bool VariableDecl()
         {
             if (Variable())
             {
-                MatchToken(";");
-                return true;
+                
+                return MatchToken(";");
             }
             else
             {
@@ -193,12 +197,22 @@ namespace Proyecto_Compiladores_2020.Data
 
                 //de Aqui
                 MatchToken("ident");
-                MatchToken("(");
-                if (Formals())
+                if (Actual_LookAhead  == "()")
                 {
-                    MatchToken(")");
+                    MatchToken("()");
                     Stmt(); //ver más adelante
                     return true;
+                }
+                else
+                {
+
+                    MatchToken("(");
+                    if (Formals())
+                    {
+                        MatchToken(")");
+                        Stmt(); //ver más adelante
+                        return true;
+                    }
                 }
 
                 MatchToken(")");
@@ -210,27 +224,33 @@ namespace Proyecto_Compiladores_2020.Data
             {
                 MatchToken("void");
                 MatchToken("ident");
-                MatchToken("(");
-                if (Formals())
+                if (Actual_LookAhead == "()")
                 {
-
-                    //MatchToken("ident");
-                    //MatchToken("(");
-                    //if (Actual_LookAhead != ")")
-                    //{
-                    //    Formals();
-                    //}
-
-                    //MatchToken(")");
-                    //Stmt();
-                    //return true;
-                    MatchToken(")");
-                    Stmt(); //ver más adelante
-                    return true;
+                    MatchToken("()");
+                    if (Formals())
+                    {
+                        Stmt(); //ver más adelante
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    return false;
+                    MatchToken("(");
+
+                    if (Formals())
+                    {
+                        MatchToken(")");
+                        Stmt(); //ver más adelante
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
             }
@@ -445,6 +465,23 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool B_Prime()
         { //B'				-> && C | ϵ
+
+                if (Actual_LookAhead == "||")
+                {
+
+                    //Expr'			-> || B Expr' | ϵ
+                    MatchToken("||");
+                    if (B())
+                    {
+                        Expr_Prime();
+                        return Expr_Prime();
+                    }
+                    else { return true; }
+                }
+                else
+                {
+                    return true;
+            }
             MatchToken("&&");
             if (C())
             {
@@ -760,46 +797,6 @@ namespace Proyecto_Compiladores_2020.Data
         {
             tokenList.Add(new KeyValuePair<string, string>(type, dato));
         }
-
-
-
-
-        //private bool Lvalue()
-        //{
-        //    if (Actual_LookAhead == "ident")
-        //    {
-        //        MatchToken("ident");
-
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        if (Expr())
-        //        {
-        //            if (Actual_LookAhead == ".")
-        //            {
-        //                MatchToken(".");
-        //                MatchToken("ident");
-        //                return true;
-        //            }
-        //            else if (Actual_LookAhead == "[")
-        //            {
-        //                MatchToken("[");
-        //                if (Expr())
-        //                {
-        //                    if (Actual_LookAhead == "]")
-        //                    {
-        //                        MatchToken("]");
-        //                        return true;
-        //                    }
-        //                    else { return false; }
-        //                }
-        //                else { return false; }
-        //            }
-        //            else { return false; }
-        //        }
-        //        else { return false; }
-        //    }
-        //}
+            
     }
 }

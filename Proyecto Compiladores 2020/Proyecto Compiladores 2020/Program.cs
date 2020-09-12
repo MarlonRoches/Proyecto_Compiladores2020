@@ -38,7 +38,7 @@ namespace Proyecto_Compiladores_2020
             Console.ForegroundColor = ConsoleColor.White;
 
             var ruta =Console.ReadLine();
-            ruta = ruta.Replace("\"", "");
+            ruta = ruta.Replace("\"", "").Trim();
             Console.Clear();
             Console.WriteLine($"#   #   #   #   #   ERRORES Fase 1   #   #   #   #   #");
             Data.Data.Instance.Sustituir(Data.TextValidation.Instance.ValidarStrings( Data.TextValidation.Instance.ValidarComentarios(ruta)), ruta);
@@ -51,6 +51,7 @@ namespace Proyecto_Compiladores_2020
             
             
             Data.GrammarValidation.Instance.LabA_Parser();
+        
         
         }
     }

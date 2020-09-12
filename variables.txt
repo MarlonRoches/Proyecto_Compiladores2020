@@ -1,0 +1,3 @@
+string Prueba ();
+int numero ;
+boolean flag;

@@ -1,0 +1,10 @@
+ string         line 1 cols 1-7 is T_string
+ Prueba         line 1 cols 9-14 is T_Identifier
+ ()         line 1 cols 17-18 is ()
+ ;         line 1 cols 19-19 is ;
+ int         line 2 cols 1-4 is T_int
+ numero         line 2 cols 6-11 is T_Identifier
+ ;         line 2 cols 14-14 is ;
+ boolean         line 3 cols 1-8 is T_boolean
+ flag         line 3 cols 9-12 is T_Identifier
+ ;         line 3 cols 14-14 is ;
