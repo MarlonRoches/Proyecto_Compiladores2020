@@ -155,6 +155,17 @@ Ejemplos de Identificadores Correctos e Incorrectos
                 de regresar los tokens ya se tendría listos para poder analizarlos otra vez pero apartir de la otra producción.
              2. Declaración de Funciones: Si existe un error, lo que te tiene que decir el anazalizador el token que deberia estar esperando y demuestra
                 el que token que esta mal escrito. No va a sacar error a toda la linea si no que nos demostrara el valor que debería de ir.
+                
+####  Archivos de Prueba
+1)
+string Prueba;                                  
+string[] PruebaArr;
+int[] numeroArr ;int numero ;
+boolean flag;boolean []flagArr;
+2)
+int Metodo() while(a + b)/*(true || false);
+void Metodo2 (boolean numero, string lol , string xd, int flag) */
+if ( flag3 && true == false % !flag4 && -true % false ) a + b; 
 
 ## Programadores
     ○ Marlon Roches
