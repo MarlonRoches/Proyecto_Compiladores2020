@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Proyecto_Compiladores_2020.Data
         #region Pre hechas
         //(true || false)
 
-        public void LabA_Parser()
+        public void LabA_Parser(string ruta )
         {
 
             Lineas();
@@ -47,7 +48,7 @@ namespace Proyecto_Compiladores_2020.Data
                 index_BackTracking = 0;
                 Actual_LookAhead = dicc[i][0].Key;
             }
-
+            OutPutLog(ruta);
         }
         public void  Lineas()
         {
@@ -73,13 +74,30 @@ namespace Proyecto_Compiladores_2020.Data
                 }
             }
 
+
             if (auxList.Count != 0)
             {
                 auxList.Add(new KeyValuePair<string, string>("$", "$"));
                 dicc.Add(inde, auxList);
                 auxList = new List<KeyValuePair<string, string>>();
             }
-        } 
+        }
+
+
+        public void OutPutLog(string ruta)
+        {
+            var file = new FileStream($"{Path.GetDirectoryName(ruta)}\\{Path.GetFileNameWithoutExtension(ruta)}.Tout", FileMode.Create);
+            var writer = new StreamWriter(file);
+            writer.WriteLine($"Tipo                  -                  Valor");
+            foreach (var token in Aceptados)
+            {
+                writer.WriteLine($"{token.Key}                  -                  {token.Value}");
+            }
+            writer.Close();
+            file.Close();
+        }
+
+
         private bool MatchToken(string expectedToken)
         {
              if (Actual_LookAhead == expectedToken)
