@@ -158,7 +158,11 @@ Ejemplos de Identificadores Correctos e Incorrectos
                 el que token que esta mal escrito. No va a sacar error a toda la linea si no que nos demostrara el valor que debería de ir.
                 Conforme se este derivando la expresión y encuentre el token que acepta o no aceptam si lo acepta no demuestra nada, y si no lo acepta,
                 va a tirar un error diciendo el valor que deberia de aparecer y el valor incorrecto
-                
+
+####  Output
+
+La salida de los tokens aceptados se demostrará en un archivo ".tout". Si salieron duplicados es porque se aceptaron en varias producciones y en otras tambien.
+
 ####  Archivos de Prueba
 ```java
 int Metodo() while(a + b)/*(true || false);
