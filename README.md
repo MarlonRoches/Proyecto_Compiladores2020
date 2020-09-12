@@ -178,6 +178,19 @@ string[] PruebaArr;
 int[] numeroArr ;int numero ;
 boolean flag;boolean []flagArr;
 ```
+```java
+carro[] auto gola ;
+ int a;
+ int b;
+ int Metodo() while(a + b) hola ;
+boolean flag1;
+ boolean flag2;
+ boolean flag3;
+void Metodo2 (boolean numero, string lol , string xd, int flag) if ( flag3 && true == false % !flag4 && -true % false ) a + b; 
+boolean flag4;
+ void Metodo3 (int flag) while(a + b) if ( flag3 && true == false % !flag4 && -true % false );
+ ```
+ 
 ## Programadores ✒️
     ○ Marlon Roches
     ○ Alexander Villatoro
