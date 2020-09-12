@@ -49,13 +49,30 @@ namespace Proyecto_Compiladores_2020.Data
                     if (Actual_LookAhead == "$")
                     {
                         //aqui se acabaron los tokens pero sigue esperando
-                        Console.WriteLine($"* Se esperaba ' {expectedToken} '.");
+                        Console.Write($"*** Err -.- Se esperaba ' ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"{expectedToken}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write($" ' y tenemos ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write($"EOF");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write($".\n");
                     }
                     else
                     {
-                        Console.WriteLine($"* Se esperaba ' {expectedToken} ' y tenemos ' {Actual_LookAhead} '.");
+                        Console.Write($"*** Err -.- Se esperaba ' ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"{expectedToken}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write($" ' y tenemos ' ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write($"{Actual_LookAhead}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write($" '.\n");
                         //amonos al siguiente ->->->
-                        
+                        Indexer++;
+                        Actual_LookAhead = tokenList[Indexer].Key;
                     }
 
                 }
@@ -74,10 +91,10 @@ namespace Proyecto_Compiladores_2020.Data
 
             //}
             //hacia aqui
-            var lol = 0;
-            var l3l = 3;
+            var lol = Decl();
+            var l3l = Program_Prime();
 
-            return Decl() && Program_Prime();
+            return lol && l3l;
         }
         private bool Program_Prime()
         {
@@ -142,12 +159,17 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("string");
                 return Type_Prime();
             }
-            //else if (Actual_LookAhead == "ident")
-            //{
-            //    MatchToken("ident");
-            //    return Type_Prime();
+            else if (Actual_LookAhead == "boolean")
+            {
+                MatchToken("boolean");
+                return Type_Prime();
+            }
+            else if (Actual_LookAhead == "ident")
+            {
+                MatchToken("ident");
+                return Type_Prime();
 
-            //}
+            }
             else
             {
                 return false;
@@ -226,7 +248,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                 if (Actual_LookAhead != ")")
                 {
-               MatchToken(",");
+                // MatchToken(",");
 
                 }
                 

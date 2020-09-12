@@ -38,17 +38,20 @@ namespace Proyecto_Compiladores_2020
             Console.ForegroundColor = ConsoleColor.White;
 
             var ruta =Console.ReadLine();
+            ruta = ruta.Replace("\"", "");
             Console.Clear();
+            Console.WriteLine($"#   #   #   #   #   ERRORES Fase 1   #   #   #   #   #");
             Data.Data.Instance.Sustituir(Data.TextValidation.Instance.ValidarStrings( Data.TextValidation.Instance.ValidarComentarios(ruta)), ruta);
 
-            Console.WriteLine($"#   #   #   #   #   ERRORES    #   #   #   #   #");
             Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
            // Console.ReadLine();
             Console.WriteLine("");
             
 
+            
+            
             Data.GrammarValidation.Instance.LabA_Parser();
-            Console.ReadLine();
+        
         }
     }
 }
