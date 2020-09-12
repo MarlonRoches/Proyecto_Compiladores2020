@@ -96,7 +96,7 @@ namespace Proyecto_Compiladores_2020.Data
         {
             if (Actual_LookAhead != "$")
             {
-                return false;
+                return Program_();
             }
             else
             {
@@ -108,13 +108,21 @@ namespace Proyecto_Compiladores_2020.Data
         {
 
             var flag1 = VariableDecl();
-            if (flag1 == false)
+            var flag2 = true;
+            if (flag1)
+            {
+                //la gramatica fué aceptada
+                flag2 = false;
+            }
+            else if (flag1 == false)
             {//no pertenece, hacer el backtracking
+                //backtrackin'
                 Console.Clear();
                 Indexer = 0;
                 Actual_LookAhead = tokenList[Indexer].Key;
+                flag2 = FunctionDecl();
             }
-            var flag2 = FunctionDecl();
+            //si alguna de las dos, da true, fue aceptada
             return flag1 || flag2;
         }
         private bool VariableDecl()

@@ -1,3 +1,4 @@
-string Prueba ();
-int numero ;
-boolean flag;
+string Prueba;
+string[] PruebaArr;
+int[] numeroArr ;int numero ;
+boolean flag;boolean []flagArr;
