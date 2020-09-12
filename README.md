@@ -149,7 +149,7 @@ Ejemplos de Identificadores Correctos e Incorrectos
 ####  Manejo de Errores           
 
         Se manejo de dos diferentes formas:
-             1. Declaración de Variables: Si viene un token que no termina con ";" o "{}" esto nos da a decir que estos tokens son de la otra función.
+             1. Declaración de Variables: Si viene un token que no termina con ";" esto nos da a decir que estos tokens son de la otra función.
                 Se hace un backtracking porque asi se sabe que se tiene que ir a la otra función. Si la primera expresión esta buena, esta se analiza 
                 y se sigue con la siguiente, de una forma recursiva. Cuando se usa el backtracking, se regresa a las tokens que teniamos y luego 
                 de regresar los tokens ya se tendría listos para poder analizarlos otra vez pero apartir de la otra producción.
