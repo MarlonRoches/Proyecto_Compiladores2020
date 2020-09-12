@@ -32,8 +32,9 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex Number = new Regex(@"^([0-9])+$");
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
         private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
- 
+
        
+
         public void Sustituir(string code, string ruta)
         {
           
@@ -105,6 +106,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtKey;
                                     Console.ForegroundColor = ConsoleColor.Cyan;
                                     writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
+                                    GrammarValidation.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
                                     ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtKey;
                                     ColEnd = 0;
@@ -119,6 +121,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtOperator;
                                     Console.ForegroundColor = ConsoleColor.DarkRed;
                                     writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart + 1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
+                                    GrammarValidation.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
                                     ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart+1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtOperator;
                                     ColEnd = 0;
@@ -167,6 +170,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                                     Console.BackgroundColor = ConsoleColor.White;
                                     writer.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
+                                    GrammarValidation.Instance.pushIntoList("stringConstant", Cadena);
                                     ///Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -290,6 +294,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtBoolean;
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
+                                    GrammarValidation.Instance.pushIntoList("boolConstant", idActual);
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
                                     colStart += lenghtBoolean;
                                     ColEnd = 0;
@@ -319,6 +324,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     else
                                     {
                                         writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
+                                        GrammarValidation.Instance.pushIntoList("ident", idActual);
 
                                         ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
 
@@ -340,6 +346,9 @@ namespace Proyecto_Compiladores_2020.Data
 
 
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
+
+                                    GrammarValidation.Instance.pushIntoList("hexagecimalCostant", idActual);
+
                                     //Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
                                     colStart += lenghtDoubleRegx;
                                     ColEnd = 0;
@@ -354,6 +363,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtDouble;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
+                                    GrammarValidation.Instance.pushIntoList("doubleConstant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
                                     colStart += lenghtDouble;
@@ -368,6 +378,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtInteger;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
+                                    GrammarValidation.Instance.pushIntoList("intCostant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                     colStart += lenghtInteger;
@@ -402,6 +413,8 @@ namespace Proyecto_Compiladores_2020.Data
                                             //FACTORIADO en string
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_Identifier (value = {idActual})");
+                                            GrammarValidation.Instance.pushIntoList("ident", fact);
+
                                             ///Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 
                                             break;
@@ -423,7 +436,9 @@ namespace Proyecto_Compiladores_2020.Data
                                             idActual = fact;
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
-                                           /// Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
+                                            GrammarValidation.Instance.pushIntoList("intCostant", fact);
+
+                                            /// Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 
                                             break;
                                         }
@@ -432,6 +447,8 @@ namespace Proyecto_Compiladores_2020.Data
                                             //mostramos error
                                             aux = validation.Substring(0, validation.Length);
                                             Console.WriteLine($"*** line {line}.*** Unrecognized char: '{aux}'");
+                                          //  OutoutTokens.Add("NFCostant");
+
                                             idActual = aux;
                                             indexer = 0;
                                             LineaActual = LineaActual.Remove(0, idActual.Length);
@@ -451,8 +468,6 @@ namespace Proyecto_Compiladores_2020.Data
             writer.Close();
             OutPut.Close();
         }
-
-
         public Dictionary<string, string> DictionarySymbols()
         {
             Dictionary<string, string> Reservadas_Sustitución = new Dictionary<string, string>();
@@ -507,7 +522,6 @@ namespace Proyecto_Compiladores_2020.Data
             Reservadas_Sustitución.Add("=", "Æ");
             return Reservadas_Sustitución;
         }
-
         string DoubleProces(string actual, string resto)
             {
             var doubleStr = "";
@@ -605,7 +619,6 @@ namespace Proyecto_Compiladores_2020.Data
             }
 
         }
-
         private string TraducirLinea(string linea)
         {
             foreach (var item in DiccionarioInvertido)

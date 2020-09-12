@@ -13,6 +13,7 @@ namespace Proyecto_Compiladores_2020
     {
         static void Main(string[] args)
         {
+
             Console.WriteLine("Alexander Villatoro / Marlon Roches");
             Console.WriteLine("Compiladores 2020");
             Console.WriteLine("");
@@ -37,37 +38,25 @@ namespace Proyecto_Compiladores_2020
             Console.ForegroundColor = ConsoleColor.White;
 
             var ruta =Console.ReadLine();
+            ruta = ruta.Replace("\"", "").Trim();
             Console.Clear();
+            Console.WriteLine($"#   #   #   #   #   ERRORES Fase 1   #   #   #   #   #");
             Data.Data.Instance.Sustituir(Data.TextValidation.Instance.ValidarStrings( Data.TextValidation.Instance.ValidarComentarios(ruta)), ruta);
 
-            Console.WriteLine($"#   #   #   #   #   ERRORES    #   #   #   #   #");
             Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
+           // Console.ReadLine();
+            Console.WriteLine("");
+            
+
+            
+            
+            Data.GrammarValidation.Instance.LabA_Parser(ruta);
+            Console.WriteLine($"Presione 3 veces Enter Para Salir...");
             Console.ReadLine();
-
-            //{ } [] () {}
-            ////id		
-            //TOKEN 1 = LETRA.(LETRA|DIGITO)*
-            //json5
-            ////integer
-            //TOKEN 2 = DIGITO.DIGITO* 
-            //    15654
-
-            ////string    
-            //TOKEN 3 = '"'.LETRA(LETRA|DIGITO)*.'"'
-            //    "asdasdasd"
-            ////Bool   
-            //TOKEN 4=(TRUE|FALSE)
-            //true
-            //    //double
-            //TOKEN 5 = DIGITO.DIGITO*.'.'DIGITO.DIGITO*
-            //    5.21651
-
-            ////integer asignado
-            //TOKEN 2 = £.' '*.LETRA.(LETRA|DIGITO)*.' '*.= ' '*.DIGITO.DIGITO *.' '*.';'
-            //         int    numero                          =            1565;
-            ////string asignado
-            //TOKEN 2 = £.' '*.LETRA.(LETRA|DIGITO)*.' '*.= ' ' *.'"'.LETRA(LETRA|DIGITO)*.'"'.' '*.';'
-            //         int numero = 1565;
+            Console.WriteLine($"Presione 2 veces Enter Para Salir...");
+            Console.ReadLine();
+            Console.WriteLine($"Presione 1 veces Enter Para Salir...");
+            Console.ReadLine();
 
         }
     }
