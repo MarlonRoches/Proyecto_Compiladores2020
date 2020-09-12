@@ -26,7 +26,7 @@ Es un analizador léxico para una mini compilador creado en C# para el lenguaje 
 #### Objetivo General 
 En el primer proyecto de programación en clase de Compiladores, ustedes iniciarán su compilador con la aplicación del análisis léxico. Para la primera tarea del front-end, crearán un escáner para el lenguaje de programación asignado. El escáner irá reconociendo los tokens en el orden en que se leen, hasta el final del archivo.  Para cada lenguaje, el escáner determinará sus atributos adecuadamente (estos eventualmente serán utilizados por otros componentes de su compilador) para que la información sobre cada símbolo deba estar correctamente impresa. 
 
-## Estructura Lexicográfica
+## Estructura Lexicográfica ⚙️
 #### Palabras Reservadas
     ● void,int,double,boolean,string,class,const,interface,null,this,extends,implements,for,while,if,else,return,break,New,System,out,println
 #### Identificadores
@@ -158,16 +158,16 @@ Ejemplos de Identificadores Correctos e Incorrectos
                 el que token que esta mal escrito. No va a sacar error a toda la linea si no que nos demostrara el valor que debería de ir.
                 
 ####  Archivos de Prueba
-int Metodo() while(a + b)/*(true || false);
-void Metodo2 (boolean numero, string lol , string xd, int flag) */
-if ( flag3 && true == false % !flag4 && -true % false ) a + b; 
+int Metodo() while(a + b)/*(true || false); <br/>
+void Metodo2 (boolean numero, string lol , string xd, int flag) */ <br/>
+if ( flag3 && true == false % !flag4 && -true % false ) a + b; <br/>
 
-string Prueba;
-string[] PruebaArr;
-int[] numeroArr ;int numero ;
-boolean flag;boolean []flagArr;
-## Programadores
+string Prueba; <br/>
+string[] PruebaArr; <br/>
+int[] numeroArr ;int numero ; <br/>
+boolean flag;boolean []flagArr; <br/>
+## Programadores ✒️
     ○ Marlon Roches
     ○ Alexander Villatoro
-## Creado en 
+## Creado en 🛠️
     ● Aplicación en Consola y en .NET Framework Version 4.7.2
