@@ -99,7 +99,7 @@ namespace Proyecto_Compiladores_2020.Data
                 return false;
             }
             else
-            { 
+            {
                 //#line 70
                 return true;
             }
@@ -108,9 +108,9 @@ namespace Proyecto_Compiladores_2020.Data
         {
 
             var flag1 = VariableDecl();
-            if (flag1==false)
+            if (flag1 == false)
             {//no pertenece, hacer el backtracking
-                Console.Clear();   
+                Console.Clear();
                 Indexer = 0;
                 Actual_LookAhead = tokenList[Indexer].Key;
             }
@@ -121,7 +121,7 @@ namespace Proyecto_Compiladores_2020.Data
         {
             if (Variable())
             {
-                
+
                 return MatchToken(";");
             }
             else
@@ -134,7 +134,7 @@ namespace Proyecto_Compiladores_2020.Data
         }
         private bool Variable()
         {
-           
+
             if (Type())
             {
                 MatchToken("ident");
@@ -197,7 +197,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                 //de Aqui
                 MatchToken("ident");
-                if (Actual_LookAhead  == "()")
+                if (Actual_LookAhead == "()")
                 {
                     MatchToken("()");
                     Stmt(); //ver más adelante
@@ -263,20 +263,20 @@ namespace Proyecto_Compiladores_2020.Data
         {
             if (Variable())
             {
-                
+
                 Variable_Prime();
 
                 if (Actual_LookAhead != ")")
                 {
-                // MatchToken(",");
+                    // MatchToken(",");
 
                 }
-                
+
                 return true;
             }
             else
             {//eps
-                return true;      
+                return true;
             }
 
         }
@@ -343,12 +343,12 @@ namespace Proyecto_Compiladores_2020.Data
             {
                 if (Actual_LookAhead == "$")
                 {
-                return true;
+                    return true;
 
                 }
                 else
                 {
-                return Stmt();
+                    return Stmt();
 
                 }
             }
@@ -372,7 +372,7 @@ namespace Proyecto_Compiladores_2020.Data
             else if (Expr())
             {
                 // falta expr
-             
+
                 MatchToken(";");
                 return true;
 
@@ -387,7 +387,7 @@ namespace Proyecto_Compiladores_2020.Data
         {
             MatchToken("while");
             MatchToken("(");
-
+            //aqui  es donde se procseasa
             if (Expr())
             {
                 MatchToken(")");
@@ -417,7 +417,7 @@ namespace Proyecto_Compiladores_2020.Data
 
         private bool IfStmt()
         {
-            if (Actual_LookAhead =="else")
+            if (Actual_LookAhead == "else")
             {
 
                 MatchToken("else");
@@ -434,8 +434,8 @@ namespace Proyecto_Compiladores_2020.Data
             var lola = B();
             var lolo = Expr_Prime();
             //Expr  -> B Expr'
-            return lola||lolo;
-            
+            return lola || lolo;
+
         }
         //tiene recursividad infinita con Lvalue y con Expr
         #region Expr Prop
@@ -448,66 +448,58 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("||");
                 if (B())
                 {
-                    Expr_Prime();
                     return Expr_Prime();
                 }
                 else { return true; }
             }
             else
             {
-                return true;
+                return B_Prime();
             }
         }
         private bool B()
         {//B				-> C B'
-            return C()|| B_Prime();
-           
+            return C() || B_Prime();
+
         }
         private bool B_Prime()
         { //B'				-> && C | ϵ
 
-                if (Actual_LookAhead == "||")
+            if (Actual_LookAhead == "&&")
+            {
+
+                //Expr'			-> || B Expr' | ϵ
+                MatchToken("&&");
+                if (C())
                 {
 
-                    //Expr'			-> || B Expr' | ϵ
-                    MatchToken("||");
-                    if (B())
-                    {
-                        Expr_Prime();
-                        return Expr_Prime();
-                    }
-                    else { return true; }
+                    return Expr_Prime();
                 }
-                else
-                {
-                    return true;
-            }
-            MatchToken("&&");
-            if (C())
-            {
-                return true;
+                else { return true; }
             }
             else
             {
-
-                return true;
+                return C_Prime();
             }
+
         }
 
         private bool C()
         {
-            return D()|| C_Prime();
-            
+            return D() || C_Prime();
+
         }
         private bool C_Prime()
         {
             //C'-> == D C' | != D C' | ϵ
             if (Actual_LookAhead == "==")
             {
+
                 MatchToken("==");
                 if (D())
                 {
-                    return C_Prime();
+
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -519,7 +511,8 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("!=");
                 if (D())
                 {
-                    return C_Prime();
+
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -528,13 +521,13 @@ namespace Proyecto_Compiladores_2020.Data
             }
             else
             {
-                return true;
+                return D_Prime();
             }
         }
         private bool D()
         {
-            return E()|| D_Prime();
-          
+            return E() || D_Prime();
+
         }
         private bool D_Prime()
         {
@@ -544,7 +537,8 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("<");
                 if (E())
                 {
-                    return D_Prime();
+
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -556,7 +550,8 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("<=");
                 if (E())
                 {
-                    return D_Prime();
+
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -568,7 +563,8 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken(">");
                 if (E())
                 {
-                    return D_Prime();
+
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -580,7 +576,8 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken(">=");
                 if (E())
                 {
-                    return D_Prime();
+
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -589,13 +586,13 @@ namespace Proyecto_Compiladores_2020.Data
             }
             else
             {
-                return true;
+                return E_Prime();
             }
         }
         private bool E()
         {
-            return F()|| E_Prime();
-            
+            return F() || E_Prime();
+
         }
         private bool E_Prime()
         {
@@ -605,7 +602,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("+");
                 if (F())
                 {
-                    return E_Prime();
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -617,7 +614,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("-");
                 if (F())
                 {
-                    return E_Prime();
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -626,7 +623,7 @@ namespace Proyecto_Compiladores_2020.Data
             }
             else
             {
-                return true;
+                return F_Prime();
             }
         }
         private bool F()
@@ -641,7 +638,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("*");
                 if (G())
                 {
-                    return F_Prime();
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -653,7 +650,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("/");
                 if (G())
                 {
-                    return F_Prime();
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -665,7 +662,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("%");
                 if (G())
                 {
-                    return F_Prime();
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -707,7 +704,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("[");
                 if (Igual_Prime())
                 {
-                    return H_Prime();
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -720,7 +717,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("ident");
                 if (Igual_Prime())
                 {
-                    return H_Prime();
+                    return Expr_Prime();
                 }
                 else
                 {
@@ -756,7 +753,7 @@ namespace Proyecto_Compiladores_2020.Data
             }
             else if (Constant())
             {
-                return Constant();
+                return true;
             }
             else if (Actual_LookAhead == "ident")
             {
@@ -797,6 +794,46 @@ namespace Proyecto_Compiladores_2020.Data
         {
             tokenList.Add(new KeyValuePair<string, string>(type, dato));
         }
-            
+
+
+
+
+        //private bool Lvalue()
+        //{
+        //    if (Actual_LookAhead == "ident")
+        //    {
+        //        MatchToken("ident");
+
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        if (Expr())
+        //        {
+        //            if (Actual_LookAhead == ".")
+        //            {
+        //                MatchToken(".");
+        //                MatchToken("ident");
+        //                return true;
+        //            }
+        //            else if (Actual_LookAhead == "[")
+        //            {
+        //                MatchToken("[");
+        //                if (Expr())
+        //                {
+        //                    if (Actual_LookAhead == "]")
+        //                    {
+        //                        MatchToken("]");
+        //                        return true;
+        //                    }
+        //                    else { return false; }
+        //                }
+        //                else { return false; }
+        //            }
+        //            else { return false; }
+        //        }
+        //        else { return false; }
+        //    }
+        //}
     }
 }

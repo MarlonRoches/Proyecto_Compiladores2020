@@ -1,1 +1,4 @@
-void Metodo(boolean numero, string lol , string xd, int flag) while ( flag || true / false != flag || true => false) if ( flag && true == false !flag && -true % false ) a + b; 
+string[] Variable;
+void Metodo(boolean numero, string lol , string xd, int flag) 
+while ( flag || true / false != flag2 || true >= false) true || false
+if ( flag3 && true == false !flag4 && -true % false ) a + b; 
