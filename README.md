@@ -88,7 +88,7 @@ Ejemplos de Identificadores Correctos e Incorrectos
 
                 VariableDecl    -> Variable ; 
 
-                 Variable        -> Type ident
+                Variable        -> Type ident
 
                 Type            -> int Type’ | double Type’| boolean Type’| string Type’ | ident Type’ 
 
@@ -108,7 +108,7 @@ Ejemplos de Identificadores Correctos e Incorrectos
 
                 IfStmt’            -> else Stmt | ε
 
-                 WhileStmt        -> while ( Expr ) Stmt
+                WhileStmt        -> while ( Expr ) Stmt
 
                 Expr             -> B Expr'
 
@@ -146,8 +146,15 @@ Ejemplos de Identificadores Correctos e Incorrectos
 
                 Constant        -> intCostant | doubleConstant | boolConstant | stringConstant | null
 
-####  Manejo de Erroes           
+####  Manejo de Errores           
 
+        Se manejo de dos diferentes formas:
+                1. Declaración de Variables: Si viene un token que no termina con ";" o "{}" esto nos da a decir que estos tokens son de la otra función.
+                   Se hace un backtracking porque asi se sabe que se tiene que ir a la otra función. Si la primera expresión esta buena, esta se analiza 
+                   y se sigue con la siguiente, de una forma recursiva. Cuando se usa el backtracking, se regresa a las tokens que teniamos y luego 
+                   de regresar los tokens ya se tendría listos para poder analizarlos otra vez pero apartir de la otra producción.
+                2. Declaración de Funciones: Si existe un error, lo que te tiene que decir el anazalizador el token que deberia estar esperando y demuestra
+                   el que token que esta mal escrito. No va a sacar error a toda la linea si no que nos demostrara el valor que debería de ir.
 
 ## Programadores
     ○ Marlon Roches
