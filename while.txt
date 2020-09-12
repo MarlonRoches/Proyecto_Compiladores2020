@@ -1,6 +1,1 @@
-string[] Variable;
-void Metodo() 
-while(a + b)/*(true || false);
-
-void Metodo2 (boolean numero, string lol , string xd, int flag) */
-if ( flag3 && true == false % !flag4 && -true % false ) a + b; 
+int Metodo() while[a + b) hola ;

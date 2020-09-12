@@ -19,74 +19,118 @@ namespace Proyecto_Compiladores_2020.Data
             }
         }
         private static List<KeyValuePair<string, string>> tokenList = new List<KeyValuePair<string, string>>();
+        private static List<KeyValuePair<string, string>> Aceptados = new List<KeyValuePair<string, string>>();
+        private static string[] LineasSplit;
+        public static int indexDiccionario = 0;
         private static List<string> sintaxError = new List<string>();
-        private int IndexerAux = 0;
+        private int index_BackTracking = 0;
         private bool backExpr = false;
         private static int Indexer = 0;
         private static string Actual_LookAhead = "";
+
+        public static Dictionary<int, List<KeyValuePair<string, string>>> dicc = new Dictionary<int, List<KeyValuePair<string, string>>>();
         #region Pre hechas
+        //(true || false)
 
         public void LabA_Parser()
         {
+
+            Lineas();
             tokenList.Add(new KeyValuePair<string, string>("$", ""));
-            Actual_LookAhead = tokenList[Indexer].Key;
-            Program_();
+            Actual_LookAhead = dicc[0][0].Key;
+
+            for (int i = 0; i < dicc.Count; i++)
+            {
+                indexDiccionario = i;
+                Program_();
+                Indexer = 0;
+                index_BackTracking = 0;
+                Actual_LookAhead = dicc[i][0].Key;
+            }
+
         }
+        public void  Lineas()
+        {
+            var dicc_ = new Dictionary<int, List<KeyValuePair<string, string>>>();
+            var inde = 0;
+            var aux = "";
+            List<KeyValuePair<string, string>> auxList = new List<KeyValuePair<string, string>>();
+            foreach (var item in tokenList)
+            {
+                if (item.Key == ";")
+                {
+
+                    auxList.Add(item);
+                      auxList.Add(new KeyValuePair<string, string>("$","$"));
+                    dicc.Add(inde, auxList);
+                    auxList = new List<KeyValuePair<string, string>>();
+                    inde++;
+                }
+                else
+                {
+                 auxList.Add(item);
+
+                }
+            }
+
+            if (auxList.Count != 0)
+            {
+                auxList.Add(new KeyValuePair<string, string>("$", "$"));
+                dicc.Add(inde, auxList);
+                auxList = new List<KeyValuePair<string, string>>();
+            }
+        } 
         private bool MatchToken(string expectedToken)
         {
-            try
-            {
-                if (Actual_LookAhead == expectedToken)
+             if (Actual_LookAhead == expectedToken)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Token: {Actual_LookAhead} ta nitido                         {tokenList[Indexer].Value}");
+                   // Console.WriteLine($"Token: {Actual_LookAhead} ta nitido                         {dicc[indexDiccionario][Indexer].Value} ");
+                    Aceptados.Add(dicc[indexDiccionario][Indexer]);
+                    index_BackTracking++;
                     Console.ForegroundColor = ConsoleColor.White;
                     Indexer++;
-                    Actual_LookAhead = tokenList[Indexer].Key;
+                    Actual_LookAhead = dicc[indexDiccionario][Indexer].Key;
                     return true;
                 }
                 else
                 {
                     if (Actual_LookAhead == "$")
                     {
-                        //aqui se acabaron los tokens pero sigue esperando
-                        Console.Write($"*** Err -.- Se esperaba ' ");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($"{expectedToken}");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write($" ' y tenemos ");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write($"EOF");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write($".\n");
-                        return false;
+                   // aqui se acabaron los tokens pero sigue esperando
+                    Console.Write($"*** Err -.- Se esperaba ' ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"{expectedToken}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($" ' y tenemos ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"EOF");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($".\n");
+                    return false;
 
                     }
                     else
                     {
-                        Console.Write($"*** Err -.- Se esperaba ' ");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($"{expectedToken}");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write($" ' y tenemos ' ");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write($"{Actual_LookAhead}");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write($" '.\n");
-                        //amonos al siguiente ->->->
-                        Indexer++;
-                        Actual_LookAhead = tokenList[Indexer].Key;
+                    Console.Write($"*** Err -.- Se esperaba ' ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"{expectedToken}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($" ' y tenemos ' ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{Actual_LookAhead}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($" '.\n");
+                   // amonos al siguiente->->->
+                    Indexer++;
+                        Actual_LookAhead = dicc[indexDiccionario][Indexer].Key;
 
                         return false;
                     }
 
                 }
-            }
-            catch (Exception)
-            {
-                // final 
-                throw;
-            }
+            
+            
         }
         private bool Program_()
         {
@@ -112,15 +156,34 @@ namespace Proyecto_Compiladores_2020.Data
             if (flag1)
             {
                 //la gramatica fué aceptada
+                index_BackTracking = 0;
                 flag2 = false;
             }
             else if (flag1 == false)
             {//no pertenece, hacer el backtracking
                 //backtrackin'
-                Console.Clear();
-                Indexer = 0;
-                Actual_LookAhead = tokenList[Indexer].Key;
+
+                if (index_BackTracking!=0)
+                {
+
+                    Indexer = Indexer - index_BackTracking - 1;
+                    if (Indexer<0)
+                    {
+                        Indexer = 0;
+                    }
+                }
+                Actual_LookAhead = dicc[indexDiccionario][Indexer].Key;
                 flag2 = FunctionDecl();
+                if (flag2)
+                {
+                    //si pertenece a func
+
+                }
+                else
+                {
+                    // no pertence
+                    flag2 = false;
+                }
             }
             //si alguna de las dos, da true, fue aceptada
             return flag1 || flag2;
@@ -129,8 +192,22 @@ namespace Proyecto_Compiladores_2020.Data
         {
             if (Variable())
             {
+                if (Actual_LookAhead == ";")
+                {
+                    //termina y consumimos todo
+                    return MatchToken(";");
+                }
+                else if (Actual_LookAhead == "(" || Actual_LookAhead == "()")
+                {
 
-                return MatchToken(";");
+                    return MatchToken(";");
+
+                }
+                else
+                {
+                
+                    return false;
+                }
             }
             else
             {
