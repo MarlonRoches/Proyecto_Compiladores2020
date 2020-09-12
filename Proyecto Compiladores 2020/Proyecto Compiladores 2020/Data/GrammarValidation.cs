@@ -39,7 +39,7 @@ namespace Proyecto_Compiladores_2020.Data
                 if (Actual_LookAhead == expectedToken)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Token: {Actual_LookAhead} ta nitido                 {tokenList[Indexer].Value}");
+                    Console.WriteLine($"Token: {Actual_LookAhead} ta nitido                         {tokenList[Indexer].Value}");
                     Console.ForegroundColor = ConsoleColor.White;
                     Indexer++;
                     Actual_LookAhead = tokenList[Indexer].Key;
@@ -392,7 +392,7 @@ namespace Proyecto_Compiladores_2020.Data
             {
                 MatchToken(")");
                 Stmt();
-                return true;
+                    return true;
             }
             else
             {
@@ -760,7 +760,7 @@ namespace Proyecto_Compiladores_2020.Data
                 MatchToken("ident");
                 if (Igual_Prime())
                 {
-                    return Igual_Prime();
+                    return true;
                 }
                 else
                 {
