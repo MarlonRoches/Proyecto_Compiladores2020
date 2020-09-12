@@ -8,10 +8,10 @@ Es un analizador léxico para una mini compilador creado en C# para el lenguaje 
 
 - [Fase 1](#fase-1).
 - [Objetivo](#objetivo-general).
-- [Estructura Lexicográfica](#estructura-lexicográfica).
-- [Programadores](#programadores).
+- [Estructura Lexicográfica](#estructura-lexicográfica-%EF%B8%8F).
 - [Laboratorio A](#laboratorio-a).
-- [Creado en](#creado-en).
+- [Programadores](#programadores-%EF%B8%8F).
+- [Creado en](#creado-en-%EF%B8%8F).
 
 ## Flujo del Programa
         ● Pasos
@@ -26,7 +26,7 @@ Es un analizador léxico para una mini compilador creado en C# para el lenguaje 
 #### Objetivo General 
 En el primer proyecto de programación en clase de Compiladores, ustedes iniciarán su compilador con la aplicación del análisis léxico. Para la primera tarea del front-end, crearán un escáner para el lenguaje de programación asignado. El escáner irá reconociendo los tokens en el orden en que se leen, hasta el final del archivo.  Para cada lenguaje, el escáner determinará sus atributos adecuadamente (estos eventualmente serán utilizados por otros componentes de su compilador) para que la información sobre cada símbolo deba estar correctamente impresa. 
 
-## Estructura Lexicográfica ⚙️
+### Estructura Lexicográfica ⚙️
 #### Palabras Reservadas
     ● void,int,double,boolean,string,class,const,interface,null,this,extends,implements,for,while,if,else,return,break,New,System,out,println
 #### Identificadores
@@ -152,10 +152,12 @@ Ejemplos de Identificadores Correctos e Incorrectos
              1. Declaración de Variables: Si viene un token que no termina con ";" esto nos da a decir que estos tokens son de la otra función.
                 Se hace un backtracking porque asi se sabe que se tiene que ir a la otra función. Si la primera expresión esta buena, esta se analiza 
                 y se sigue con la siguiente, de una forma recursiva. Cuando se usa el backtracking, se regresa a las tokens que teniamos y luego 
-                de regresar los tokens ya se tendría listos para poder analizarlos otra vez pero apartir de la otra producción.
+                de regresar los tokens ya se tendría listos para poder analizarlos otra vez pero apartir de la otra producción. 
                 
              2. Declaración de Funciones: Si existe un error, lo que te tiene que decir el anazalizador el token que deberia estar esperando y demuestra
                 el que token que esta mal escrito. No va a sacar error a toda la linea si no que nos demostrara el valor que debería de ir.
+                Conforme se este derivando la expresión y encuentre el token que acepta o no aceptam si lo acepta no demuestra nada, y si no lo acepta,
+                va a tirar un error diciendo el valor que deberia de aparecer y el valor incorrecto
                 
 ####  Archivos de Prueba
 ```java
@@ -169,7 +171,13 @@ string[] PruebaArr;
 int[] numeroArr ;int numero ;
 boolean flag;boolean []flagArr;
 ```
-
+```java
+Car[] Mercedez hola;
+string Prueba;
+string[] PruebaArr;
+int[] numeroArr ;int numero ;
+boolean flag;boolean []flagArr;
+```
 ## Programadores ✒️
     ○ Marlon Roches
     ○ Alexander Villatoro
