@@ -1,1 +1,0 @@
-int Metodo() while[a + b) hola ;

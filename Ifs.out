@@ -14,10 +14,23 @@
  flag         line 1 cols 58-61 is T_Identifier
  )         line 1 cols 63-63 is )
  if         line 1 cols 64-66 is T_if
- )         line 1 cols 68-68 is )
+ (         line 1 cols 68-68 is (
  flag         line 1 cols 70-73 is T_Identifier
  ||         line 1 cols 76-77 is ||
  true         line 1 cols 79-83 is T_Boolean
  ||         line 1 cols 85-86 is ||
  false         line 1 cols 88-93 is T_Boolean
  )         line 1 cols 95-95 is )
+ else         line 1 cols 96-100 is T_else
+ if         line 1 cols 101-103 is T_if
+ (         line 1 cols 105-105 is (
+ flag         line 1 cols 107-110 is T_Identifier
+ ||         line 1 cols 113-114 is ||
+ true         line 1 cols 116-120 is T_Boolean
+ ||         line 1 cols 122-123 is ||
+ false         line 1 cols 125-130 is T_Boolean
+ )         line 1 cols 132-132 is )
+ a         line 1 cols 134-134 is T_Identifier
+ +         line 1 cols 137-137 is +
+ c         line 1 cols 138-138 is T_Identifier
+ ;         line 1 cols 140-140 is ;

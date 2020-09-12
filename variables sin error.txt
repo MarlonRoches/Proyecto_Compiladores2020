@@ -1,4 +1,4 @@
-Car[] Mercedez hola;
+Car[] Mercedez;
 string Prueba;
 string[] PruebaArr;
 int[] numeroArr ;int numero ;

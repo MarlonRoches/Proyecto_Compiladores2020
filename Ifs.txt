@@ -1,1 +1,1 @@
-void Metodo(boolean numero, string lol , string xd, int flag) if ( flag || true || false )
+void Metodo(boolean numero, string lol , string xd, int flag) if ( flag || true || false ) else if ( flag || true || false ) a + c;

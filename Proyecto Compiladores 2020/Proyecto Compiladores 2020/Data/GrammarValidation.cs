@@ -491,11 +491,27 @@ namespace Proyecto_Compiladores_2020.Data
             if (Expr())
             {
                 MatchToken(")");
-                if (Stmt())
+                if (Actual_LookAhead == "else")
                 {
-                    IfStmt();
-                }
+                    MatchToken("else");
+                    if (Stmt())
+                    {
+                        IfStmt();
+                    }
                 return true;
+                }
+                else
+                {
+                    if (Stmt())
+                    {
+                        
+                    return IfStmt();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
             return false;
         }
