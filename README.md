@@ -158,14 +158,18 @@ Ejemplos de Identificadores Correctos e Incorrectos
                 el que token que esta mal escrito. No va a sacar error a toda la linea si no que nos demostrara el valor que debería de ir.
                 
 ####  Archivos de Prueba
-int Metodo() while(a + b)/*(true || false); <br/>
-void Metodo2 (boolean numero, string lol , string xd, int flag) */ <br/>
-if ( flag3 && true == false % !flag4 && -true % false ) a + b; <br/>
+```java
+int Metodo() while(a + b)/*(true || false);
+void Metodo2 (boolean numero, string lol , string xd, int flag) */
+if ( flag3 && true == false % !flag4 && -true % false ) a + b;
+```
+```java
+string Prueba;
+string[] PruebaArr;
+int[] numeroArr ;int numero ;
+boolean flag;boolean []flagArr;
+```
 
-string Prueba; <br/>
-string[] PruebaArr; <br/>
-int[] numeroArr ;int numero ; <br/>
-boolean flag;boolean []flagArr; <br/>
 ## Programadores ✒️
     ○ Marlon Roches
     ○ Alexander Villatoro
