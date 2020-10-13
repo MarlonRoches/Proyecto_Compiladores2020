@@ -1,0 +1,39 @@
+/*     an almost-nested comment 
+asd
+ddadsddsdas*/
+class Animal {
+  int height; // attribute
+  double weight;
+   void Eat() { weight = weight * 2.0;}
+}
+
+class Cow : Animal {
+  string name;
+  void Moo() { // single comment }
+}
+
+int a?; // ERROR-1 unknown char
+
+void main() {
+   int b;
+   int a;
+   int d;
+   */ ERROR-2 Unmatched end of comment not single * and /
+   d = a+b;
+
+
+}
+
+/*    /* an almost-nested comment */
+void main() {
+  class Cow betsy;
+  variable="Go, Betsy! Go,  // ERROR-3 string without ending
+              betsy = "! Go, Betsy! // id and ERROR-4 string without ending
+  betsy = New(Cow);
+  betsy.height = 0xa2 + 0XFa4; // two hexadecimals
+  betsy.weight = 1.456;
+  besty.name = "Betsy";
+  betsy.Moo(); /* Go, Betsy!
+}
+
+ERROR-5 EOF in multiline comment! should NOT scan this line!

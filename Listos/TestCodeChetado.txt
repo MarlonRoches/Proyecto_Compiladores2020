@@ -1,0 +1,40 @@
+int Double2 = 0.5911e+19;
+
+int Double7 = 0.6000E+29;
+156#IdPostError 
+smndsk#IdPostError
+abc123#IdPostError
+	void	   	 	  	met$hod(string[] args) {
+		// TODO Auto-generated method stub
+				println(" -> Buenvenidos a AW <- ");
+				println("   ");
+				println(" Selecciona");
+				println(" ----------------------------------------- ");  	 	 	 
+				println("1. Movies ");
+				println("2. Series ");   	 	 	
+				println("3. Books ");
+				println("4. Magazines ");
+				//leer respuesta del usuario
+				
+				 		 	 	int response = Integer.valueOf(sc.nextLine());
+				int Double1 = 1330.591126565E+19;
+		    	int asda$12345678912345678912345678912345 = 20;
+				 	 	 	
+boolean Hexa= 0x16A57321a6c16;
+				 	 	boolean Flag = true;
+					println(" Selecciona");
+					println(" ----------------------------------------- ");
+					println(" ");
+					/*println("1. Movies ");
+					println("2. Series ");
+esto es un comentario dentro
+						 	println("3. Books ");v*/ 				int Nota =100; // uni-linea
+					//println("4. Magazines ");
+					/*println("0. End");
+
+					
+				if (condition) {
+			} else {                    
+                }
+}
+"Cadena cerrada

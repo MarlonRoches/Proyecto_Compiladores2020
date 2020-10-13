@@ -49,8 +49,8 @@ namespace Proyecto_Compiladores_2020
             
 
             
-            
-            Data.GrammarValidation.Instance.LabA_Parser(ruta);
+            // Lab A 
+            //Data.GrammarValidation.Instance.LabA_Parser(ruta);
             Console.WriteLine($"Presione 3 veces Enter Para Salir...");
             Console.ReadLine();
             Console.WriteLine($"Presione 2 veces Enter Para Salir...");

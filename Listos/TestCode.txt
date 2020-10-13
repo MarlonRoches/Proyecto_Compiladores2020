@@ -1,0 +1,34 @@
+ void 		   	 	  	method(string[] args) {
+		// TODO Auto-generated method stub
+				println(" -> Buenvenidos a AW <- );
+				println("   ");
+				println(" Selecciona");
+				println(" ----------------------------------------- ");  	 	 	 
+				println("1. Movies ");
+				println(2. Series ");   	 	 	
+				println("3. Books ");
+				println(4. Magazines ");
+				//leer respuesta del usuario
+				
+				 		 	 	int response = Integer.valueOf(sc.nextLine());
+						    	int Edad = 20;
+				 	 	 	
+				 	 	boolean Flag = true;
+					print*/ln(" Selecciona");
+					println(" ----------------------------------------- ");
+					println(" ");
+					/*println("1. Movies ");
+					println("2. Series ");
+esto es un comentario dentro
+						 	println("3. Books ");v*/ 				int Nota =100; // uni-linea
+					//println("4. Magazines ");
+					println("0. End");
+
+					
+				if (cond/*ition) {
+			} el*/se { */                   
+                }
+	
+
+}
+

@@ -1,0 +1,5 @@
+Car[] Mercedez;
+string Prueba;
+string[] PruebaArr;
+int[] numeroArr ;int numero ;
+boolean flag;boolean []flagArr;

@@ -1,0 +1,100 @@
+ void         line 1 cols 2-6 is T_void
+ method         line 1 cols 53-58 is T_Identifier
+ (         line 1 cols 60-60 is (
+ string         line 1 cols 60-66 is T_string
+ []         line 1 cols 67-68 is []
+ args         line 1 cols 69-72 is T_Identifier
+ )         line 1 cols 74-74 is )
+ {         line 1 cols 76-76 is {
+ println         line 3 cols 33-40 is T_println
+ (         line 3 cols 41-41 is (
+ println         line 4 cols 33-40 is T_println
+ (         line 4 cols 41-41 is (
+"   "  line 4 cols 41-46 is (value = "   "
+ )         line 4 cols 47-47 is )
+ ;         line 4 cols 48-48 is ;
+ println         line 5 cols 33-40 is T_println
+ (         line 5 cols 41-41 is (
+" Selecciona"  line 5 cols 41-54 is (value = " Selecciona"
+ )         line 5 cols 55-55 is )
+ ;         line 5 cols 56-56 is ;
+ println         line 6 cols 33-40 is T_println
+ (         line 6 cols 41-41 is (
+" ----------------------------------------- "  line 6 cols 41-86 is (value = " ----------------------------------------- "
+ )         line 6 cols 87-87 is )
+ ;         line 6 cols 88-88 is ;
+ println         line 7 cols 33-40 is T_println
+ (         line 7 cols 41-41 is (
+"1. Movies "  line 7 cols 41-53 is (value = "1. Movies "
+ )         line 7 cols 54-54 is )
+ ;         line 7 cols 55-55 is ;
+ println         line 8 cols 33-40 is T_println
+ (         line 8 cols 41-41 is (
+ 2.         line 8 cols 41-43 is T_Double ( value = 2.)
+ Series         line 8 cols 45-50 is T_Identifier
+ println         line 9 cols 33-40 is T_println
+ (         line 9 cols 41-41 is (
+"3. Books "  line 9 cols 41-52 is (value = "3. Books "
+ )         line 9 cols 53-53 is )
+ ;         line 9 cols 54-54 is ;
+ println         line 10 cols 33-40 is T_println
+ (         line 10 cols 41-41 is (
+ 4.         line 10 cols 41-43 is T_Double ( value = 4.)
+ Magazines         line 10 cols 45-53 is T_Identifier
+ int         line 13 cols 68-71 is T_int
+ response         line 13 cols 73-80 is T_Identifier
+ =         line 13 cols 83-83 is =
+ Integer         line 13 cols 84-90 is T_Identifier
+ .         line 13 cols 92-92 is .
+ valueOf         line 13 cols 92-98 is T_Identifier
+ (         line 13 cols 100-100 is (
+ sc         line 13 cols 100-101 is T_Identifier
+ .         line 13 cols 103-103 is .
+ nextLine         line 13 cols 103-110 is T_Identifier
+ ()         line 13 cols 112-113 is ()
+ )         line 13 cols 114-114 is )
+ ;         line 13 cols 115-115 is ;
+ int         line 14 cols 61-64 is T_int
+ Edad         line 14 cols 66-69 is T_Identifier
+ =         line 14 cols 72-72 is =
+ 20         line 14 cols 73-75 is T_IntConstant (value = 20)
+ ;         line 14 cols 76-76 is ;
+ boolean         line 16 cols 51-58 is T_boolean
+ Flag         line 16 cols 60-63 is T_Identifier
+ =         line 16 cols 66-66 is =
+ true         line 16 cols 67-71 is T_Boolean
+ ;         line 16 cols 72-72 is ;
+ pr         line 17 cols 41-42 is T_Identifier
+ int         line 17 cols 43-46 is T_int
+ ln         line 17 cols 46-47 is T_Identifier
+ (         line 17 cols 49-49 is (
+" Selecciona"  line 17 cols 49-62 is (value = " Selecciona"
+ )         line 17 cols 63-63 is )
+ ;         line 17 cols 64-64 is ;
+ println         line 18 cols 41-48 is T_println
+ (         line 18 cols 49-49 is (
+" ----------------------------------------- "  line 18 cols 49-94 is (value = " ----------------------------------------- "
+ )         line 18 cols 95-95 is )
+ ;         line 18 cols 96-96 is ;
+ println         line 19 cols 41-48 is T_println
+ (         line 19 cols 49-49 is (
+" "  line 19 cols 49-52 is (value = " "
+ )         line 19 cols 53-53 is )
+ ;         line 19 cols 54-54 is ;
+ int         line 23 cols 66-69 is T_int
+ Nota         line 23 cols 71-74 is T_Identifier
+ =         line 23 cols 77-77 is =
+ 100         line 23 cols 77-80 is T_IntConstant (value = 100)
+ ;         line 23 cols 81-81 is ;
+ println         line 24 cols 41-48 is T_println
+ (         line 24 cols 49-49 is (
+"0. End"  line 24 cols 49-57 is (value = "0. End"
+ )         line 24 cols 58-58 is )
+ ;         line 24 cols 59-59 is ;
+ if         line 26 cols 33-35 is T_if
+ (         line 26 cols 37-37 is (
+ cond         line 26 cols 37-40 is T_Identifier
+ se         line 27 cols 11-12 is T_Identifier
+ {         line 27 cols 15-15 is {
+ }         line 27 cols 52-52 is }
+ }         line 29 cols 2-2 is }
