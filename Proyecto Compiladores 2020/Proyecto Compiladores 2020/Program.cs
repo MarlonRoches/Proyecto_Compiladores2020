@@ -46,9 +46,10 @@ namespace Proyecto_Compiladores_2020
             Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
            // Console.ReadLine();
             Console.WriteLine("");
-            
 
-            
+
+
+            SintaxValidation.Instance.Parser(GrammarValidation.tokenList);
             // Lab A 
             //Data.GrammarValidation.Instance.LabA_Parser(ruta);
             Console.WriteLine($"Presione 3 veces Enter Para Salir...");

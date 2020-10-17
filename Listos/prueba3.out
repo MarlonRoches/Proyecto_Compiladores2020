@@ -1,0 +1,37 @@
+ int         line 1 cols 1-4 is T_int
+ a         line 1 cols 5-5 is T_Identifier
+ ;         line 1 cols 7-7 is ;
+ void         line 2 cols 1-5 is T_void
+ main         line 2 cols 6-9 is T_Identifier
+ ()         line 2 cols 11-12 is ()
+ {         line 2 cols 14-14 is {
+ int         line 3 cols 4-7 is T_int
+ b         line 3 cols 8-8 is T_Identifier
+ ;         line 3 cols 10-10 is ;
+ int         line 4 cols 4-7 is T_int
+ a         line 4 cols 8-8 is T_Identifier
+ ;         line 4 cols 10-10 is ;
+ int         line 5 cols 4-7 is T_int
+ d         line 5 cols 8-8 is T_Identifier
+ ;         line 5 cols 10-10 is ;
+ d         line 7 cols 5-5 is T_Identifier
+ =         line 7 cols 8-8 is =
+ 2         line 7 cols 10-11 is T_IntConstant (value = 2)
+ +         line 7 cols 13-13 is +
+ 3         line 7 cols 15-16 is T_IntConstant (value = 3)
+ *         line 7 cols 18-18 is *
+ 4         line 7 cols 20-21 is T_IntConstant (value = 4)
+ -         line 7 cols 23-23 is -
+ 6         line 7 cols 24-25 is T_IntConstant (value = 6)
+ ;         line 7 cols 26-26 is ;
+ b         line 8 cols 5-5 is T_Identifier
+ =         line 8 cols 8-8 is =
+ 3         line 8 cols 9-10 is T_IntConstant (value = 3)
+ ;         line 8 cols 11-11 is ;
+ a         line 9 cols 5-5 is T_Identifier
+ =         line 9 cols 8-8 is =
+ b         line 9 cols 10-10 is T_Identifier
+ +         line 9 cols 13-13 is +
+ 2         line 9 cols 14-15 is T_IntConstant (value = 2)
+ ;         line 9 cols 16-16 is ;
+ }         line 11 cols 2-2 is }

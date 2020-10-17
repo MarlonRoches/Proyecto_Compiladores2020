@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D6972D8-D6E2-4F37-BEC6-A975470388B1}</ProjectGuid>
+    <ProjectGuid>{E6BBC47E-0764-4783-8D7C-9595F4B44CE8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Proyecto_Compiladores_2020</RootNamespace>
-    <AssemblyName>Proyecto Compiladores 2020</AssemblyName>
+    <RootNamespace>ConsolaDeAutogeneracion</RootNamespace>
+    <AssemblyName>ConsolaDeAutogeneracion</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,17 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Data.cs" />
-    <Compile Include="Data\GrammarValidation.cs" />
-    <Compile Include="Data\SintaxValidation.cs" />
-    <Compile Include="Data\TextValidation.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="AutoGeneracionProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

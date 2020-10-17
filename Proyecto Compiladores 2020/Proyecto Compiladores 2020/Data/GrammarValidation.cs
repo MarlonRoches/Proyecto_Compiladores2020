@@ -19,7 +19,7 @@ namespace Proyecto_Compiladores_2020.Data
                 return _instance;
             }
         }
-        private static List<KeyValuePair<string, string>> tokenList = new List<KeyValuePair<string, string>>();
+        public static List<KeyValuePair<string, string>> tokenList = new List<KeyValuePair<string, string>>();
         private static List<KeyValuePair<string, string>> Aceptados = new List<KeyValuePair<string, string>>();
         private static string[] LineasSplit;
         public static int indexDiccionario = 0;

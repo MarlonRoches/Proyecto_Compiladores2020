@@ -1,0 +1,1 @@
+void ident ( int ident ) { int ident ; int ident ; int ident ; }
