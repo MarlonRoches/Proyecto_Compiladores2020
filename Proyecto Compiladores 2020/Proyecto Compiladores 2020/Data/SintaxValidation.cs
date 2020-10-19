@@ -810,110 +810,90 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "static":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "class":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "{":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "interface":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "void":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "int":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "double":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "boolean":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "string":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "extends":
@@ -928,22 +908,18 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "$":
 					//reduccion a r21
 					reduccion = Reducciones[21].Split('↓')[0].Trim();
 					reducido = Reducciones[21].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "Heritage":
@@ -1172,11 +1148,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r23
 					reduccion = Reducciones[23].Split('↓')[0].Trim();
 					reducido = Reducciones[23].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "implements":
@@ -1227,11 +1201,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r32
 					reduccion = Reducciones[32].Split('↓')[0].Trim();
 					reducido = Reducciones[32].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "void":
@@ -1660,11 +1632,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r32
 					reduccion = Reducciones[32].Split('↓')[0].Trim();
 					reducido = Reducciones[32].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "void":
@@ -1845,11 +1815,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r27
 					reduccion = Reducciones[27].Split('↓')[0].Trim();
 					reducido = Reducciones[27].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "void":
@@ -1924,11 +1892,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r25
 					reduccion = Reducciones[25].Split('↓')[0].Trim();
 					reducido = Reducciones[25].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case ",":
@@ -2608,11 +2574,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r27
 					reduccion = Reducciones[27].Split('↓')[0].Trim();
 					reducido = Reducciones[27].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "void":
@@ -3377,11 +3341,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r25
 					reduccion = Reducciones[25].Split('↓')[0].Trim();
 					reducido = Reducciones[25].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case ",":
@@ -3456,11 +3418,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r39
 					reduccion = Reducciones[39].Split('↓')[0].Trim();
 					reducido = Reducciones[39].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "if":
@@ -3958,11 +3918,9 @@ namespace Proyecto_Compiladores_2020.Data
 					//reduccion a r39
 					reduccion = Reducciones[39].Split('↓')[0].Trim();
 					reducido = Reducciones[39].Split('↓')[1].Trim();
-					Simbolos = Simbolos.Replace(reducido, reduccion);
-					unStack = reducido.Split(' ').Length;
-					for (int i = 0; i < unStack; i++)
+					if (reducido == "\'\'")
 					{
-						StackDeConsumo.Pop();
+						Simbolos += $" {reduccion}";
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				case "if":
