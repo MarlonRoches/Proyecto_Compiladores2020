@@ -9,8 +9,15 @@ namespace ConsolaDeAutogeneracion
 {
     class AutoGeneracionProgram
     {
+
         static void Main(string[] args)
         {
+
+
+
+
+            
+         Dictionary<int, string> Reducciones = new Dictionary<int, string>();
             //
             var lol = nuevoDiccionario();
          
@@ -23,7 +30,9 @@ namespace ConsolaDeAutogeneracion
                 var linea = reader.ReadLine();
                 for (int i = 0; i < 177; i++)
                 {
-                    salida += $"public bool Estado{i} (Stack<int> _Pila, string  _actual , string _lookahead  )\n";
+                   // salida += $"public bool Estado{i} (Stack<int> _Pila, string  _actual , string _lookahead  )\n";
+                    //salida += $"public bool Estado{i} (string  _actual , string _lookahead  )\n";
+                    salida += $"public bool Estado{i} (string _lookahead  )\n";
                     salida += "{\n";
                     var acciones = linea.Replace('\t', '↓').Split('↓');
                     //switch (lookahead)
@@ -39,9 +48,11 @@ namespace ConsolaDeAutogeneracion
                             salida += $"\tcase \"{campos[k]}\":\n";
                             if (acciones[k].Contains("/"))
                             {
-                                //conflictos
-                                salida += $"\t\t//conflicto a {acciones[k]}\n";
-                                salida += $"\t\t\t\t//consume {campos[k]}\n";
+                                //CONFLICTO
+                                //CONFLICTO
+
+                                salida += $"\t\t// CONFLICTO a {acciones[k]}\n";
+                                //salida += $"\t\t\t\t//consume {campos[k]}\n";
                                 //StackDeEntrada
                                 //salida += $" //StackDeEntrada.Pop();\n";
                                 //salida += $" //StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
@@ -56,20 +67,22 @@ namespace ConsolaDeAutogeneracion
                                     salida += $"\t\t//desplazamiento a {acciones[k]}\n";
                                     salida += $"\t\t\t\t//consume {campos[k]}\n";
                                     //StackDeEntrada
-                                    salida += $" //StackDeEntrada.Pop();\n";
-                                    salida += $" //StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
-                                    salida += $"\treturn Estado{acciones[k].Replace("d", "")}(null, null, null);\n";
+                                    salida += $" StackDeEntrada.Pop();\n";
+                                    salida += $" StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
+                                    salida += $"Simbolos += $\"_lookahead \" ";
+                                  
+                                    salida += $"\treturn Estado{acciones[k].Replace("d", "")}(StackDeEntrada.Peek());\n";
                                 }
                                 else if (acciones[k].Contains("r"))
                                 {
                                     salida += $"\t\t//reduccion a {acciones[k]}\n";
-                                    salida += $"\treturn Estado{acciones[k].Replace("r", "")}(null, null, null);\n";
+                                    salida += $"\treturn Estado{acciones[k].Replace("r", "")}(StackDeEntrada.Peek());\n";
 
                                 }
                                 else
                                 {
                                     salida += $"\t\t//irA {acciones[k]}\n";
-                                    salida += $"\treturn Estado{acciones[k]}(null, null, null);\n";
+                                    salida += $"\treturn Estado{acciones[k]}(StackDeEntrada.Peek());\n";
 
                                 }
                             }
@@ -87,39 +100,23 @@ namespace ConsolaDeAutogeneracion
                     linea = reader.ReadLine();
                 }
 
-
                 reader.Close();
-                //while ((linea = reader.ReadLine())!= null)
-                //{
-                //    //var acciones = linea.Replace('\t', '↓').Split('↓');
-                //    //for (int k = 0; k < campos.Length; k++)
-                //    //{
-                //    //    if (acciones[k]!="")
-                //    //    {
-                //    //        salida += $"case \"{campos[k]}\":\n";
-                //    //        if (acciones[k].Contains("d"))
-                //    //        {
+                var gramaticas = new StreamReader("producciones.txt");
+                var num = 0;
+                while ((linea= gramaticas.ReadLine()) != null)
+                {
+                    Reducciones.Add(num,linea );
+                    num++;
+                }
+                var salidaDeIrA = "";
 
-                //    //        salida += $"//desplazamiento a {acciones[k]}\n";
-                //    //        }
-                //    //        else if (acciones[k].Contains("r"))
-                //    //        {
-
-                //    //        salida += $"//reduccion a {acciones[k]}\n";
-                //    //        }
-                //    //        else
-                //    //        {
-
-                //    //        salida += $"//irA {acciones[k]}\n";
-                //    //        }
-                //    //        salida += $"break;\n";
-                //    //    }
-                //    //}
-                //}
-                //foreach (var item in campos)
-                //{
-
-                //}
+                for (int i = 0; i < 177; i++)
+                {
+                    salidaDeIrA +=$"case {i}:\n";
+                    salidaDeIrA += $"//IrA Estado {i}\n";
+                    salidaDeIrA += $"Estado{i}( _lookahead);\n";
+                    salidaDeIrA +=$"break;\n";
+                }
                 return null;
             }
         }
