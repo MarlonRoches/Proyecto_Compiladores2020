@@ -12,11 +12,6 @@ namespace ConsolaDeAutogeneracion
 
         static void Main(string[] args)
         {
-
-
-
-
-            
          Dictionary<int, string> Reducciones = new Dictionary<int, string>();
             //
             var lol = nuevoDiccionario();
@@ -52,13 +47,18 @@ namespace ConsolaDeAutogeneracion
                                 //CONFLICTO
 
                                 salida += $"\t\t// CONFLICTO a {acciones[k]}\n";
-                                //salida += $"\t\t\t\t//consume {campos[k]}\n";
+
+                                salida += $"\t\t//desplazamiento a {acciones[k].Split('/')[0].Trim()}\n";
+                                salida += $"\t\t\t\t//consume {campos[k]}\n";
                                 //StackDeEntrada
-                                //salida += $" //StackDeEntrada.Pop();\n";
-                                //salida += $" //StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
-                                //salida += $"\treturn Estado{acciones[k].Replace("d", "")}(null, null, null);\n";
-                                salida += $"\treturn false;\n";
-                                salida += $"\tbreak;\n";
+                                salida += $"StackDeEntrada.Pop();\n";
+                                salida += $"StackDeConsumo.Push({acciones[k].Split('/')[0].Trim().Replace("d", "")});\n";
+                                salida += "Simbolos += $\" { _lookahead} \";\n";
+                                salida += "Simbolos = Simbolos.Trim();\n";
+
+                                salida += $"\treturn Estado{acciones[k].Split('/')[0].Trim().Replace("d", "")}(StackDeEntrada.Peek());\n";
+                                //salida += $"\treturn false;\n";
+                                //salida += $"\tbreak;\n";
                             }
                             else
                             {
@@ -93,7 +93,6 @@ namespace ConsolaDeAutogeneracion
                                 {
                                     salida += $"\t\t//irA {acciones[k]}\n";
                                     salida += $"\t\tStackDeConsumo.Push({acciones[k]});\n";
-                                    
                                     salida += $"\treturn Estado{acciones[k]}(StackDeEntrada.Peek());\n";
 
                                 }
