@@ -7,6 +7,7 @@ Es un analizador léxico para una mini compilador creado en C# para el lenguaje 
 ## Tabla de Contenido 
 
 - [Fase 1](#fase-1).
+- [Fase 2](#fase-2).
 - [Objetivo](#objetivo-general).
 - [Estructura Lexicográfica](#estructura-lexicográfica-%EF%B8%8F).
 - [Laboratorio A](#laboratorio-a).
@@ -205,6 +206,10 @@ string[] PruebaArr;
 int[] numeroArr ;int numero ;
 boolean flag;boolean []flagArr;
 ```
+
+## Fase 2
+
+
 ## Programadores ✒️
     ○ Marlon Roches
     ○ Alexander Villatoro
