@@ -25,7 +25,7 @@ namespace ConsolaDeAutogeneracion
             Dictionary<string, string> nuevoDiccionario()
             {
                 var salida = "";
-                var campos = "ident↓;↓(↓)↓static↓class↓{↓}↓interface↓[]↓void↓,↓int↓double↓bool↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓#ERROR!↓!=↓||↓>↓>=↓-↓/↓%↓!↓this↓New↓intConstant↓doubleConstant↓boolConstant↓stringConstant↓null↓$↓Start↓Program↓Decl↓Type↓FRoot↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓ElseStmt↓ExPrint↓Expr↓ExprOr↓ExprOrP↓ExprAnd↓ExprAndP↓ExprEquals↓ExprEqualsP↓ExprComp↓ExprCompP".Split('↓');
+                var campos = "ident↓;↓(↓)↓static↓class↓{↓}↓interface↓[]↓void↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓=↓!=↓||↓>↓>=↓-↓/↓%↓!↓this↓New↓intConstant↓doubleConstant↓boolConstant↓stringConstant↓null↓$↓Start↓Program↓Decl↓Type↓FRoot↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓ElseStmt↓ExPrint↓Expr↓ExprOr↓ExprOrP↓ExprAnd↓ExprAndP↓ExprEquals↓ExprEqualsP↓ExprComp↓ExprCompP".Split('↓');
                 var reader = new StreamReader("gramatica.txt");
                 var linea = reader.ReadLine();
                 for (int i = 0; i < 180; i++)

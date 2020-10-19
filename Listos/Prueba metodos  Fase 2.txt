@@ -1,5 +1,3 @@
-void main( int lol ) {
-   int b;
-   int a;
-   int d;
+void main( boolean lol ) { 
+int mundo; static double Auxiliar;
 }

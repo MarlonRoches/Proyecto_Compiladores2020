@@ -1,4 +1,6 @@
  class         line 1 cols 1-6 is T_class
  holaMundo         line 1 cols 8-16 is T_Identifier
- {         line 1 cols 19-19 is {
+ extends         line 1 cols 18-25 is T_extends
+ lol         line 1 cols 27-29 is T_Identifier
+ {         line 1 cols 32-32 is {
  }         line 2 cols 2-2 is }
