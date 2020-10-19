@@ -25,10 +25,10 @@ namespace ConsolaDeAutogeneracion
             Dictionary<string, string> nuevoDiccionario()
             {
                 var salida = "";
-                var campos = "ident↓;↓(↓)↓const↓class↓{↓}↓interface↓[]↓void↓,↓int↓double↓bool↓string↓:↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓=↓!=↓||↓>↓>=↓-↓/↓%↓!↓this↓New↓intConstant↓doubleConstant↓boolConstant↓stringConstant↓null↓$↓Start↓Program↓Decl↓Type↓FRoot↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageP↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓ElseStmt↓ExPrint↓Expr↓ExprOr↓ExprOrP↓ExprAnd↓ExprAndP↓ExprEquals↓ExprEqualsP↓ExprComp↓ExprCompP".Split('↓');
+                var campos = "ident↓;↓(↓)↓static↓class↓{↓}↓interface↓[]↓void↓,↓int↓double↓bool↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓#ERROR!↓!=↓||↓>↓>=↓-↓/↓%↓!↓this↓New↓intConstant↓doubleConstant↓boolConstant↓stringConstant↓null↓$↓Start↓Program↓Decl↓Type↓FRoot↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓ElseStmt↓ExPrint↓Expr↓ExprOr↓ExprOrP↓ExprAnd↓ExprAndP↓ExprEquals↓ExprEqualsP↓ExprComp↓ExprCompP".Split('↓');
                 var reader = new StreamReader("gramatica.txt");
                 var linea = reader.ReadLine();
-                for (int i = 0; i < 177; i++)
+                for (int i = 0; i < 180; i++)
                 {
                    // salida += $"public bool Estado{i} (Stack<int> _Pila, string  _actual , string _lookahead  )\n";
                     //salida += $"public bool Estado{i} (string  _actual , string _lookahead  )\n";
@@ -57,7 +57,8 @@ namespace ConsolaDeAutogeneracion
                                 //salida += $" //StackDeEntrada.Pop();\n";
                                 //salida += $" //StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
                                 //salida += $"\treturn Estado{acciones[k].Replace("d", "")}(null, null, null);\n";
-
+                                salida += $"\treturn false;\n";
+                                salida += $"\tbreak;\n";
                             }
                             else
                             {
@@ -67,21 +68,32 @@ namespace ConsolaDeAutogeneracion
                                     salida += $"\t\t//desplazamiento a {acciones[k]}\n";
                                     salida += $"\t\t\t\t//consume {campos[k]}\n";
                                     //StackDeEntrada
-                                    salida += $" StackDeEntrada.Pop();\n";
-                                    salida += $" StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
-                                    salida += $"Simbolos += $\"_lookahead \" ";
-                                  
+                                    salida += $"StackDeEntrada.Pop();\n";
+                                    salida += $"StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
+                                    salida += "Simbolos += $\" { _lookahead} \";\n";
+                                    salida += "Simbolos = Simbolos.Trim();\n";
+
                                     salida += $"\treturn Estado{acciones[k].Replace("d", "")}(StackDeEntrada.Peek());\n";
                                 }
                                 else if (acciones[k].Contains("r"))
                                 {
                                     salida += $"\t\t//reduccion a {acciones[k]}\n";
-                                    salida += $"\treturn Estado{acciones[k].Replace("r", "")}(StackDeEntrada.Peek());\n";
+                                    salida += $"reduccion = Reducciones[{acciones[k].Replace("r","")}].Split('↓')[0].Trim();\n";
+                                    salida += $" reducido = Reducciones[{acciones[k].Replace("r", "")}].Split('↓')[1].Trim();\n";
+                                    salida += $"Simbolos = Simbolos.Replace(reducido, reduccion);\n";
+                                    salida += $"unStack = reducido.Split(' ').Length;\n";
+                                    salida += $"for (int i = 0; i < unStack; i++)\n";
+                                    salida += "{\n";
+                                    salida += $"    StackDeConsumo.Pop();\n";
+                                    salida += "}\n";
+                                    salida += $"return IrA(StackDeConsumo.Peek(), reduccion);\n";
 
                                 }
                                 else
                                 {
                                     salida += $"\t\t//irA {acciones[k]}\n";
+                                    salida += $"\t\tStackDeConsumo.Push({acciones[k]});\n";
+                                    
                                     salida += $"\treturn Estado{acciones[k]}(StackDeEntrada.Peek());\n";
 
                                 }
@@ -108,14 +120,15 @@ namespace ConsolaDeAutogeneracion
                     Reducciones.Add(num,linea );
                     num++;
                 }
+                gramaticas.Close();
                 var salidaDeIrA = "";
 
-                for (int i = 0; i < 177; i++)
+                for (int i = 0; i < 180; i++)
                 {
                     salidaDeIrA +=$"case {i}:\n";
                     salidaDeIrA += $"//IrA Estado {i}\n";
-                    salidaDeIrA += $"Estado{i}( _lookahead);\n";
-                    salidaDeIrA +=$"break;\n";
+                    salidaDeIrA += $"return Estado{i}( _lookahead);\n";
+                    //salidaDeIrA +=$"break;\n";
                 }
                 return null;
             }
