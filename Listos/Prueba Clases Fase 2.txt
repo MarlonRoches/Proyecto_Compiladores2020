@@ -1,2 +1,2 @@
-class holaMundo extends lol {
+class holaMundo extends lol implements interfaz1 , compresion  {
 }

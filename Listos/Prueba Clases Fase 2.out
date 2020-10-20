@@ -2,5 +2,10 @@
  holaMundo         line 1 cols 8-16 is T_Identifier
  extends         line 1 cols 18-25 is T_extends
  lol         line 1 cols 27-29 is T_Identifier
- {         line 1 cols 32-32 is {
+ implements         line 1 cols 31-41 is T_implements
+ int         line 1 cols 42-45 is T_int
+ erfaz1         line 1 cols 46-51 is T_Identifier
+ ,         line 1 cols 54-54 is ,
+ compresion         line 1 cols 56-65 is T_Identifier
+ {         line 1 cols 69-69 is {
  }         line 2 cols 2-2 is }
