@@ -147,8 +147,7 @@ namespace ConsolaDeAutogeneracion
                             else
                             {
                                 if (acciones[k].Contains("d"))
-                                {
-
+                                {//desplazamientos
                                     salida += $"\t\t//desplazamiento a {acciones[k]}\n";
                                     salida += $"\t\t\t\t//consume {campos[k]}\n";
                                     //StackDeEntrada
@@ -176,8 +175,27 @@ namespace ConsolaDeAutogeneracion
                                     }
                                     else
                                     {
-                                        salida += $"Simbolos = Simbolos.Replace(reducido, reduccion);\n";
+                                        //salida += $"Simbolos = Simbolos.Replace(reducido, reduccion);\n";
+
+                                        salida += "if (Simbolos.Contains(reducido.Trim()))";
+                                        salida += "{";
+                                        salida += "    Simbolos = Simbolos.Replace(reducido, reduccion);";
+                                        salida += "}";
+                                        salida += "else";
+                                        salida += "{";
+                                        salida += "var SimbolosQueSeQuedan = Simbolos.Trim().Split(' ').Length - reducido.Trim().Split(' ').Length;";
+                                        salida += "var aux = \"\";";
+                                        salida += "for (int i = 0; i < SimbolosQueSeQuedan; i++)";
+                                        salida += "{";
+                                        salida += "aux += $\" { Simbolos.Trim().Split(' ')[i]}\";";
+                                        salida += "aux = aux.Trim();";
+                                        salida += "}";
+                                        salida += "aux += $\" { reduccion}\";";
+                                        salida += "aux = aux.Trim();";
+                                        salida += "}";
+
                                         salida += $"unStack = reducido.Split(' ').Length;\n";
+                                        salida += $"//quitando pasos de la stack;\n";
                                         salida += $"for (int i = 0; i < unStack; i++)\n";
                                         salida += "{\n";
                                         salida += $"    StackDeConsumo.Pop();\n";
