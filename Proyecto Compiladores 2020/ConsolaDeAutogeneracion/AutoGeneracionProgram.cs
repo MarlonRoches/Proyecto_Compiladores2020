@@ -177,22 +177,23 @@ namespace ConsolaDeAutogeneracion
                                     {
                                         //salida += $"Simbolos = Simbolos.Replace(reducido, reduccion);\n";
 
-                                        salida += "if (Simbolos.Contains(reducido.Trim()))";
-                                        salida += "{";
+                                        salida += "//if (Simbolos.Contains(reducido.Trim()))";
+                                        salida += "//{";
                                         salida += "    Simbolos = Simbolos.Replace(reducido, reduccion);";
-                                        salida += "}";
-                                        salida += "else";
-                                        salida += "{";
-                                        salida += "var SimbolosQueSeQuedan = Simbolos.Trim().Split(' ').Length - reducido.Trim().Split(' ').Length;";
-                                        salida += "var aux = \"\";";
-                                        salida += "for (int i = 0; i < SimbolosQueSeQuedan; i++)";
-                                        salida += "{";
-                                        salida += "aux += $\" { Simbolos.Trim().Split(' ')[i]}\";";
-                                        salida += "aux = aux.Trim();";
-                                        salida += "}";
-                                        salida += "aux += $\" { reduccion}\";";
-                                        salida += "aux = aux.Trim();";
-                                        salida += "}";
+                                        salida += "//}";
+                                        salida += "//else";
+                                        salida += "//{\n";
+                                        salida += "SimbolosQueSeQuedan = Simbolos.Trim().Split(' ').Length - reducido.Trim().Split(' ').Length;\n";
+                                        salida += " aux = \"\";\n";
+                                        salida += "for (int i = 0; i < SimbolosQueSeQuedan; i++)\n";
+                                        salida += "{\n";
+                                        salida += "aux += $\" { Simbolos.Trim().Split(' ')[i]}\";\n";
+                                        salida += "aux = aux.Trim();\n";
+                                        salida += "}\n";
+                                        salida += "aux += $\" { reduccion}\";\n";
+                                        salida += "aux = aux.Trim();\n";
+                                        salida += "Simbolos = aux;";
+                                        salida += "//}\n";
 
                                         salida += $"unStack = reducido.Split(' ').Length;\n";
                                         salida += $"//quitando pasos de la stack;\n";
