@@ -51,7 +51,37 @@ namespace Proyecto_Compiladores_2020.Data
 			}
 			var actual = StackDeEntrada.Peek();
 			CargarDiccionario();
+
+			//while que se analize mientras la pila de entrada .peek != $
+
+			var CadenaDePrueba = "";
+			for (int i = 0; i < StackDeEntrada.Count; i++)
+			{
+				CadenaDePrueba += $" {StackDeEntrada.ElementAt(i)}";
+				CadenaDePrueba = CadenaDePrueba.Trim();
+			}
+
 			var resultado = Estado0(actual);
+			if (resultado)
+			{
+				Console.BackgroundColor = ConsoleColor.White;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
+				Console.WriteLine("Cadena Aceptada!");
+				Console.ForegroundColor = ConsoleColor.White;
+				Console.BackgroundColor = ConsoleColor.Black;
+
+			}
+			else
+			{
+				Console.BackgroundColor = ConsoleColor.White;
+
+				Console.ForegroundColor = ConsoleColor.DarkRed;
+
+				Console.WriteLine("F");
+				Console.ForegroundColor = ConsoleColor.White;
+				Console.BackgroundColor = ConsoleColor.Black;
+
+			}
 
 			var xdd = 0;
 		}
