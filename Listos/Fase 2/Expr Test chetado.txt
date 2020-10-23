@@ -1,0 +1,49 @@
+static int numero; 
+string[] palabra ; 
+boolean bandera;
+static double bandera;
+
+interface prueba
+{
+double Promedio ( int[] nota1, int[] nota2) ;
+}
+
+
+void metodo1 ( string[] palabra) 
+{ 
+for ( hola / mundo ; prueba >= de ;todos || los.operacionales) 
+while ( coso != dentro . combinados) 
+if ( este > del ) 
+while ( que = esta.mamadisimo) ; 
+else 
+return this ; 
+} 
+
+int metodo1 ( int[] gg , boolean izi) 
+{ 
+if ( - ExprComp)
+	System.out.println ( hola != como);
+else
+ ;
+}
+int metodo2 ( int[] gg , int izi) 
+{ 
+if ( - ExprComp)
+	System.out.println ( hola != como);
+else
+ ;
+}
+int metodo3 ( int[] gg , int izi) 
+{ 
+if ( - ExprComp)
+	System.out.println ( hola != como);
+else
+ ;
+}
+int metodo4 ( int[] gg , int izi) 
+{ 
+if ( - ExprComp)
+	System.out.println ( hola != como);
+else
+ ;
+}
