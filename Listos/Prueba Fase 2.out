@@ -1,8 +1,0 @@
- void         line 1 cols 1-5 is T_void
- main         line 1 cols 6-9 is T_Identifier
- (         line 1 cols 11-11 is (
- int         line 1 cols 12-15 is T_int
- lol         line 1 cols 17-19 is T_Identifier
- )         line 1 cols 22-22 is )
- {         line 1 cols 24-24 is {
- }         line 3 cols 2-2 is }
