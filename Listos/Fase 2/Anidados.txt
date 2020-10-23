@@ -1,8 +1,3 @@
-static int numero; 
-string palabra ; 
-boolean bandera;
-static double bandera;
-
 interface prueba
 {
 double Promedio ( int nota1, int nota2) ;
@@ -21,5 +16,6 @@ return this ;
 
 int metodo1 ( int gg , int izi) 
 { 
-	System.out.println ( hola != como);
+
+	System.out.println ( hola != como , estas);
 }
