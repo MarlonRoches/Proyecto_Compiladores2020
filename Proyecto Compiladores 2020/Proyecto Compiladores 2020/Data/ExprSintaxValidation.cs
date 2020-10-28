@@ -92,8 +92,6 @@ namespace Proyecto_Compiladores_2020.Data
 
 		public bool Err()
 		{
-			//sacar hasta encontrar un ; , ) } en la stack de entrada
-			//consumir la de consumo hasta encontrar un ; o un { de reversa y quitar los n pasos
 			var TokenDeError = StackDeEntrada.Peek();
 
 			var lookahead = StackDeEntrada.Peek();
@@ -3513,7 +3511,7 @@ namespace Proyecto_Compiladores_2020.Data
 					//consume ident
 					StackDeEntrada.Pop();
 					StackDeConsumo.Push(9);
-					Simbolos += $" { _lookahead} ";
+					Simbolos += $" {_lookahead} ";
 					Simbolos = Simbolos.Trim();
 					return Estado9(StackDeEntrada.Peek());
 				case ";":
