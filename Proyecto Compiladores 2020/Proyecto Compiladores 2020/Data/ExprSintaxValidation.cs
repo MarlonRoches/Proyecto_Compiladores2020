@@ -106,7 +106,7 @@ namespace Proyecto_Compiladores_2020.Data
 					if (estadoactual.ContainsKey(StackDeEntrada.Peek()))
 					{
 						// lo cointiene, ir a
-						IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
+						return IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
 						break;
 					}
 					else
@@ -118,6 +118,7 @@ namespace Proyecto_Compiladores_2020.Data
 				else
 				{
 					return false;
+						break;
 				}
 			}
 			return true;
