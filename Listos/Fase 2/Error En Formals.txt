@@ -1,6 +1,7 @@
-void ident ( int ident , )  
-{ 
-}
+void ident ( int ident , void  gola int hola ) 
+{
 
-int hola;
-static string xd ;
+}
+int void int vairbel xcd;
+}
+static int xd ;

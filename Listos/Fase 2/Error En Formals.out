@@ -4,18 +4,21 @@
  int         line 1 cols 15-18 is T_int
  ident         line 1 cols 20-24 is T_Identifier
  ,         line 1 cols 27-27 is ,
- double         line 1 cols 28-34 is T_double
- ident         line 1 cols 36-40 is T_Identifier
- string         line 1 cols 42-48 is T_string
- sdf         line 1 cols 50-52 is T_Identifier
- df         line 1 cols 56-57 is T_Identifier
- s         line 1 cols 60-60 is T_Identifier
- sdf         line 1 cols 63-65 is T_Identifier
- sd         line 1 cols 68-69 is T_Identifier
- nombre         line 1 cols 72-77 is T_Identifier
- ,         line 1 cols 80-80 is ,
- int         line 1 cols 81-84 is T_int
- lol         line 1 cols 86-88 is T_Identifier
- )         line 1 cols 92-92 is )
+ void         line 1 cols 28-32 is T_void
+ gola         line 1 cols 35-38 is T_Identifier
+ int         line 1 cols 40-43 is T_int
+ hola         line 1 cols 45-48 is T_Identifier
+ )         line 1 cols 51-51 is )
  {         line 2 cols 2-2 is {
  }         line 3 cols 2-2 is }
+ int         line 4 cols 1-4 is T_int
+ void         line 4 cols 5-9 is T_void
+ int         line 4 cols 10-13 is T_int
+ vairbel         line 4 cols 15-21 is T_Identifier
+ xcd         line 4 cols 23-25 is T_Identifier
+ ;         line 4 cols 27-27 is ;
+ }         line 5 cols 2-2 is }
+ static         line 6 cols 1-7 is T_static
+ int         line 6 cols 8-11 is T_int
+ xd         line 6 cols 13-14 is T_Identifier
+ ;         line 6 cols 17-17 is ;

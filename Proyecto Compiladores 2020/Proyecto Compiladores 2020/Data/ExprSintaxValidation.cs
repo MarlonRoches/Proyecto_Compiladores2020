@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Proyecto_Compiladores_2020.Data
 {
@@ -33,6 +34,7 @@ namespace Proyecto_Compiladores_2020.Data
 		int SimbolosQueSeQuedan = 0;
 		string aux = "";
 		int unStack = 0;
+		Dictionary<int, Dictionary<string, string>> EstadoDeError;
 		// calcular lookahead
 		// 
 		// obtener lista de tokens
@@ -52,7 +54,7 @@ namespace Proyecto_Compiladores_2020.Data
 			}
 			var actual = StackDeEntrada.Peek();
 			CargarDiccionario();
-
+			EstadoDeError = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(new StreamReader("D:\\Proyecto_Compiladores2020\\jsonDeEstados.txt").ReadToEnd());
 			//while que se analize mientras la pila de entrada .peek != $
 
 			var CadenaDePrueba = "";
@@ -95,15 +97,35 @@ namespace Proyecto_Compiladores_2020.Data
 			var TokenDeError = StackDeEntrada.Peek();
 
 			var lookahead = StackDeEntrada.Peek();
-
-			while (lookahead != ";" && lookahead != "," && lookahead != ")" && lookahead != "}")
+			bool encontrado = true;
+			while (encontrado)
 			{
-				tokensNoEsperados.Add(lookahead);
-				StackDeEntrada.Pop();
-				lookahead = StackDeEntrada.Peek();
+				if (StackDeEntrada.Count != 0)
+				{
+
+					var lola = StackDeEntrada.Peek();
+					var estadoactual = EstadoDeError[StackDeConsumo.Peek()];
+					if (estadoactual.ContainsKey(StackDeEntrada.Peek()))
+					{
+						// lo cointiene, ir a
+						IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
+						break;
+					}
+					else
+					{
+
+						tokensNoEsperados.Add(StackDeEntrada.Pop());
+					}
+				}
+				else
+				{
+					return false;
+				}
 			}
-			return IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
+			return true;
 		}
+
+
 
 		void CargarDiccionario()
 		{
@@ -704,10 +726,7 @@ namespace Proyecto_Compiladores_2020.Data
 					return Err();
 			}
 		}
-		bool Conflictos()
-		{
-			return false;
-		}
+		
 		#region Estados
 		public bool Estado0(string _lookahead)
 		{
