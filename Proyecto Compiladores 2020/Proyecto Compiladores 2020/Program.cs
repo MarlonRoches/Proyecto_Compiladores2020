@@ -50,8 +50,15 @@ namespace Proyecto_Compiladores_2020
 
 
             ExprSintaxValidation.Instance.Parser(GrammarValidation.tokenList);
+
+
+            for (int i = 0; i < ExprSintaxValidation.tokensNoEsperados.Count; i++)
+            {
+                Console.WriteLine($"Err: Token No Esperado {ExprSintaxValidation.tokensNoEsperados[i]}");
+            }
             // Lab A 
             //Data.GrammarValidation.Instance.LabA_Parser(ruta);
+
             Console.WriteLine($"Presione 3 veces Enter Para Salir...");
             Console.ReadLine();
             Console.WriteLine($"Presione 2 veces Enter Para Salir...");

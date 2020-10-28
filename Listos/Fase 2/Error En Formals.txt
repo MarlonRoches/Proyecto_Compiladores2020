@@ -1,0 +1,6 @@
+void ident ( int ident , )  
+{ 
+}
+
+int hola;
+static string xd ;
