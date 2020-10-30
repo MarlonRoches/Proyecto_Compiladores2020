@@ -249,6 +249,15 @@ namespace ConsolaDeAutogeneracion
                 reader.Close();
                 var ax = Newtonsoft.Json.JsonConvert.SerializeObject(estados);
 
+                var diccionarioString = "";
+                for (int i = 0; i < estados.Count; i++)
+                {
+                    diccionarioString += $"EstadoDeError.Add({i}, new Dictionary<string, string>());\n";
+                    foreach (var item in estados[i])
+                    {
+                        diccionarioString += $"EstadoDeError[{i}].Add(\"{item.Key}\",\"{item.Value}\");\n";
+                    }
+                }
                 var salidaDeIrA = "";
                 //for (int i = 0; i < 180; i++)
                 for (int i = 0; i < 171; i++)
