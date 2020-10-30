@@ -1,0 +1,3 @@
+int Metodo() while[a + b) hola ;
+// error de (), por este token es que no pertenece a VariableDecl
+//error de [ en lugar de (

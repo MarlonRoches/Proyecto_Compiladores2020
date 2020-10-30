@@ -1,0 +1,15 @@
+static int numero ; string palabra ; 
+void inicio ( string palabraRservada ) 
+{ 
+if ( numero = palabra) 
+while ( numero = numero.numero) ; 
+}
+
+class holaMundo extends lol implements heredar , compresion 
+{
+}
+
+int Suma (int numero1 , int numero2 )
+{
+
+}

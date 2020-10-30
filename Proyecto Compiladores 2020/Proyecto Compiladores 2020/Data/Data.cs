@@ -24,7 +24,7 @@ namespace Proyecto_Compiladores_2020.Data
         private static Dictionary<string, string> Reservadas_Sustitucion = new Dictionary<string, string>();
         private static Dictionary<string, string> Variables_Sustitucion = new Dictionary<string, string>();
         private static Dictionary<string, string> DiccionarioInvertido = new Dictionary<string, string>();
-        private static Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|const|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
+        private static Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|static|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
         private static Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
         private static Regex Boolean = new Regex("true|false");
         private static Regex IntegerRegx = new Regex(@"^([0-9]+)*$");
@@ -477,7 +477,7 @@ namespace Proyecto_Compiladores_2020.Data
             Reservadas_Sustitución.Add("boolean", "♪");
             Reservadas_Sustitución.Add("string", "♫");
             Reservadas_Sustitución.Add("class", "☼");
-            Reservadas_Sustitución.Add("const", "►");
+            Reservadas_Sustitución.Add("static", "►");
             Reservadas_Sustitución.Add("interface", "◄");
             Reservadas_Sustitución.Add("null", "↕");
             Reservadas_Sustitución.Add("this", "‼");
@@ -520,6 +520,7 @@ namespace Proyecto_Compiladores_2020.Data
             Reservadas_Sustitución.Add(">", "æ");
             Reservadas_Sustitución.Add("<", "Ä");
             Reservadas_Sustitución.Add("=", "Æ");
+
             return Reservadas_Sustitución;
         }
         string DoubleProces(string actual, string resto)

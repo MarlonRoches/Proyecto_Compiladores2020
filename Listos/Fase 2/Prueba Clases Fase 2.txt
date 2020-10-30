@@ -1,0 +1,2 @@
+class holaMundo extends lol implements heredar , compresion  {
+}

@@ -1,0 +1,21 @@
+interface prueba
+{
+double Promedio ( int nota1, int nota2) ;
+}
+
+
+void metodo1 ( string palabra) 
+{ 
+for ( hola / mundo ; prueba>= de ;todos|| los.operacionales) 
+while ( coso != dentro . combinados) 
+if ( este > del ) 
+while ( que = esta.mamadisimo) ; 
+else 
+return this ; 
+} 
+
+int metodo1 ( int gg , int izi) 
+{ 
+
+	System.out.println ( hola != como , estas);
+}

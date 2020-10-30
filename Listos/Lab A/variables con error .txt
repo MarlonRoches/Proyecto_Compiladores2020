@@ -1,0 +1,5 @@
+Car[] Mercedez hola; //tira error por que tiene un hola de mas, se irá mas adelante a la siguiente produccin y dirá lo que esperaba
+string Prueba;
+string[] PruebaArr;
+int[] numeroArr ;int numero ;
+boolean flag;boolean []flagArr;

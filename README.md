@@ -1,3 +1,6 @@
+
+# Proyecto_Compiladores2020
+
 # Mini-Java (Analizador Léxico)
 
 ## Descripción
@@ -206,6 +209,7 @@ string[] PruebaArr;
 int[] numeroArr ;int numero ;
 boolean flag;boolean []flagArr;
 ```
+
 # Mini-Java (Analizador Sintáctico)
 ## Fase 2
 ### Gramatica Fase 2 Mini-Java
@@ -294,3 +298,4 @@ boolean flag;boolean []flagArr;
     ○ Alexander Villatoro
 ## Creado en 🛠️
     ● Aplicación en Consola y en .NET Framework Version 4.7.2
+

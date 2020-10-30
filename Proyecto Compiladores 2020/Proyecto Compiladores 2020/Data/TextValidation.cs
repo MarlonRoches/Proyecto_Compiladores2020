@@ -50,68 +50,80 @@ namespace Proyecto_Compiladores_2020.Data
                     compressedCode += $"{linea}\n";
                     Comentarios_Index++;
                 }
+                //cometarios multilinea
                 else if (linea.Contains("/*"))
                 {
-                    var actual = "";
-                    var aux1 = linea.Remove(0, linea.IndexOf("/*"));
-                    linea = linea.Replace(aux1, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
-                    AgregarComentario(aux1);
-                    actual += linea;
-                    linea = "";
-                    //inicio de comentario multilinea
-                    while (!linea.Contains("*/"))
-                    {
-                        linea = fileCode.ReadLine();
-                        if (linea == null)
-                        {
-                            //EOF EN COMENTARIO
-                            Errores.Add("¦" + $"{Error_Index}".PadLeft(2, '0'), "EOF en un comentario");
-                            compressedCode += "¦" + $"{Error_Index}".PadLeft(2, '0');
-                            Error_Index++;
-                            break;
-                        }
-                        else
-                        {
 
 
-                            if (linea == "")
+                    if (linea.Contains("*/"))
+                    {// el comentario termina en la misma linea
+                        var actual = "";
+                        var aux1 = linea.Remove(0, linea.IndexOf("/*"));
+                        linea = linea.Replace(aux1, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
+                        AgregarComentario(aux1);
+                        actual += linea;
+                        linea = "";
+                    }
+                    else
+                    {// multi linea que no se cierre en la misma linea
+
+                        var actual = "";
+                        var aux1 = linea.Remove(0, linea.IndexOf("/*"));
+                        linea = linea.Replace(aux1, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
+                        AgregarComentario(aux1);
+                        actual += linea;
+                        linea = "";
+                        //inicio de comentario multilinea
+                        while (!linea.Contains("*/"))
+                        {
+                            linea = fileCode.ReadLine();
+                            if (linea == null)
                             {
-                                actual += "\n";
-                            }
-                            else if (linea.Contains("*/"))
-                            {
-                                //contiene final de comentario
-                                //*/  code......
-                                var aux = linea.Substring(0, linea.IndexOf("*/") + 2);
-                                linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
-                                AgregarComentario(aux);
-                                actual += linea;
-                                linea = actual;
+                                //EOF EN COMENTARIO
+                                Errores.Add("¦" + $"{Error_Index}".PadLeft(2, '0'), "EOF en un comentario");
+                                compressedCode += "¦" + $"{Error_Index}".PadLeft(2, '0');
+                                Error_Index++;
                                 break;
                             }
                             else
                             {
-                                //Medio comentarios
-                                //agarrar toda la linea 
-                                var aux = linea;
-                                linea = linea.Replace(linea, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
-                                AgregarComentario(aux);
-                                actual += linea;
-                                linea = "";
 
 
-
-                            }
-                            if (linea == null)
-                            {
-                                //error de comentario no cerrado
-
-
-
-                                break;
+                                if (linea == "")
+                                {
+                                    actual += "\n";
+                                }
+                                else if (linea.Contains("*/"))
+                                {
+                                    //contiene final de comentario
+                                    //*/  code......
+                                    var aux = linea.Substring(0, linea.IndexOf("*/") + 2);
+                                    linea = linea.Replace(aux, "█" + $"{Comentarios_Index}".PadLeft(2, '0'));
+                                    AgregarComentario(aux);
+                                    actual += linea;
+                                    linea = actual;
+                                    break;
+                                }
+                                else
+                                {
+                                    //Medio comentarios
+                                    //agarrar toda la linea 
+                                    var aux = linea;
+                                    linea = linea.Replace(linea, "█" + $"{Comentarios_Index}".PadLeft(2, '0') + "\n");
+                                    AgregarComentario(aux);
+                                    actual += linea;
+                                    linea = "";
+                                }
+                                if (linea == null)
+                                {
+                                    //error de comentario no cerrado
+                                    break;
+                                }
                             }
                         }
+
                     }
+
                     if (linea!=null)
                     {
 
@@ -121,6 +133,7 @@ namespace Proyecto_Compiladores_2020.Data
                         }
                         compressedCode += $"{linea}";
                     }
+
                 }
                 else
                 {
