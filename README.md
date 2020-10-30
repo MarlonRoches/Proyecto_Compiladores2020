@@ -206,7 +206,7 @@ string[] PruebaArr;
 int[] numeroArr ;int numero ;
 boolean flag;boolean []flagArr;
 ```
-
+# Mini-Java (Analizador Sintáctico)
 ## Fase 2
 ### Gramatica Fase 2 Mini-Java
                                 Start->Program
@@ -283,6 +283,10 @@ boolean flag;boolean []flagArr;
                                 Constant->boolConstant
                                 Constant->doubleConstant
                                 Constant->null
+### Tabla de Estados
+<a href="mailto:https://docs.google.com/spreadsheets/d/1KT8kXKfLwkojqElmsG2XVfTTgeOCfz21sXeF841lnOA/edit?usp=sharing">
+    <img align="left" alt="Shubhamdeep Jha | Excel" width="26px" src="https://github.com/sempostma/office365-icons/blob/master/svg/excel.svg" />
+  </a>
 
 ## Programadores ✒️
     ○ Marlon Roches
