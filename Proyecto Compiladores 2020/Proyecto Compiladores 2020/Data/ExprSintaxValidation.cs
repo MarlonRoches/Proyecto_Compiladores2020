@@ -64,7 +64,11 @@ namespace Proyecto_Compiladores_2020.Data
 				CadenaDePrueba = CadenaDePrueba.Trim();
 			}
 
-			var resultado = Estado0(actual);
+			var resultado = false;
+			while (StackDeEntrada.Count!=0)
+			{
+				resultado = Estado0(actual);
+			}
 			if (resultado)
 			{
 				Console.BackgroundColor = ConsoleColor.White;
@@ -113,7 +117,6 @@ namespace Proyecto_Compiladores_2020.Data
 				{
 					Console.WriteLine("ERR: Gramatica no aceptada. Errores hasta EOF");
 					return false;
-						break;
 				}
 			}
 			return true;

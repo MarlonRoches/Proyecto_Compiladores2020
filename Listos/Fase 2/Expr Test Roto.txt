@@ -1,0 +1,61 @@
+static int Celular; 
+string Apellido ; 
+boolean activo;
+static double AlDia;
+Alumno[] Alumnos;
+
+interface MetodosAlumno
+{
+	
+	double Promedio ( Notas [] Lista );
+	string Usuario (string nota1, double nota2);
+	boolean CargarDiccionario (string nota1,double nota2);
+}
+
+class Alumno extends Universidad implements DPI , RENAP
+{
+	//fieldP
+	string Nombre;
+	string Apellido;
+	int Edad;
+	double Promedio;
+	boolean Inscrito;
+
+	boolean ProcesarUsuario ( string palabra) 
+	{ 
+	for ( hola / mundo ; prueba>= de ;todos|| los.operacionales) 
+	while ( coso != dentro.combinados) 
+	if ( este > del ) 
+	while ( que = esta.mamadisimo) ; 
+	else 
+	return this ; 
+	} 
+
+
+
+}
+
+int[] metodo2 ( double gg , string izi) 
+{ 
+	for ( hola / mundo ; prueba -  de ;todos|| los.operacionales) 
+	if ( - ExprComp)
+	System.out.println ( hola != como, estas);
+	else
+ 	;
+}
+
+int metodo3 ( boolean gg , int izi) 
+{ 
+	if ( modulo % ExprComp)
+	System.out.println ( hola != como, estas);
+	else
+ 	;
+}
+
+int metodo1 ( int gg , int izi) 
+{ 
+	if ( - ExprComp)
+	System.out.println ( hola != como, estas);
+	else
+ 	;
+}
