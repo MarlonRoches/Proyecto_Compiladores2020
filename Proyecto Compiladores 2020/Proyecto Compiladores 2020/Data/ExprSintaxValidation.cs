@@ -101,9 +101,8 @@ namespace Proyecto_Compiladores_2020.Data
 					var estadoactual = EstadoDeError[StackDeConsumo.Peek()];
 					if (estadoactual.ContainsKey(StackDeEntrada.Peek()))
 					{
-						// lo contiene, ir a
-						IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
-						break;
+						// lo cointiene, ir a
+						return IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
 					}
 					else
 					{
@@ -114,6 +113,7 @@ namespace Proyecto_Compiladores_2020.Data
 				{
 					Console.WriteLine("ERR: Gramatica no aceptada. Errores hasta EOF");
 					return false;
+						break;
 				}
 			}
 			return true;
