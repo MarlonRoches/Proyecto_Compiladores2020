@@ -64,10 +64,21 @@ namespace Proyecto_Compiladores_2020.Data
 				CadenaDePrueba = CadenaDePrueba.Trim();
 			}
 
-			var resultado = false;
+			var resultado = true;
 			while (StackDeEntrada.Count!=0)
 			{
-				resultado = Estado0(actual);
+				if (StackDeEntrada.Count ==1 && StackDeConsumo.Count == 1)
+				{//todo esta buenardo
+					resultado = true;
+					break;
+
+				}
+				else
+				{
+					var ResultadoParcial = IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
+					resultado = resultado && ResultadoParcial;
+
+				}
 			}
 			if (resultado)
 			{
@@ -723,7 +734,7 @@ namespace Proyecto_Compiladores_2020.Data
 					return Err();
 			}
 		}
-		
+
 		#region Estados
 		public bool Estado0(string _lookahead)
 		{
@@ -818,7 +829,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(8);
 					return Estado8(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado1(string _lookahead)
@@ -830,7 +841,7 @@ namespace Proyecto_Compiladores_2020.Data
 					//StackDeConsumo.Push(acc);
 					return true;
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado2(string _lookahead)
@@ -948,7 +959,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(8);
 					return Estado8(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado3(string _lookahead)
@@ -972,7 +983,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado16(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado4(string _lookahead)
@@ -988,7 +999,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado17(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado5(string _lookahead)
@@ -1032,7 +1043,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(18);
 					return Estado18(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado6(string _lookahead)
@@ -1048,7 +1059,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado19(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado7(string _lookahead)
@@ -1064,7 +1075,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado20(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado8(string _lookahead)
@@ -1116,7 +1127,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado9(string _lookahead)
@@ -1168,7 +1179,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado10(string _lookahead)
@@ -1220,7 +1231,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado11(string _lookahead)
@@ -1272,7 +1283,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado12(string _lookahead)
@@ -1324,7 +1335,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado13(string _lookahead)
@@ -1376,7 +1387,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado14(string _lookahead)
@@ -1406,7 +1417,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado15(string _lookahead)
@@ -1430,7 +1441,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado22(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado16(string _lookahead)
@@ -1482,7 +1493,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado17(string _lookahead)
@@ -1498,7 +1509,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado23(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado18(string _lookahead)
@@ -1514,7 +1525,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado24(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado19(string _lookahead)
@@ -1618,7 +1629,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(25);
 					return Estado25(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado20(string _lookahead)
@@ -1634,7 +1645,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado27(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado21(string _lookahead)
@@ -1662,7 +1673,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "void":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1684,7 +1695,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "static":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1706,7 +1717,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "class":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1728,7 +1739,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "interface":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1750,7 +1761,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "int":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1772,7 +1783,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "double":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1794,7 +1805,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "boolean":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1816,7 +1827,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "string":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1838,7 +1849,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "$":
 					//reduccion a r3
 					reduccion = Reducciones[3].Split('↓')[0].Trim();
@@ -1860,9 +1871,9 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado22(string _lookahead)
@@ -1922,7 +1933,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(8);
 					return Estado8(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado23(string _lookahead)
@@ -1982,7 +1993,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(8);
 					return Estado8(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado24(string _lookahead)
@@ -1998,7 +2009,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado31(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado25(string _lookahead)
@@ -2025,7 +2036,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(32);
 					return Estado32(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado26(string _lookahead)
@@ -2041,7 +2052,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado34(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado27(string _lookahead)
@@ -2112,7 +2123,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(36);
 					return Estado36(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado28(string _lookahead)
@@ -2128,7 +2139,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado38(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado29(string _lookahead)
@@ -2152,7 +2163,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado16(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado30(string _lookahead)
@@ -2168,7 +2179,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado40(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado31(string _lookahead)
@@ -2196,7 +2207,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "void":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2218,7 +2229,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "static":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2240,7 +2251,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "class":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2262,7 +2273,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "interface":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2284,7 +2295,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "int":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2306,7 +2317,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "double":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2328,7 +2339,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "boolean":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2350,7 +2361,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "string":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2372,7 +2383,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "$":
 					//reduccion a r6
 					reduccion = Reducciones[6].Split('↓')[0].Trim();
@@ -2394,9 +2405,9 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado32(string _lookahead)
@@ -2412,7 +2423,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado41(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado33(string _lookahead)
@@ -2428,7 +2439,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado42(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado34(string _lookahead)
@@ -2700,7 +2711,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado35(string _lookahead)
@@ -2716,7 +2727,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado43(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado36(string _lookahead)
@@ -2787,7 +2798,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(36);
 					return Estado36(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado37(string _lookahead)
@@ -2811,7 +2822,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado16(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado38(string _lookahead)
@@ -2831,7 +2842,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(46);
 					return Estado46(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado39(string _lookahead)
@@ -2869,7 +2880,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado48(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado40(string _lookahead)
@@ -2889,7 +2900,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(49);
 					return Estado49(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado41(string _lookahead)
@@ -2968,7 +2979,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(51);
 					return Estado51(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado42(string _lookahead)
@@ -2995,7 +3006,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(54);
 					return Estado54(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado43(string _lookahead)
@@ -3023,7 +3034,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "void":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3045,7 +3056,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "static":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3067,7 +3078,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "class":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3089,7 +3100,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "interface":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3111,7 +3122,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "int":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3133,7 +3144,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "double":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3155,7 +3166,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "boolean":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3177,7 +3188,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "string":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3199,7 +3210,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "$":
 					//reduccion a r8
 					reduccion = Reducciones[8].Split('↓')[0].Trim();
@@ -3221,9 +3232,9 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado44(string _lookahead)
@@ -3253,7 +3264,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado45(string _lookahead)
@@ -3269,7 +3280,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado56(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado46(string _lookahead)
@@ -3297,7 +3308,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "void":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3319,7 +3330,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "static":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3341,7 +3352,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "class":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3363,7 +3374,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "interface":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3385,7 +3396,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "int":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3407,7 +3418,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "double":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3429,7 +3440,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "boolean":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3451,7 +3462,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "string":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3473,7 +3484,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "$":
 					//reduccion a r4
 					reduccion = Reducciones[4].Split('↓')[0].Trim();
@@ -3495,9 +3506,9 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado47(string _lookahead)
@@ -3510,7 +3521,7 @@ namespace Proyecto_Compiladores_2020.Data
 					//consume ident
 					StackDeEntrada.Pop();
 					StackDeConsumo.Push(9);
-					Simbolos += $" {_lookahead} ";
+					Simbolos += $" { _lookahead} ";
 					Simbolos = Simbolos.Trim();
 					return Estado9(StackDeEntrada.Peek());
 				case ";":
@@ -3737,7 +3748,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(57);
 					return Estado57(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado48(string _lookahead)
@@ -3797,7 +3808,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(8);
 					return Estado8(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado49(string _lookahead)
@@ -3825,7 +3836,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "void":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -3847,7 +3858,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "static":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -3869,7 +3880,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "class":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -3891,7 +3902,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "interface":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -3913,7 +3924,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "int":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -3935,7 +3946,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "double":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -3957,7 +3968,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "boolean":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -3979,7 +3990,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "string":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -4001,7 +4012,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "$":
 					//reduccion a r5
 					reduccion = Reducciones[5].Split('↓')[0].Trim();
@@ -4023,9 +4034,9 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado50(string _lookahead)
@@ -4041,7 +4052,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado60(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado51(string _lookahead)
@@ -4120,7 +4131,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(51);
 					return Estado51(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado52(string _lookahead)
@@ -4144,7 +4155,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado16(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado53(string _lookahead)
@@ -4188,7 +4199,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(63);
 					return Estado63(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado54(string _lookahead)
@@ -4218,7 +4229,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado55(string _lookahead)
@@ -4234,7 +4245,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado64(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado56(string _lookahead)
@@ -4294,7 +4305,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(8);
 					return Estado8(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado57(string _lookahead)
@@ -4518,7 +4529,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(66);
 					return Estado66(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado58(string _lookahead)
@@ -4542,7 +4553,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado16(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado59(string _lookahead)
@@ -4572,7 +4583,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado60(string _lookahead)
@@ -4600,7 +4611,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "void":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4622,7 +4633,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "static":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4644,7 +4655,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "class":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4666,7 +4677,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "interface":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4688,7 +4699,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "int":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4710,7 +4721,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "double":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4732,7 +4743,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "boolean":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4754,7 +4765,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "string":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4776,7 +4787,7 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				case "$":
 					//reduccion a r7
 					reduccion = Reducciones[7].Split('↓')[0].Trim();
@@ -4798,9 +4809,9 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						StackDeConsumo.Pop();
 					}
-					return IrA(StackDeConsumo.Peek(), reduccion);
+					return true;
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado61(string _lookahead)
@@ -4830,7 +4841,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado62(string _lookahead)
@@ -4854,7 +4865,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado70(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado63(string _lookahead)
@@ -4870,7 +4881,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado71(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado64(string _lookahead)
@@ -4897,7 +4908,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(72);
 					return Estado72(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado65(string _lookahead)
@@ -4913,7 +4924,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado73(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado66(string _lookahead)
@@ -5104,7 +5115,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado67(string _lookahead)
@@ -5148,7 +5159,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(98);
 					return Estado98(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado68(string _lookahead)
@@ -5164,7 +5175,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado99(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado69(string _lookahead)
@@ -5326,7 +5337,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado70(string _lookahead)
@@ -5386,7 +5397,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(8);
 					return Estado8(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado71(string _lookahead)
@@ -5402,7 +5413,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado101(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado72(string _lookahead)
@@ -5432,7 +5443,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado73(string _lookahead)
@@ -5448,7 +5459,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado102(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado74(string _lookahead)
@@ -5464,7 +5475,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado103(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado75(string _lookahead)
@@ -5655,7 +5666,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado76(string _lookahead)
@@ -5735,7 +5746,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado77(string _lookahead)
@@ -6205,7 +6216,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado78(string _lookahead)
@@ -6221,7 +6232,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado114(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado79(string _lookahead)
@@ -6237,7 +6248,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado115(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado80(string _lookahead)
@@ -6253,7 +6264,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado116(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado81(string _lookahead)
@@ -6269,7 +6280,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado117(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado82(string _lookahead)
@@ -6377,7 +6388,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado83(string _lookahead)
@@ -6393,7 +6404,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado119(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado84(string _lookahead)
@@ -6863,7 +6874,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado85(string _lookahead)
@@ -6971,7 +6982,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado86(string _lookahead)
@@ -7079,7 +7090,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado87(string _lookahead)
@@ -7095,7 +7106,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado122(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado88(string _lookahead)
@@ -7771,7 +7782,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado89(string _lookahead)
@@ -8439,7 +8450,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado90(string _lookahead)
@@ -9107,7 +9118,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado91(string _lookahead)
@@ -9215,7 +9226,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado92(string _lookahead)
@@ -9905,7 +9916,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado93(string _lookahead)
@@ -10573,7 +10584,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado94(string _lookahead)
@@ -11241,7 +11252,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado95(string _lookahead)
@@ -11909,7 +11920,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado96(string _lookahead)
@@ -12577,7 +12588,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado97(string _lookahead)
@@ -13245,7 +13256,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado98(string _lookahead)
@@ -13261,7 +13272,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado125(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado99(string _lookahead)
@@ -13501,7 +13512,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(126);
 					return Estado126(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado100(string _lookahead)
@@ -13517,7 +13528,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado127(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado101(string _lookahead)
@@ -13679,7 +13690,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado102(string _lookahead)
@@ -13819,7 +13830,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado103(string _lookahead)
@@ -14487,7 +14498,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado104(string _lookahead)
@@ -14517,7 +14528,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado105(string _lookahead)
@@ -14987,7 +14998,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado106(string _lookahead)
@@ -15095,7 +15106,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado107(string _lookahead)
@@ -15203,7 +15214,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado108(string _lookahead)
@@ -15311,7 +15322,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado109(string _lookahead)
@@ -15419,7 +15430,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado110(string _lookahead)
@@ -15527,7 +15538,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado111(string _lookahead)
@@ -15635,7 +15646,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado112(string _lookahead)
@@ -15743,7 +15754,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado113(string _lookahead)
@@ -15759,7 +15770,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado135(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado114(string _lookahead)
@@ -15867,7 +15878,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado115(string _lookahead)
@@ -15975,7 +15986,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado116(string _lookahead)
@@ -16083,7 +16094,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado117(string _lookahead)
@@ -16553,7 +16564,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado118(string _lookahead)
@@ -16633,7 +16644,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado119(string _lookahead)
@@ -16649,7 +16660,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado140(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado120(string _lookahead)
@@ -17213,7 +17224,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado121(string _lookahead)
@@ -17777,7 +17788,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado122(string _lookahead)
@@ -17793,7 +17804,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado141(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado123(string _lookahead)
@@ -17901,7 +17912,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado124(string _lookahead)
@@ -17981,7 +17992,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado125(string _lookahead)
@@ -17997,7 +18008,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado144(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado126(string _lookahead)
@@ -18665,7 +18676,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado127(string _lookahead)
@@ -18685,7 +18696,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(145);
 					return Estado145(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado128(string _lookahead)
@@ -19249,7 +19260,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado129(string _lookahead)
@@ -19813,7 +19824,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado130(string _lookahead)
@@ -20377,7 +20388,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado131(string _lookahead)
@@ -20941,7 +20952,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado132(string _lookahead)
@@ -21505,7 +21516,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado133(string _lookahead)
@@ -22069,7 +22080,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado134(string _lookahead)
@@ -22633,7 +22644,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado135(string _lookahead)
@@ -23323,7 +23334,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado136(string _lookahead)
@@ -23403,7 +23414,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado137(string _lookahead)
@@ -23483,7 +23494,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado138(string _lookahead)
@@ -23563,7 +23574,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado139(string _lookahead)
@@ -24033,7 +24044,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado140(string _lookahead)
@@ -24049,7 +24060,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado149(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado141(string _lookahead)
@@ -24065,7 +24076,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado150(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado142(string _lookahead)
@@ -24629,7 +24640,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado143(string _lookahead)
@@ -25297,7 +25308,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado144(string _lookahead)
@@ -25521,7 +25532,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(151);
 					return Estado151(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado145(string _lookahead)
@@ -25683,7 +25694,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado146(string _lookahead)
@@ -25863,7 +25874,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado147(string _lookahead)
@@ -26043,7 +26054,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado148(string _lookahead)
@@ -26151,7 +26162,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado149(string _lookahead)
@@ -26167,7 +26178,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado155(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado150(string _lookahead)
@@ -26835,7 +26846,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado151(string _lookahead)
@@ -27503,7 +27514,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado152(string _lookahead)
@@ -27664,7 +27675,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(156);
 					return Estado156(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado153(string _lookahead)
@@ -28134,7 +28145,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado154(string _lookahead)
@@ -28214,7 +28225,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado155(string _lookahead)
@@ -28230,7 +28241,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado159(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado156(string _lookahead)
@@ -28700,7 +28711,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado157(string _lookahead)
@@ -28880,7 +28891,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado158(string _lookahead)
@@ -28988,7 +28999,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado159(string _lookahead)
@@ -29096,7 +29107,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado160(string _lookahead)
@@ -29566,7 +29577,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado161(string _lookahead)
@@ -29646,7 +29657,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado112(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado162(string _lookahead)
@@ -29737,7 +29748,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(164);
 					return Estado164(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado163(string _lookahead)
@@ -29917,7 +29928,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado164(string _lookahead)
@@ -29933,7 +29944,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado167(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado165(string _lookahead)
@@ -30041,7 +30052,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(89);
 					return Estado89(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado166(string _lookahead)
@@ -30511,7 +30522,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado167(string _lookahead)
@@ -30527,7 +30538,7 @@ namespace Proyecto_Compiladores_2020.Data
 					Simbolos = Simbolos.Trim();
 					return Estado169(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado168(string _lookahead)
@@ -30618,7 +30629,7 @@ namespace Proyecto_Compiladores_2020.Data
 					StackDeConsumo.Push(170);
 					return Estado170(StackDeEntrada.Peek());
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado169(string _lookahead)
@@ -31088,7 +31099,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 		public bool Estado170(string _lookahead)
@@ -31118,7 +31129,7 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					return IrA(StackDeConsumo.Peek(), reduccion);
 				default:
-					return Err();
+					Err(); return false;
 			}
 		}
 

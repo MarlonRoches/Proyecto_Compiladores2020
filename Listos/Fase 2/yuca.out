@@ -36,16 +36,16 @@
  heredar         line 7 cols 43-49 is T_Identifier
  ,         line 7 cols 52-52 is ,
  compresion         line 7 cols 54-63 is T_Identifier
- {         line 7 cols 67-67 is {
- }         line 8 cols 2-2 is }
- int         line 9 cols 1-4 is T_int
- Suma         line 9 cols 6-9 is T_Identifier
- (         line 9 cols 12-12 is (
- int         line 9 cols 12-15 is T_int
- numero1         line 9 cols 17-23 is T_Identifier
- ,         line 9 cols 26-26 is ,
- int         line 9 cols 27-30 is T_int
- numero2         line 9 cols 32-38 is T_Identifier
- )         line 9 cols 41-41 is )
- {         line 10 cols 2-2 is {
- }         line 11 cols 2-2 is }
+ {         line 8 cols 2-2 is {
+ }         line 9 cols 2-2 is }
+ int         line 10 cols 1-4 is T_int
+ Suma         line 10 cols 6-9 is T_Identifier
+ (         line 10 cols 12-12 is (
+ int         line 10 cols 12-15 is T_int
+ numero1         line 10 cols 17-23 is T_Identifier
+ ,         line 10 cols 26-26 is ,
+ int         line 10 cols 27-30 is T_int
+ numero2         line 10 cols 32-38 is T_Identifier
+ )         line 10 cols 41-41 is )
+ {         line 11 cols 2-2 is {
+ }         line 12 cols 2-2 is }
