@@ -92,31 +92,27 @@ namespace Proyecto_Compiladores_2020.Data
 
 		public bool Err()
 		{
-			var TokenDeError = StackDeEntrada.Peek();
-
-			var lookahead = StackDeEntrada.Peek();
 			bool encontrado = true;
 			while (encontrado)
 			{
 				if (StackDeEntrada.Count != 0)
 				{
-
-					var lola = StackDeEntrada.Peek();
+					var lookahead = StackDeEntrada.Peek();
 					var estadoactual = EstadoDeError[StackDeConsumo.Peek()];
 					if (estadoactual.ContainsKey(StackDeEntrada.Peek()))
 					{
-						// lo cointiene, ir a
+						// lo contiene, ir a
 						IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
 						break;
 					}
 					else
 					{
-
 						tokensNoEsperados.Add(StackDeEntrada.Pop());
 					}
 				}
 				else
 				{
+					Console.WriteLine("ERR: Gramatica no aceptada. Errores hasta EOF");
 					return false;
 				}
 			}

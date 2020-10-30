@@ -202,7 +202,6 @@ namespace ConsolaDeAutogeneracion
                                         salida += "aux = aux.Trim();\n";
                                         salida += "Simbolos = aux;";
                                         salida += "//}\n";
-
                                         salida += $"unStack = reducido.Split(' ').Length;\n";
                                         salida += $"//quitando pasos de la stack;\n";
                                         salida += $"for (int i = 0; i < unStack; i++)\n";
