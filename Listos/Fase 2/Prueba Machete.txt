@@ -1,5 +1,5 @@
-jose jose ;
-string str ;
+jose intenso;
+string extraintrovertido ;
 int[] jose ;
 boolean i ;
 boolean inmplements;

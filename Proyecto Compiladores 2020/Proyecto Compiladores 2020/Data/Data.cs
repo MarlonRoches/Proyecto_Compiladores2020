@@ -633,10 +633,7 @@ namespace Proyecto_Compiladores_2020.Data
         {
             foreach (var item in DiccionarioInvertido)
             {
-                if (item.Key=="if")
-                {
 
-                }
                 if (linea.Contains(item.Key.ToString()))
                 {
                     linea = linea.Replace($"{item.Key}", DiccionarioInvertido[$"{item.Key}"]);
