@@ -23,79 +23,156 @@ namespace ConsolaDeAutogeneracion
                 #region Diccionario
 
                 Reducciones.Add(0, "Start↓Program");
+
                 Reducciones.Add(1, "Program↓Decl Program");
+
                 Reducciones.Add(2, "Program↓Decl");
-                Reducciones.Add(3, "Decl↓Type ident ;");
+
+                Reducciones.Add(3, "Decl↓Type ident ; ");
+
                 Reducciones.Add(4, "Decl↓Type ident ( Formals ) StmtBlock");
+
                 Reducciones.Add(5, "Decl↓void ident ( Formals ) StmtBlock");
+
                 Reducciones.Add(6, "Decl↓static CnsTp ident ;");
-                Reducciones.Add(7, "Decl↓class ident Heritage HeritageI {​​​​ FieldP }​​​​");
-                Reducciones.Add(8, "Decl↓interface ident {​​​​ Proto }​​​​");
+
+                Reducciones.Add(7, "Decl↓class ident Heritage HeritageI {​​ FieldP }​​");
+
+                Reducciones.Add(8, "Decl↓interface ident {​​ Proto }​​");
+
                 Reducciones.Add(9, "Type↓CnsTp");
+
                 Reducciones.Add(10, "Type↓ident");
+
                 Reducciones.Add(11, "Type↓Type []");
+
                 Reducciones.Add(12, "Formals↓Type ident , Formals");
+
                 Reducciones.Add(13, "Formals↓Type ident");
-                Reducciones.Add(14, "StmtBlock↓{​​​​ SBPV SBPC SBPS }​​​​");
+
+                Reducciones.Add(14, "StmtBlock↓{​​ SBPV SBPC SBPS }​​");
+
                 Reducciones.Add(15, "CnsTp↓int");
+
                 Reducciones.Add(16, "CnsTp↓double");
+
                 Reducciones.Add(17, "CnsTp↓boolean");
+
                 Reducciones.Add(18, "CnsTp↓string");
+
                 Reducciones.Add(19, "Heritage↓extends ident");
+
                 Reducciones.Add(20, "Heritage↓''");
+
                 Reducciones.Add(21, "HeritageI↓implements ident HeritageD");
+
                 Reducciones.Add(22, "HeritageI↓''");
+
                 Reducciones.Add(23, "HeritageD↓, ident HeritageD");
+
                 Reducciones.Add(24, "HeritageD↓''");
+
                 Reducciones.Add(25, "FieldP↓Field FieldP");
+
                 Reducciones.Add(26, "FieldP↓''");
+
                 Reducciones.Add(27, "Field↓Type ident ;");
-                Reducciones.Add(28, "Field↓FRoot ident ( Formals ) StmtBlock");
-                Reducciones.Add(29, "Field↓static CnsTp ident ;");
-                Reducciones.Add(30, "Proto↓Prototype Proto");
-                Reducciones.Add(31, "Proto↓''");
-                Reducciones.Add(32, "Prototype↓FRoot ident ( Formals ) ;");
-                Reducciones.Add(33, "SBPV↓Type ident ; SBPV");
-                Reducciones.Add(34, "SBPV↓''");
-                Reducciones.Add(35, "SBPC↓static CnsTp ident ; SBPC");
-                Reducciones.Add(36, "SBPC↓''");
-                Reducciones.Add(37, "SBPS↓Stmt SBPS");
-                Reducciones.Add(38, "SBPS↓''");
-                Reducciones.Add(39, "Stmt↓Expr ;");
-                Reducciones.Add(40, "Stmt↓;");
-                Reducciones.Add(41, "Stmt↓if ( Expr ) Stmt ElseStmt");
-                Reducciones.Add(42, "Stmt↓while ( Expr ) Stmt");
-                Reducciones.Add(43, "Stmt↓for ( Expr ; Expr ; Expr ) Stmt");
-                Reducciones.Add(44, "Stmt↓break ;");
-                Reducciones.Add(45, "Stmt↓return Expr ;");
-                Reducciones.Add(46, "Stmt↓System . out . println ( Expr ExPrint ) ;");
-                Reducciones.Add(47, "Stmt↓StmtBlock");
-                Reducciones.Add(48, "ElseStmt↓else Stmt");
-                Reducciones.Add(49, "ElseStmt↓''");
-                Reducciones.Add(50, "ExPrint↓, Expr ExPrint");
-                Reducciones.Add(51, "ExPrint↓''");
-                Reducciones.Add(52, "Expr↓Expr - Expr");
-                Reducciones.Add(53, "Expr↓Expr / Expr");
-                Reducciones.Add(54, "Expr↓Expr % Expr");
-                Reducciones.Add(55, "Expr↓- Expr");
-                Reducciones.Add(56, "Expr↓Expr > Expr");
-                Reducciones.Add(57, "Expr↓Expr >= Expr");
-                Reducciones.Add(58, "Expr↓Expr != Expr");
-                Reducciones.Add(59, "Expr↓Expr || Expr");
-                Reducciones.Add(60, "Expr↓! Expr");
-                Reducciones.Add(61, "Expr↓New ( ident )");
-                Reducciones.Add(62, "Expr↓LValue");
-                Reducciones.Add(63, "Expr↓LValue = Expr");
-                Reducciones.Add(64, "Expr↓Constant");
-                Reducciones.Add(65, "Expr↓this");
-                Reducciones.Add(66, "Expr↓( Expr )");
-                Reducciones.Add(67, "LValue↓Expr . ident");
-                Reducciones.Add(68, "LValue↓ident");
-                Reducciones.Add(69, "Constant↓intConstant");
-                Reducciones.Add(70, "Constant↓doubleConstant");
-                Reducciones.Add(71, "Constant↓boolConstant");
+
+                Reducciones.Add(28, "Field↓Type ident ( Formals ) StmtBlock");
+
+                Reducciones.Add(29, "Field↓void ident ( Formals ) StmtBlock");
+
+                Reducciones.Add(30, "Field↓static CnsTp ident ;");
+
+                Reducciones.Add(31, "Proto↓Prototype Proto");
+
+                Reducciones.Add(32, "Proto↓''");
+
+                Reducciones.Add(33, "Prototype↓Type ident ( Formals ) ;");
+
+                Reducciones.Add(34, "Prototype↓void ident ( Formals ) ;");
+
+                Reducciones.Add(35, "SBPV↓Type ident ; SBPV");
+
+                Reducciones.Add(36, "SBPV↓''");
+
+                Reducciones.Add(37, "SBPC↓static CnsTp ident ; SBPC");
+
+                Reducciones.Add(38, "SBPC↓''");
+
+                Reducciones.Add(39, "SBPS↓Stmt SBPS");
+
+                Reducciones.Add(40, "SBPS↓''");
+
+                Reducciones.Add(41, "Stmt↓Expr ;");
+
+                Reducciones.Add(42, "Stmt↓;");
+
+                Reducciones.Add(43, "Stmt↓if ( Expr ) Stmt ElseStmt");
+
+                Reducciones.Add(44, "Stmt↓while ( Expr ) Stmt");
+
+                Reducciones.Add(45, "Stmt↓for ( Expr ; Expr ; Expr ) Stmt");
+
+                Reducciones.Add(46, "Stmt↓break ;");
+
+                Reducciones.Add(47, "Stmt↓return Expr ;");
+
+                Reducciones.Add(48, "Stmt↓System . out . println ( Expr ExPrint ) ;");
+
+                Reducciones.Add(49, "Stmt↓StmtBlock");
+
+                Reducciones.Add(50, "ElseStmt↓else Stmt");
+
+                Reducciones.Add(51, "ElseStmt↓''");
+
+                Reducciones.Add(52, "ExPrint↓, Expr ExPrint");
+
+                Reducciones.Add(53, "ExPrint↓''");
+
+                Reducciones.Add(54, "Expr↓Expr - Expr");
+
+                Reducciones.Add(55, "Expr↓Expr / Expr");
+
+                Reducciones.Add(56, "Expr↓Expr % Expr");
+
+                Reducciones.Add(57, "Expr↓- Expr");
+
+                Reducciones.Add(58, "Expr↓ Expr > Expr");
+
+                Reducciones.Add(59, "Expr↓Expr >= Expr");
+
+                Reducciones.Add(60, "Expr↓Expr != Expr");
+
+                Reducciones.Add(61, "Expr↓Expr || Expr");
+
+                Reducciones.Add(62, "Expr↓! Expr");
+
+                Reducciones.Add(63, "Expr↓New ( ident )");
+
+                Reducciones.Add(64, "Expr↓LValue");
+
+                Reducciones.Add(65, "Expr↓LValue = Expr");
+
+                Reducciones.Add(66, "Expr↓Constant");
+
+                Reducciones.Add(67, "Expr↓this");
+
+                Reducciones.Add(68, "Expr↓( Expr )");
+
+                Reducciones.Add(69, "LValue↓Expr . ident");
+
+                Reducciones.Add(70, "LValue↓ident");
+
+                Reducciones.Add(71, "Constant↓intConstant");
+
                 Reducciones.Add(72, "Constant↓stringConstant");
-                Reducciones.Add(73, "Constant↓null");
+
+                Reducciones.Add(73, "Constant↓boolConstant");
+
+                Reducciones.Add(74, "Constant↓doubleConstant");
+
+                Reducciones.Add(75, "Constant↓null");
                 var salida = "";
                 #endregion
                 //var campos = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓=↓!=↓||↓>↓>=↓-↓/↓%↓!↓this↓New↓intConstant↓doubleConstant↓boolConstant↓stringConstant↓null↓$↓Start↓Program↓Decl↓Type↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓ElseStmt↓ExPrint↓Expr↓ExprOr↓ExprOrP↓ExprAnd↓ExprAndP↓ExprEquals↓ExprEqualsP↓ExprComp↓ExprCompP".Split('↓');
@@ -107,7 +184,7 @@ namespace ConsolaDeAutogeneracion
                 var linea = reader.ReadLine();
                 var candidadDeConflictos = 0;
                 //for (int i = 0; i < 180; i++)
-                for (int i = 0; i < 171; i++)
+                for (int i = 0; i < 183; i++)
                 {
                    // salida += $"public bool Estado{i} (Stack<int> _Pila, string  _actual , string _lookahead  )\n";
                     //salida += $"public bool Estado{i} (string  _actual , string _lookahead  )\n";
@@ -132,12 +209,12 @@ namespace ConsolaDeAutogeneracion
                                 salida += $"\t\t//Conflicto desplazamiento  a {acciones[k].Split('/')[0].Trim()}\n";
                                 salida += $"\t\t\t\t//consume {campos[k]}\n";
                                 //StackDeEntrada
-
                                 estados[i].Add(campos[k], acciones[k].Split('/')[0].Trim().Replace("d", ""));
                                 salida += $"StackDeEntrada.Pop();\n";
                                 salida += $"StackDeConsumo.Push({acciones[k].Split('/')[0].Trim().Replace("d", "")});\n";
                                 salida += "Simbolos += $\" { _lookahead} \";\n";
                                 salida += "Simbolos = Simbolos.Trim();\n";
+                                salida += "StackDeLineasYColumnas.Pop();";
 
                                 salida += $"\treturn Estado{acciones[k].Split('/')[0].Trim().Replace("d", "")}(StackDeEntrada.Peek());\n";
                                 //salida += $"\treturn false;\n";
@@ -156,6 +233,7 @@ namespace ConsolaDeAutogeneracion
                                     salida += $"StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
                                     salida += "Simbolos += $\" { _lookahead} \";\n";
                                     salida += "Simbolos = Simbolos.Trim();\n";
+                                    salida += "StackDeLineasYColumnas.Pop();";
                                     salida += $"\treturn Estado{acciones[k].Replace("d", "")}(StackDeEntrada.Peek());\n";
                                 }
                                 else if (acciones[k].Contains("r"))
@@ -179,12 +257,7 @@ namespace ConsolaDeAutogeneracion
                                     {
                                         //salida += $"Simbolos = Simbolos.Replace(reducido, reduccion);\n";
 
-                                        salida += "//if (Simbolos.Contains(reducido.Trim()))";
-                                        salida += "//{";
-                                        salida += "    Simbolos = Simbolos.Replace(reducido, reduccion);";
-                                        salida += "//}";
-                                        salida += "//else";
-                                        salida += "//{\n";
+                                        
                                         salida += "SimbolosQueSeQuedan = Simbolos.Trim().Split(' ').Length - reducido.Trim().Split(' ').Length;\n";
                                         salida += " aux = \"\";\n";
                                         salida += "for (int i = 0; i < SimbolosQueSeQuedan; i++)\n";
@@ -195,9 +268,9 @@ namespace ConsolaDeAutogeneracion
                                         salida += "aux += $\" { reduccion}\";\n";
                                         salida += "aux = aux.Trim();\n";
                                         salida += "Simbolos = aux;";
-                                        salida += "//}\n";
+                                  
                                         salida += $"unStack = reducido.Split(' ').Length;\n";
-                                        salida += $"//quitando pasos de la stack;\n";
+                                    
                                         salida += $"for (int i = 0; i < unStack; i++)\n";
                                         salida += "{\n";
                                         salida += $"    StackDeConsumo.Pop();\n";
@@ -216,7 +289,6 @@ namespace ConsolaDeAutogeneracion
                                 }
                                 else
                                 {//irA
-                                    salida += $"\t\t//irA {acciones[k]}\n";
                                     salida += $"\t\tStackDeConsumo.Push({acciones[k]});\n";
                                     salida += $"\treturn Estado{acciones[k]}(StackDeEntrada.Peek());\n";
 
@@ -229,7 +301,6 @@ namespace ConsolaDeAutogeneracion
                     salida += "default:\n";
                     salida += "return Err();";
                     //
-                    salida += "//return false;\n";
                     //salida += "break;\n";
                     salida += "}\n";
                     salida += "}\n";
@@ -250,11 +321,10 @@ namespace ConsolaDeAutogeneracion
                 }
                 var salidaDeIrA = "";
                 //for (int i = 0; i < 180; i++)
-                for (int i = 0; i < 171; i++)
+                for (int i = 0; i < 183; i++)
                     
                 {
                     salidaDeIrA +=$"case {i}:\n";
-                    salidaDeIrA += $"//IrA Estado {i}\n";
                     salidaDeIrA += $"return Estado{i}( _lookahead);\n";
                     //salidaDeIrA +=$"break;\n";
                 }
