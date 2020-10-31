@@ -298,6 +298,10 @@ boolean flag;boolean []flagArr;
 
 -Presione el icono para ver la tabla de símbolos
 
+### Manejo de Errores
+
+Según el libro del dragón, nos da a entender que el manejo de errores o recuperación de errores en un analizar sintáctico se da al momento de encontrar un token en el cual no tenga relación con la gramática dada, al momento de encontrar un error, ese token se manda a imprimir como una cadena errónea y se elimina de la entrada.  El analizador seguirá analizando el siguiente token hasta que uno tenga relación con la gramática, si el siguiente token no tiene ninguna relación con la gramática, este se tomara como un error también hasta que el analizador encontré un token correcto este seguirá con su análisis normal.
+
 ## Programadores ✒️
     ○ Marlon Roches
     ○ Alexander Villatoro
