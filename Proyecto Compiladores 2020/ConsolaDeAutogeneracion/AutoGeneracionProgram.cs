@@ -128,11 +128,8 @@ namespace ConsolaDeAutogeneracion
                             if (acciones[k].Contains("/"))
                             {
                                 //CONFLICTO
-                                //CONFLICTO
-
-                                salida += $"\t\t// CONFLICTO a {acciones[k]}\n";
-
-                                salida += $"\t\t//dConflicto desplazamiento  a {acciones[k].Split('/')[0].Trim()}\n";
+                                
+                                salida += $"\t\t//Conflicto desplazamiento  a {acciones[k].Split('/')[0].Trim()}\n";
                                 salida += $"\t\t\t\t//consume {campos[k]}\n";
                                 //StackDeEntrada
 
@@ -151,8 +148,7 @@ namespace ConsolaDeAutogeneracion
                             {
                                 if (acciones[k].Contains("d"))
                                 {//desplazamientos
-                                    salida += $"\t\t//desplazamiento a {acciones[k]}\n";
-                                    salida += $"\t\t\t\t//consume {campos[k]}\n";
+                                    salida += $"\t\t\t\t//desplazamientoconsume {campos[k]}\n";
                                     //StackDeEntrada
                                     estados[i].Add(campos[k],acciones[k].Replace("d", ""));
 
@@ -160,7 +156,6 @@ namespace ConsolaDeAutogeneracion
                                     salida += $"StackDeConsumo.Push({acciones[k].Replace("d", "")});\n";
                                     salida += "Simbolos += $\" { _lookahead} \";\n";
                                     salida += "Simbolos = Simbolos.Trim();\n";
-
                                     salida += $"\treturn Estado{acciones[k].Replace("d", "")}(StackDeEntrada.Peek());\n";
                                 }
                                 else if (acciones[k].Contains("r"))
@@ -175,7 +170,6 @@ namespace ConsolaDeAutogeneracion
                                     if (Reducciones[int.Parse(acciones[k].Replace("r", ""))].Split('↓')[1]== "\'\'")
                                     {
                                         salida += $"\t\t//reduccion LAMBDA a {acciones[k]}\n";
-
                                         salida += "if (reducido == \"''\")";
                                         salida += "{";
                                         salida += "    Simbolos += $\" {reduccion}\";";
@@ -209,20 +203,16 @@ namespace ConsolaDeAutogeneracion
                                         salida += $"    StackDeConsumo.Pop();\n";
                                         salida += "}\n";
                                     }
-                                    var aux = int.Parse(acciones[k].Replace("r", ""));
-                                    if (aux == 3|| aux == 4|| aux == 5|| aux == 6|| aux == 7|| aux == 8)
-                                    {
+                                    //var aux = int.Parse(acciones[k].Replace("r", ""));
+                                    //if (aux == 3|| aux == 4|| aux == 5|| aux == 6|| aux == 7|| aux == 8)
+                                    //{
                                         
-                                        salida += "return true;\n";
+                                    //    salida += "return true;\n";
 
-                                    }
-                                    else
-                                    {
-                                    salida += $"return IrA(StackDeConsumo.Peek(), reduccion);\n";
-
-                                    }
-
-
+                                    //}
+                                    //else
+                                    //{
+                                    salida += $"return IrA(StackDeConsumo.Peek(), reduccion);\n";//}
                                 }
                                 else
                                 {//irA
@@ -237,9 +227,9 @@ namespace ConsolaDeAutogeneracion
                         }
                     }
                     salida += "default:\n";
-                    salida += "Err();";
+                    salida += "return Err();";
                     //
-                    salida += "return false;\n";
+                    salida += "//return false;\n";
                     //salida += "break;\n";
                     salida += "}\n";
                     salida += "}\n";
