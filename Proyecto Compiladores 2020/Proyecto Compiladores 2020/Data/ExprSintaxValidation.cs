@@ -35,13 +35,7 @@ namespace Proyecto_Compiladores_2020.Data
 		string aux = "";
 		int unStack = 0;
 		Dictionary<int, Dictionary<string, string>> EstadoDeError = new Dictionary<int, Dictionary<string, string>>();
-		// calcular lookahead
-		// 
-		// obtener lista de tokens
-		// error: leer hasta ; y seguir
-		// des stackear estados
-
-
+	
 		public void Parser(List<KeyValuePair<string, string>> _Aceptados)
 		{
 			StackDeConsumo.Push(0);
@@ -62,21 +56,22 @@ namespace Proyecto_Compiladores_2020.Data
 				CadenaDePrueba = CadenaDePrueba.Trim();
 			}
 			var resultado = true;
-			while (StackDeEntrada.Count!=0)
-			{
-				if (StackDeEntrada.Count ==1 && StackDeConsumo.Count == 1)
-				{//todo esta buenardo
-					resultado = true;
-					break;
+			//while (StackDeEntrada.Count!=0)
+			//{
+			//	if (StackDeEntrada.Count ==1 && StackDeConsumo.Count == 1)
+			//	{//todo esta buenardo
+			//		resultado = true;
+			//		break;
 
-				}
-				else
-				{
-					var ResultadoParcial = IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
-					resultado = resultado && ResultadoParcial;
+			//	}
+			//	else
+			//	{
+			//		var ResultadoParcial = IrA(StackDeConsumo.Peek(), StackDeEntrada.Peek());
+			//		resultado = resultado && ResultadoParcial;
 
-				}
-			}
+			//	}
+			//}
+			resultado = Estado0(StackDeEntrada.Peek());
 			if (resultado)
 			{
 				Console.BackgroundColor = ConsoleColor.White;
@@ -89,10 +84,8 @@ namespace Proyecto_Compiladores_2020.Data
 			else
 			{
 				Console.BackgroundColor = ConsoleColor.White;
-
 				Console.ForegroundColor = ConsoleColor.DarkRed;
-
-				Console.WriteLine("F");
+				Console.WriteLine("Cadena No Aceptada");
 				Console.ForegroundColor = ConsoleColor.White;
 				Console.BackgroundColor = ConsoleColor.Black;
 
