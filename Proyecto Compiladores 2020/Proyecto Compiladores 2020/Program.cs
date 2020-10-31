@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace Proyecto_Compiladores_2020
 {
+
     class Program
     {
         static void Main(string[] args)
@@ -46,16 +47,15 @@ namespace Proyecto_Compiladores_2020
             Console.WriteLine($"</-----------------------------------Final De Archivo-----------------------------------/>");
            // Console.ReadLine();
             Console.WriteLine("");
+            Console.WriteLine($"</-----------------------------------ERRORES FASE 2-----------------------------------/>");
+            Console.WriteLine("");
 
 
 
-            ExprSintaxValidation.Instance.Parser(GrammarValidation.tokenList);
+            ExprSintaxValidation.Instance.Parser(GrammarValidation.tokenList, Data.Data.LineaColumna);
 
 
-            for (int i = 0; i < ExprSintaxValidation.tokensNoEsperados.Count; i++)
-            {
-                Console.WriteLine($"Err: Token No Esperado {ExprSintaxValidation.tokensNoEsperados[i]}");
-            }
+           
             // Lab A 
             //Data.GrammarValidation.Instance.LabA_Parser(ruta);
 

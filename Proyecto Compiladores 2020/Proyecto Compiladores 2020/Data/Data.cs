@@ -32,12 +32,12 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex Number = new Regex(@"^([0-9])+$");
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
         private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
+        public static List<string> LineaColumna = new List<string>();
 
-       
 
         public void Sustituir(string code, string ruta)
         {
-          
+
             Reservadas_Sustitucion = DictionarySymbols();
             var pathNew = $"{Path.GetDirectoryName(ruta)}\\{Path.GetFileNameWithoutExtension(ruta)}.out";
             var OutPut = new FileStream(pathNew, FileMode.Create);
@@ -106,6 +106,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtKey;
                                     Console.ForegroundColor = ConsoleColor.Cyan;
                                     writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
+                                    LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
                                     GrammarValidation.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
                                     ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtKey;
@@ -121,6 +122,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtOperator;
                                     Console.ForegroundColor = ConsoleColor.DarkRed;
                                     writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart + 1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
+                                    LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
                                     GrammarValidation.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
                                     ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart+1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtOperator;
@@ -170,6 +172,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                                     Console.BackgroundColor = ConsoleColor.White;
                                     writer.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
+                                    LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
                                     GrammarValidation.Instance.pushIntoList("stringConstant", Cadena);
                                     ///Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
                                     Console.BackgroundColor = ConsoleColor.Black;
@@ -204,7 +207,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.BackgroundColor = ConsoleColor.Yellow;
 
-                                    if (i== codigoArray.Length-1)
+                                    if (i == codigoArray.Length - 1)
                                     {
                                         Console.WriteLine($" ***line {line}.*** EOF ERROR DE CADENA SIN CERRAR");
                                     }
@@ -239,13 +242,13 @@ namespace Proyecto_Compiladores_2020.Data
                                 foreach (var characterActual in auxiiar)
                                 {
 
-                                    if (characterActual.ToString() == " " || characterActual.ToString() == "\t" || characterActual.ToString() == "\n" || characterActual.ToString() == "\r" || characterActual.ToString() == "\t" || characterActual.ToString() == "\n" || characterActual.ToString() == "█"|| DiccionarioInvertido.ContainsKey(characterActual.ToString()) || item.ToString() == "█" || item.ToString() == "█" || item.ToString() == "▄" || item.ToString() == "┘" || item.ToString() == "┌" || item.ToString() == "¦")
+                                    if (characterActual.ToString() == " " || characterActual.ToString() == "\t" || characterActual.ToString() == "\n" || characterActual.ToString() == "\r" || characterActual.ToString() == "\t" || characterActual.ToString() == "\n" || characterActual.ToString() == "█" || DiccionarioInvertido.ContainsKey(characterActual.ToString()) || item.ToString() == "█" || item.ToString() == "█" || item.ToString() == "▄" || item.ToString() == "┘" || item.ToString() == "┌" || item.ToString() == "¦")
                                     {
                                         //saltamos
                                         ////sumas 1 si es espacio 8 si es \t
 
                                         if (characterActual.ToString() == "ª")
-                                            {
+                                        {
                                             if (IntegerRegx.IsMatch(idActual))
                                             {
                                                 idActual += "ª";
@@ -254,13 +257,13 @@ namespace Proyecto_Compiladores_2020.Data
                                                 if (LineaActual == arr)
                                                 {
                                                     var idActualaux = idActual.Substring(0, idActual.IndexOf('ª'));
-                                                    LineaActual = $"ª{LineaActual.Replace(idActual,"")}";
+                                                    LineaActual = $"ª{LineaActual.Replace(idActual, "")}";
                                                     idActual = idActualaux;
                                                 }
                                                 else
-                                                {   
-                                                idActual = lol.Split('^')[0];
-                                                LineaActual = lol.Split('^')[1];
+                                                {
+                                                    idActual = lol.Split('^')[0];
+                                                    LineaActual = lol.Split('^')[1];
                                                 }
                                             }
                                         }
@@ -271,7 +274,7 @@ namespace Proyecto_Compiladores_2020.Data
                                         }
                                         else if (characterActual.ToString() == " ")
                                         {
-                                           // LineaActual = LineaActual.Remove(0, 1);
+                                            // LineaActual = LineaActual.Remove(0, 1);
                                             colStart++;
 
                                         }
@@ -294,6 +297,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtBoolean;
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
+                                    LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
                                     GrammarValidation.Instance.pushIntoList("boolConstant", idActual);
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
                                     colStart += lenghtBoolean;
@@ -307,23 +311,24 @@ namespace Proyecto_Compiladores_2020.Data
                                 else if (Identifier.IsMatch(idActual))
                                 {
                                     int lenghtIdentifier = idActual.ToString().Length;
-                                    ColEnd = colStart + lenghtIdentifier -1;
+                                    ColEnd = colStart + lenghtIdentifier - 1;
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    if (idActual.Length>=31)
+                                    if (idActual.Length >= 31)
                                     {
                                         var trucado = idActual.Substring(0, 31);
-                                    // MOSTRAR ERROR POR CARACTER MUY LARGO
+                                        // MOSTRAR ERROR POR CARACTER MUY LARGO
 
-                                    Console.BackgroundColor= ConsoleColor.White;
+                                        Console.BackgroundColor = ConsoleColor.White;
                                         writer.WriteLine();
 
                                         writer.WriteLine($" {trucado}          line {line} cols {colStart}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
                                         ///Console.WriteLine($" {trucado}          line {line} cols {colStart}-{ColEnd} is T_Identifier, ERR_ Legth > 31");
-                                    Console.BackgroundColor= ConsoleColor.Black;
+                                        Console.BackgroundColor = ConsoleColor.Black;
                                     }
                                     else
                                     {
                                         writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
+                                        LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
                                         GrammarValidation.Instance.pushIntoList("ident", idActual);
 
                                         ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
@@ -332,12 +337,12 @@ namespace Proyecto_Compiladores_2020.Data
                                     colStart += lenghtIdentifier;
                                     ColEnd = 0;
                                     Console.ForegroundColor = ConsoleColor.White;
-                                    LineaActual = LineaActual.Remove(0,idActual.Length);
+                                    LineaActual = LineaActual.Remove(0, idActual.Length);
                                     indexer = 0;
                                     break;
                                     // LineaActual = LineaActual.Remove(0, idActual.Length);
                                 }
-                               
+
                                 else if (HexaRegx.IsMatch(idActual))
                                 {
                                     int lenghtDoubleRegx = idActual.ToString().Length;
@@ -346,8 +351,8 @@ namespace Proyecto_Compiladores_2020.Data
 
 
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
-
-                                    GrammarValidation.Instance.pushIntoList("hexagecimalCostant", idActual);
+                                    LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
+                                    GrammarValidation.Instance.pushIntoList("hexagecimalConstant", idActual);
 
                                     //Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
                                     colStart += lenghtDoubleRegx;
@@ -363,6 +368,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtDouble;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
+                                    LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
                                     GrammarValidation.Instance.pushIntoList("doubleConstant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
@@ -378,7 +384,8 @@ namespace Proyecto_Compiladores_2020.Data
                                     ColEnd = colStart + lenghtInteger;
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
-                                    GrammarValidation.Instance.pushIntoList("intCostant", idActual);
+                                    LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
+                                    GrammarValidation.Instance.pushIntoList("intConstant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                     colStart += lenghtInteger;
@@ -397,10 +404,10 @@ namespace Proyecto_Compiladores_2020.Data
                                     {
                                         validation += idActual[j];
                                         var fff = IntegerRegx.IsMatch(validation);
-                                        if ( Identifier.IsMatch(validation[0].ToString()))
+                                        if (Identifier.IsMatch(validation[0].ToString()))
                                         {
                                             var fact = validation[0].ToString();
-                                            var k = j+1;
+                                            var k = j + 1;
                                             while (Identifier.IsMatch(fact))
                                             {
                                                 fact += idActual[k];
@@ -413,13 +420,14 @@ namespace Proyecto_Compiladores_2020.Data
                                             //FACTORIADO en string
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_Identifier (value = {idActual})");
+                                            LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
                                             GrammarValidation.Instance.pushIntoList("ident", fact);
 
                                             ///Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 
                                             break;
                                         }
-                                        else if(IntegerRegx.IsMatch(validation[0].ToString()))
+                                        else if (IntegerRegx.IsMatch(validation[0].ToString()))
                                         {
                                             var fact = validation[0].ToString();
                                             var k = j + 1;
@@ -436,7 +444,8 @@ namespace Proyecto_Compiladores_2020.Data
                                             idActual = fact;
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
-                                            GrammarValidation.Instance.pushIntoList("intCostant", fact);
+                                            LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
+                                            GrammarValidation.Instance.pushIntoList("intConstant", fact);
 
                                             /// Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 
@@ -447,7 +456,7 @@ namespace Proyecto_Compiladores_2020.Data
                                             //mostramos error
                                             aux = validation.Substring(0, validation.Length);
                                             Console.WriteLine($"*** line {line}.*** Unrecognized char: '{aux}'");
-                                          //  OutoutTokens.Add("NFCostant");
+                                            //  OutoutTokens.Add("NFConstant");
 
                                             idActual = aux;
                                             indexer = 0;
@@ -464,7 +473,7 @@ namespace Proyecto_Compiladores_2020.Data
                     }
                 }
             }
-            
+
             writer.Close();
             OutPut.Close();
         }
@@ -485,7 +494,6 @@ namespace Proyecto_Compiladores_2020.Data
             Reservadas_Sustitución.Add("implements", "§");
             Reservadas_Sustitución.Add("for", "▬");
             Reservadas_Sustitución.Add("while", "↨");
-            Reservadas_Sustitución.Add("if", "↑");
             Reservadas_Sustitución.Add("else", "↓");
             Reservadas_Sustitución.Add("return", "→");
             Reservadas_Sustitución.Add("break", "←");
@@ -511,6 +519,7 @@ namespace Proyecto_Compiladores_2020.Data
             Reservadas_Sustitución.Add("()", "╗");
             Reservadas_Sustitución.Add("{}", "╝");
             Reservadas_Sustitución.Add("int", "♂");
+            Reservadas_Sustitución.Add("if", "↑");
             Reservadas_Sustitución.Add("[", "⌐");
             Reservadas_Sustitución.Add("]", "½");
             Reservadas_Sustitución.Add("(", "¼");
@@ -524,14 +533,14 @@ namespace Proyecto_Compiladores_2020.Data
             return Reservadas_Sustitución;
         }
         string DoubleProces(string actual, string resto)
-            {
+        {
             var doubleStr = "";
             var traducida = TraducirLinea(resto);
             var PostE = "";
 
-            if (traducida.IndexOf(".")!= -1)
+            if (traducida.IndexOf(".") != -1)
             {
-                doubleStr += traducida.Substring(0, traducida.IndexOf(".")+1);
+                doubleStr += traducida.Substring(0, traducida.IndexOf(".") + 1);
                 traducida = traducida.Replace(doubleStr, "");
                 if (traducida.IndexOf("E+") != -1 || traducida.IndexOf("e+") != -1)
                 {
@@ -541,7 +550,7 @@ namespace Proyecto_Compiladores_2020.Data
                         traducida = traducida.Remove(0, (traducida.Substring(0, traducida.IndexOf("E+") + 2)).Length);
 
                     }
-                    else 
+                    else
                     {
                         doubleStr += traducida.Substring(0, traducida.IndexOf("e+") + 2);
                         traducida = traducida.Remove(0, (traducida.Substring(0, traducida.IndexOf("e+") + 2)).Length);
@@ -551,7 +560,7 @@ namespace Proyecto_Compiladores_2020.Data
                     for (int i = 0; i < traducida.Length; i++)
                     {
                         var xd = traducida[i];
-                        if (Reservadas_Sustitucion.ContainsKey(xd.ToString()) )
+                        if (Reservadas_Sustitucion.ContainsKey(xd.ToString()))
                         {
                             traducida = traducida.Remove(0, traducida.IndexOf(xd.ToString()));
                             doubleStr += PostE;
@@ -583,29 +592,29 @@ namespace Proyecto_Compiladores_2020.Data
 
                 }
 
-                
+
                 if (DoubleRegx.IsMatch(doubleStr))
                 {
                     actual = doubleStr;
                     resto = resto.Remove(0, resto.Length - traducida.Length);
                     return $"{actual}^{resto}";
                 }
-                else if(PostE =="")
+                else if (PostE == "")
                 {
                     if (doubleStr.Contains("E"))
                     {
-                    actual = doubleStr.Substring(0,doubleStr.IndexOf("E"));
+                        actual = doubleStr.Substring(0, doubleStr.IndexOf("E"));
 
                     }
                     else
                     {
-                        actual = doubleStr.Substring(0,doubleStr.IndexOf("e"));
+                        actual = doubleStr.Substring(0, doubleStr.IndexOf("e"));
 
                     }
 
                     resto = resto.Remove(0, actual.Length);
                     return $"{actual}^{resto}";
-             
+
                 }
                 else
                 {
@@ -616,7 +625,7 @@ namespace Proyecto_Compiladores_2020.Data
             }
             else
             {
-                    return $"{actual}^{resto}";
+                return $"{actual}^{resto}";
             }
 
         }
@@ -624,9 +633,10 @@ namespace Proyecto_Compiladores_2020.Data
         {
             foreach (var item in DiccionarioInvertido)
             {
+
                 if (linea.Contains(item.Key.ToString()))
                 {
-                linea = linea.Replace($"{item.Key}", DiccionarioInvertido[$"{item.Key}"]);
+                    linea = linea.Replace($"{item.Key}", DiccionarioInvertido[$"{item.Key}"]);
                 }
             }
             return linea;
