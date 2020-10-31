@@ -292,6 +292,7 @@ boolean flag;boolean []flagArr;
     <img align="left" alt="Shubhamdeep Jha | Excel" width="26px" src="https://github.com/sempostma/office365-icons/blob/master/svg/excel.svg" />
 </a>
 
+-Presione el icono para ver la tabla de símbolos
 
 ## Programadores ✒️
     ○ Marlon Roches
