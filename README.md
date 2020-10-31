@@ -2,6 +2,10 @@
 # Proyecto_Compiladores2020
 
 # Mini-Java (Analizador Sintáctico)
+
+- [Fase 2](#fase-2).
+- [Manejo de Errores](#manejo-de-errores).
+
 ## Fase 2
 ### Gramatica Fase 2 Mini-Java
                                 Start->Program
@@ -82,6 +86,8 @@
 <a href="https://docs.google.com/spreadsheets/d/1KT8kXKfLwkojqElmsG2XVfTTgeOCfz21sXeF841lnOA/edit?usp=sharing">
     <img align="left" alt="Shubhamdeep Jha | Excel" width="26px" src="https://github.com/sempostma/office365-icons/blob/master/svg/excel.svg" />
 </a>
+
+### Manejo de Errores
 
 
 ## Programadores ✒️
