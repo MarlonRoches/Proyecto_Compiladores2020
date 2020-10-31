@@ -32,8 +32,8 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex Number = new Regex(@"^([0-9])+$");
         private static Regex HexaRegx = new Regex(@"^([0][xX])([0-9a-fA-F]+)$");
         private static Regex DoubleRegx = new Regex(@"([0-9])+([.])([0-9]+)?((([e]|[E])([+]|[-])?)[0-9]+)?$");
+        public static List<string> LineaColumna = new List<string>();
 
-       
 
         public void Sustituir(string code, string ruta)
         {
@@ -68,7 +68,6 @@ namespace Proyecto_Compiladores_2020.Data
                 int ColEnd = 1;
                 var indexer = 0;
                 var LineaActual = codigoArray[i].Replace("\r", "");
-                var LineaColumna = new List<string>();
                 while (LineaActual != "")
                 {
                     //se rompe hasta que no tenga nada o encuentre un id
