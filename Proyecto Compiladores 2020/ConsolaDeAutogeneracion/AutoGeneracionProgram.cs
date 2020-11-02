@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+  
 namespace ConsolaDeAutogeneracion
 {
     class AutoGeneracionProgram
@@ -276,16 +276,17 @@ namespace ConsolaDeAutogeneracion
                                         salida += $"    StackDeConsumo.Pop();\n";
                                         salida += "}\n";
                                     }
-                                    //var aux = int.Parse(acciones[k].Replace("r", ""));
-                                    //if (aux == 3|| aux == 4|| aux == 5|| aux == 6|| aux == 7|| aux == 8)
-                                    //{
-                                        
-                                    //    salida += "return true;\n";
+                                    var aux = int.Parse(acciones[k].Replace("r", ""));
+                                    if (aux == 3 || aux == 4 || aux == 5 || aux == 6 || aux == 7 || aux == 8)
+                                    {
 
-                                    //}
-                                    //else
-                                    //{
-                                    salida += $"return IrA(StackDeConsumo.Peek(), reduccion);\n";//}
+                                        salida += "return true;\n";
+
+                                    }
+                                    else
+                                    {
+                                        salida += $"return IrA(StackDeConsumo.Peek(), reduccion);\n";
+                                    }
                                 }
                                 else
                                 {//irA
