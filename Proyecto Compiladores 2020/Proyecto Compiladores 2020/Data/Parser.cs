@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Proyecto_Compiladores_2020.Data
 {
-	class SintaxValidation
+	class Parser
 	{
-		private static SintaxValidation _instance = null;
-		public static SintaxValidation Instance
+		private static Parser _instance = null;
+		public static Parser Instance
 		{
 			get
 			{
-				if (_instance == null) _instance = new SintaxValidation();
+				if (_instance == null) _instance = new Parser();
 				return _instance;
 			}
 		}
@@ -39,7 +39,7 @@ namespace Proyecto_Compiladores_2020.Data
 		// des stackear estados
 
 
-		public void Parser(List<KeyValuePair<string, string>> _Aceptados)
+		public void Parse(List<KeyValuePair<string, string>> _Aceptados)
 		{
 
 			StackDeConsumo.Push(0);
