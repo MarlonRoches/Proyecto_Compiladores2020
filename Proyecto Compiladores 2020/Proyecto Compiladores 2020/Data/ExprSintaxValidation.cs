@@ -64,6 +64,8 @@ namespace Proyecto_Compiladores_2020.Data
 				CadenaDePrueba += $" {StackDeEntrada.ElementAt(i)}";
 				CadenaDePrueba = CadenaDePrueba.Trim();
 			}
+			//orden de bloque interior de la gramatica
+			// lista de tokens aceptados
 			var resultado =true;
 
 			while (StackDeEntrada.Count()!=0)
