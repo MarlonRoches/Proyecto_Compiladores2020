@@ -26,7 +26,7 @@ namespace Proyecto_Compiladores_2020.Data
 		static Stack<string> StackDeEntrada = new Stack<string>();
 		static Stack<string> StackDeLineasYColumnas = new Stack<string>();
 		public static List<string> tokensNoEsperados = new List<string>();
-		public static List<string> tokensAceptados= new List<string>();
+		public static List<KeyValuePair<string, string>> tokensAceptados= new List<KeyValuePair<string, string>>();
 		string Simbolos = "";
 		Dictionary<int, string> Reducciones = new Dictionary<int, string>();
 		static List<string> Pasos = new List<string>();

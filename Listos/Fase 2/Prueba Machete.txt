@@ -1,4 +1,4 @@
-jose intenso;
+jose inenso;
 string extraintrovertido ;
 int[] jose ;
 boolean i ;
@@ -43,7 +43,7 @@ interface Derly {
 }
 class nombre extends Mel implements Nil 
 {
-	 static boolean identificador ;
+	 static boolean identiier ;
 	static int ident ;
 	void calcular ( int valor ) 
 	{

@@ -283,17 +283,17 @@ namespace ConsolaDeAutogeneracion
                                         salida += $"    StackDeConsumo.Pop();\n";
                                         salida += "}\n";
                                     }
-                                    //var aux = int.Parse(acciones[k].Replace("r", ""));
-                                    //if (aux == 3 || aux == 4 || aux == 5 || aux == 6 || aux == 7 || aux == 8)
-                                    //{
+                                    var aux = int.Parse(acciones[k].Replace("r", ""));
+                                    if (aux == 3 || aux == 4 || aux == 5 || aux == 6 || aux == 7 || aux == 8)
+                                    {
 
-                                    //    salida += "return ;\n";
+                                        salida += "return ;\n";
 
-                                    //}
-                                    //else
-                                    //{
+                                    }
+                                    else
+                                    {
                                         salida += $"IrA(StackDeConsumo.Peek(), reduccion);\n";
-                                    //}
+                                    }
                                 }
                                 else
                                 {//irA
