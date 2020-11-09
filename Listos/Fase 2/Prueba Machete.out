@@ -2,10 +2,8 @@
  inenso         line 1 cols 7-12 is T_Identifier
  ;         line 1 cols 14-14 is ;
  string         line 2 cols 1-7 is T_string
- extra         line 2 cols 8-12 is T_Identifier
- int         line 2 cols 13-16 is T_int
- rovertido         line 2 cols 17-25 is T_Identifier
- ;         line 2 cols 28-28 is ;
+ extraitrovertido         line 2 cols 9-24 is T_Identifier
+ ;         line 2 cols 27-27 is ;
  int         line 3 cols 1-4 is T_int
  []         line 3 cols 5-6 is []
  jose         line 3 cols 8-11 is T_Identifier

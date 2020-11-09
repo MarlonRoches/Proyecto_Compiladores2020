@@ -12,6 +12,17 @@ namespace ConsolaDeAutogeneracion
 
         static void Main(string[] args)
         {
+
+            var lector = new StreamReader("D:\\Proyecto_Compiladores2020\\Gramatica.txt");
+            var lineaee = lector.ReadLine();
+            var diccinoarioGramatica = "";
+            var contador = 0;
+            while ((lineaee = lector.ReadLine())!=null)
+            {
+
+                diccinoarioGramatica += $"Reducciones.Add({contador},\"{lineaee.Replace("->","↓")}\");\n";
+                contador++;
+            }
             Dictionary<int, string> Reducciones = new Dictionary<int, string>();
             //
             var estados = new Dictionary<int, Dictionary<string, string>>();
@@ -20,180 +31,105 @@ namespace ConsolaDeAutogeneracion
             Dictionary<string, string> nuevoDiccionario()
             {
                 //Con Expr
-                #region Diccionario
+                #region Dicciionario
                 Reducciones.Add(0, "Start↓Program");
-
                 Reducciones.Add(1, "Program↓Decl Program");
-
                 Reducciones.Add(2, "Program↓Decl");
-
-                Reducciones.Add(3, "Decl↓Type ident ; ");
-
+                Reducciones.Add(3, "Decl↓Type ident ;");
                 Reducciones.Add(4, "Decl↓Type ident ( Formals ) StmtBlock");
-
                 Reducciones.Add(5, "Decl↓void ident ( Formals ) StmtBlock");
-
                 Reducciones.Add(6, "Decl↓static CnsTp ident ;");
-
-                Reducciones.Add(7, "Decl↓class ident Heritage HeritageI {​​ FieldP }​​");
-
-                Reducciones.Add(8, "Decl↓interface ident {​​ Proto }​​");
-
+                Reducciones.Add(7, "Decl↓class ident Heritage HeritageI { FieldP }");
+                Reducciones.Add(8, "Decl↓interface ident { Proto }");
                 Reducciones.Add(9, "Type↓CnsTp");
-
                 Reducciones.Add(10, "Type↓ident");
-
                 Reducciones.Add(11, "Type↓Type []");
-
                 Reducciones.Add(12, "Formals↓Type ident , Formals");
-
                 Reducciones.Add(13, "Formals↓Type ident");
-
-                Reducciones.Add(14, "StmtBlock↓{​​ SBPV SBPC SBPS }​​");
-
-                Reducciones.Add(15, "CnsTp↓int");
-
-                Reducciones.Add(16, "CnsTp↓double");
-
-                Reducciones.Add(17, "CnsTp↓boolean");
-
-                Reducciones.Add(18, "CnsTp↓string");
-
-                Reducciones.Add(19, "Heritage↓extends ident");
-
-                Reducciones.Add(20, "Heritage↓''");
-
-                Reducciones.Add(21, "HeritageI↓implements ident HeritageD");
-
-                Reducciones.Add(22, "HeritageI↓''");
-
-                Reducciones.Add(23, "HeritageD↓, ident HeritageD");
-
-                Reducciones.Add(24, "HeritageD↓''");
-
-                Reducciones.Add(25, "FieldP↓Field FieldP");
-
-                Reducciones.Add(26, "FieldP↓''");
-
-                Reducciones.Add(27, "Field↓Type ident ;");
-
-                Reducciones.Add(28, "Field↓Type ident ( Formals ) StmtBlock");
-
-                Reducciones.Add(29, "Field↓void ident ( Formals ) StmtBlock");
-
-                Reducciones.Add(30, "Field↓static CnsTp ident ;");
-
-                Reducciones.Add(31, "Proto↓Prototype Proto");
-
-                Reducciones.Add(32, "Proto↓''");
-
-                Reducciones.Add(33, "Prototype↓Type ident ( Formals ) ;");
-
-                Reducciones.Add(34, "Prototype↓void ident ( Formals ) ;");
-
-                Reducciones.Add(35, "SBPV↓Type ident ; SBPV");
-
-                Reducciones.Add(36, "SBPV↓''");
-
-                Reducciones.Add(37, "SBPC↓static CnsTp ident ; SBPC");
-
-                Reducciones.Add(38, "SBPC↓''");
-
-                Reducciones.Add(39, "SBPS↓Stmt SBPS");
-
-                Reducciones.Add(40, "SBPS↓''");
-
+                Reducciones.Add(14, "StmtBlock↓{ COMBINACION }");
+                Reducciones.Add(15, "COMBINACION↓Type ident ; COMBINACION");
+                Reducciones.Add(16, "COMBINACION↓''");
+                Reducciones.Add(17, "COMBINACION↓static CnsTp ident ; COMBINACION");
+                Reducciones.Add(18, "COMBINACION↓''");
+                Reducciones.Add(19, "COMBINACION↓Stmt COMBINACION");
+                Reducciones.Add(20, "COMBINACION↓''");
+                Reducciones.Add(21, "CnsTp↓int");
+                Reducciones.Add(22, "CnsTp↓double");
+                Reducciones.Add(23, "CnsTp↓boolean");
+                Reducciones.Add(24, "CnsTp↓string");
+                Reducciones.Add(25, "Heritage↓extends ident");
+                Reducciones.Add(26, "Heritage↓''");
+                Reducciones.Add(27, "HeritageI↓implements ident HeritageD");
+                Reducciones.Add(28, "HeritageI↓''");
+                Reducciones.Add(29, "HeritageD↓, ident HeritageD");
+                Reducciones.Add(30, "HeritageD↓''");
+                Reducciones.Add(31, "FieldP↓Field FieldP");
+                Reducciones.Add(32, "FieldP↓''");
+                Reducciones.Add(33, "Field↓Type ident ;");
+                Reducciones.Add(34, "Field↓Type ident ( Formals ) StmtBlock");
+                Reducciones.Add(35, "Field↓void ident ( Formals ) StmtBlock");
+                Reducciones.Add(36, "Field↓static CnsTp ident ;");
+                Reducciones.Add(37, "Proto↓Prototype Proto");
+                Reducciones.Add(38, "Proto↓''");
+                Reducciones.Add(39, "Prototype↓Type ident ( Formals ) ;");
+                Reducciones.Add(40, "Prototype↓void ident ( Formals ) ;");
                 Reducciones.Add(41, "Stmt↓Expr ;");
-
                 Reducciones.Add(42, "Stmt↓;");
-
                 Reducciones.Add(43, "Stmt↓if ( Expr ) Stmt ElseStmt");
-
                 Reducciones.Add(44, "Stmt↓while ( Expr ) Stmt");
-
                 Reducciones.Add(45, "Stmt↓for ( Expr ; Expr ; Expr ) Stmt");
-
                 Reducciones.Add(46, "Stmt↓break ;");
-
                 Reducciones.Add(47, "Stmt↓return Expr ;");
-
                 Reducciones.Add(48, "Stmt↓System . out . println ( Expr ExPrint ) ;");
-
                 Reducciones.Add(49, "Stmt↓StmtBlock");
-
                 Reducciones.Add(50, "Stmt↓CallStmt");
-
                 Reducciones.Add(51, "CallStmt↓ident ( Actuals )");
-
                 Reducciones.Add(52, "CallStmt↓ident . ident ( Actuals )");
-
                 Reducciones.Add(53, "Actuals↓Expr , Actuals");
-
                 Reducciones.Add(54, "Actuals↓Expr");
-
                 Reducciones.Add(55, "ElseStmt↓else Stmt");
-
                 Reducciones.Add(56, "ElseStmt↓''");
-
                 Reducciones.Add(57, "ExPrint↓, Expr ExPrint");
-
                 Reducciones.Add(58, "ExPrint↓''");
-
                 Reducciones.Add(59, "Expr↓Expr - Expr");
-
                 Reducciones.Add(60, "Expr↓Expr / Expr");
-
                 Reducciones.Add(61, "Expr↓Expr % Expr");
-
                 Reducciones.Add(62, "Expr↓- Expr");
-
-                Reducciones.Add(63, "Expr↓ Expr > Expr");
-
+                Reducciones.Add(63, "Expr↓Expr > Expr");
                 Reducciones.Add(64, "Expr↓Expr >= Expr");
-
                 Reducciones.Add(65, "Expr↓Expr != Expr");
-
                 Reducciones.Add(66, "Expr↓Expr || Expr");
-
                 Reducciones.Add(67, "Expr↓! Expr");
-
                 Reducciones.Add(68, "Expr↓New ( ident )");
-
-                Reducciones.Add(69, "Expr↓LValue");
-
-                Reducciones.Add(70, "Expr↓LValue = Expr");
-
-                Reducciones.Add(71, "Expr↓Constant");
-
-                Reducciones.Add(72, "Expr↓this");
-
-                Reducciones.Add(73, "Expr↓( Expr )");
-
-                Reducciones.Add(74, "LValue↓Expr . ident");
-
-                Reducciones.Add(75, "LValue↓ident");
-
+                Reducciones.Add(69, "Expr↓Expr . ident");
+                Reducciones.Add(70, "Expr↓ident");
+                Reducciones.Add(71, "Expr↓Expr . ident = Expr");
+                Reducciones.Add(72, "Expr↓ident = Expr");
+                Reducciones.Add(73, "Expr↓Constant");
+                Reducciones.Add(74, "Expr↓this");
+                Reducciones.Add(75, "Expr↓( Expr )");
                 Reducciones.Add(76, "Constant↓intConstant");
-
                 Reducciones.Add(77, "Constant↓stringConstant");
-
                 Reducciones.Add(78, "Constant↓boolConstant");
-
                 Reducciones.Add(79, "Constant↓doubleConstant");
-
                 Reducciones.Add(80, "Constant↓null");
-                var salida = "";
+
                 #endregion
+
+                var salida = "";
                 //var campos = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓=↓!=↓||↓>↓>=↓-↓/↓%↓!↓this↓New↓intConstant↓doubleConstant↓boolConstant↓stringConstant↓null↓$↓Start↓Program↓Decl↓Type↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓ElseStmt↓ExPrint↓Expr↓ExprOr↓ExprOrP↓ExprAnd↓ExprAndP↓ExprEquals↓ExprEqualsP↓ExprComp↓ExprCompP".Split('↓');
-                var campos = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓-↓/↓%↓>↓>=↓!=↓||↓!↓New↓=↓this↓intConstant↓stringConstant↓boolConstant↓doubleConstant↓null↓$↓Start↓Program↓Decl↓Type↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓CallStmt↓Actuals↓ElseStmt↓ExPrint↓Expr↓LValue↓Constant".Split('↓');
+                //var campos = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓-↓/↓%↓>↓>=↓!=↓||↓!↓New↓=↓this↓intConstant↓stringConstant↓boolConstant↓doubleConstant↓null↓$↓Start↓Program↓Decl↓Type↓Formals↓StmtBlock↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓SBPV↓SBPC↓SBPS↓Stmt↓CallStmt↓Actuals↓ElseStmt↓ExPrint↓Expr↓LValue↓Constant".Split('↓');
+                //var campos = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓-↓/↓%↓>↓>=↓!=↓||↓!↓New↓=↓this↓intConstant↓stringConstant↓boolConstant↓doubleConstant↓null↓$↓Start↓Program↓Decl↓Type↓Formals↓StmtBlock↓COMBINACION↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓Stmt↓CallStmt↓Actuals↓ElseStmt↓ExPrint↓Expr↓LValue↓Constant".Split('↓');
+                //var campos = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓-↓/↓%↓>↓>=↓!=↓||↓!↓New↓=↓this↓intConstant↓stringConstant↓boolConstant↓doubleConstant↓null↓$↓Start↓Program↓Decl↓Type↓Formals↓StmtBlock↓COMBINACION↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓Stmt↓CallStmt↓Actuals↓ElseStmt↓ExPrint↓Expr↓Constant".Split('↓');
+                var campos = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓-↓/↓%↓>↓>=↓!=↓||↓!↓New↓=↓this↓intConstant↓stringConstant↓boolConstant↓doubleConstant↓null↓$↓Start↓Program↓Decl↓Type↓Formals↓StmtBlock↓COMBINACION↓CnsTp↓Heritage↓HeritageI↓HeritageD↓FieldP↓Field↓Proto↓Prototype↓Stmt↓CallStmt↓Actuals↓ElseStmt↓ExPrint↓Expr↓Constant".Split('↓');
 
-
+                var numEstados = 196;
                 //var reader = new StreamReader("gramatica.txt");
                 var reader = new StreamReader("Exprgramatica.txt");
                 var linea = reader.ReadLine();
                 var candidadDeConflictos = 0;
                 //for (int i = 0; i < 180; i++)
-                for (int i = 0; i < 196; i++)
+                for (int i = 0; i < numEstados; i++)
                 {
                     // salida += $"public bool Estado{i} (Stack<int> _Pila, string  _actual , string _lookahead  )\n";
                     //salida += $"public bool Estado{i} (string  _actual , string _lookahead  )\n";
@@ -283,17 +219,17 @@ namespace ConsolaDeAutogeneracion
                                         salida += $"    StackDeConsumo.Pop();\n";
                                         salida += "}\n";
                                     }
-                                    var aux = int.Parse(acciones[k].Replace("r", ""));
-                                    if (aux == 3 || aux == 4 || aux == 5 || aux == 6 || aux == 7 || aux == 8)
-                                    {
+                                    //var aux = int.Parse(acciones[k].Replace("r", ""));
+                                    //if (aux == 3 || aux == 4 || aux == 5 || aux == 6 || aux == 7 || aux == 8)
+                                    //{
 
-                                        salida += "return ;\n";
+                                    //    salida += "return ;\n";
 
-                                    }
-                                    else
-                                    {
+                                    //}
+                                    //else
+                                    //{
                                         salida += $"IrA(StackDeConsumo.Peek(), reduccion);\n";
-                                    }
+                                    //}
                                 }
                                 else
                                 {//irA
@@ -323,12 +259,12 @@ namespace ConsolaDeAutogeneracion
                     diccionarioString += $"EstadoDeError.Add({i}, new Dictionary<string, string>());\n";
                     foreach (var item in estados[i])
                     {
-                        diccionarioString += $"EstadoDeError[{i}].Add(\"{item}\",\"{item.Value}\");\n";
+                        diccionarioString += $"EstadoDeError[{i}].Add(\"{item.Key}\",\"{item.Value}\");\n";
                     }
                 }
                 var salidaDeIrA = "";
                 //for (int i = 0; i < 180; i++)
-                for (int i = 0; i < 196; i++)
+                for (int i = 0; i < numEstados; i++)
 
                 {
                     salidaDeIrA += $"case {i}:\n";

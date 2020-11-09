@@ -43,6 +43,9 @@ namespace Proyecto_Compiladores_2020.Data
             var OutPut = new FileStream(pathNew, FileMode.Create);
             var writer = new StreamWriter(OutPut);
             code = code.TrimEnd();
+            var auxCode = code;
+            //Sustituimos el codigo
+
 
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
@@ -68,6 +71,7 @@ namespace Proyecto_Compiladores_2020.Data
                 int ColEnd = 1;
                 var indexer = 0;
                 var LineaActual = codigoArray[i].Replace("\r", "");
+                //clacificacion de tokens
                 while (LineaActual != "")
                 {
                     //se rompe hasta que no tenga nada o encuentre un id

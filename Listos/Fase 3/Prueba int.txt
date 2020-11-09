@@ -1,0 +1,10 @@
+jose intenso;
+string ifunable ;
+int[] jose ;
+boolean i ;
+boolean inmplements;
+static boolean jose ;
+static int zerafina;
+static double Zerafina;
+static double Zerafina ;
+

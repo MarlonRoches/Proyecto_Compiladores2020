@@ -50,6 +50,7 @@
     <Compile Include="Data\GrammarValidation.cs" />
     <Compile Include="Data\ExprSintaxValidation.cs" />
     <Compile Include="Data\Parser.cs" />
+    <Compile Include="Data\TablaDeSimbolos.cs" />
     <Compile Include="Data\TextValidation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
