@@ -1,7 +1,4 @@
 //COMBINACION
-// los r 70 son para la parte vieja
-// s102 son para la parte nueva
-
 Start->Program
 Program->Decl Program
 Program->Decl
@@ -52,11 +49,6 @@ Stmt->break ;
 Stmt->return Expr ;
 Stmt->System . out . println ( Expr ExPrint ) ;
 Stmt->StmtBlock
-Stmt->CallStmt
-CallStmt->ident ( Actuals )
-CallStmt->ident . ident ( Actuals )
-Actuals->Expr , Actuals
-Actuals->Expr
 ElseStmt->else Stmt
 ElseStmt->''
 ExPrint->, Expr ExPrint
@@ -71,6 +63,8 @@ Expr->Expr != Expr
 Expr->Expr || Expr
 Expr->! Expr
 Expr->New ( ident )
+Expr->ident ( Actuals )
+Expr->Expr . ident ( Actuals )
 Expr->Expr . ident
 Expr->ident
 Expr->Expr . ident = Expr
@@ -78,6 +72,8 @@ Expr->ident = Expr
 Expr->Constant
 Expr->this
 Expr->( Expr )
+Actuals->Expr , Actuals
+Actuals->Expr
 Constant->intConstant
 Constant->stringConstant
 Constant->boolConstant

@@ -1,0 +1,66 @@
+jose inenso;
+string extraitrovertido ;
+int[] jose ;
+boolean i ;
+boolean inmplements;
+static boolean jose ;
+static int zerafina;
+static double Zerafina;
+static double Zerafina ;
+void procedimiento ( double jose )  
+{
+	
+}
+void procedimiento ( double jose)  
+{
+	int publico ; 
+	string publico ;
+	boolean publico ;
+	static double Zerafina ;
+	static int Helios;
+	static string Jose;
+	static boolean Mercurio;
+}
+TYPEX VariableDecl ( double jose )  
+{
+	int publico ;
+	string publico ;
+	boolean publico ;
+	static double Zerafina ;
+	static int Helios;
+	static string Jose;
+	static boolean Mercurio;
+}
+class nombre { }
+class nombre extends Ryan { }
+class nombre extends Prim implements jose, zerafina, helios, mercurio, ryan , prim, lucas, pedro
+{ 
+}
+interface Derly {
+	void jose ( double jose ) ;
+	void jose (double Zerafina) ;
+	Type nuevo ( string Zerafina, double jose);
+}
+class nombre extends Mel implements Nil 
+{
+	 static boolean identiier ;
+	static int ident ;
+	void calcular ( int valor ) 
+	{
+		double calculo ;
+		double resultado ;
+
+		static  double valoraretornar;
+		if(calculo >= valor)
+		valor - valor ;
+		for (numero = 0;valor>numero;null)
+		break;
+		if(calculo >= valor)
+		while (calculo != valor)
+		return - (valor - valor) ;
+		System.out.println ( 9 ) ;
+		System.out.println ( "Jose y Derly" ) ;
+		
+	}
+}
+
