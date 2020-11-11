@@ -40,7 +40,7 @@ namespace Proyecto_Compiladores_2020.Data
 		int unStack = 0;
 		Dictionary<int, Dictionary<string, string>> EstadoDeError = new Dictionary<int, Dictionary<string, string>>();
 
-		public void Parser(List<KeyValuePair<string, string>> _Aceptados, List<string> LineCol)
+		public void Parse(List<KeyValuePair<string, string>> _Aceptados, List<string> LineCol)
 		{
 			StackDeConsumo.Push(0);
 			Entrada = _Aceptados;

@@ -52,8 +52,8 @@ namespace Proyecto_Compiladores_2020
 
 
 
-            Parser.Instance.Parser(GrammarValidation.tokenList, Data.Data.LineaColumna);
-            TablaDeSimbolos.Instance.GenerarTabla(Parser.tokensAceptados);
+            Parser.Instance.Parse(GrammarValidation.tokenList, Data.Data.LineaColumna);
+            TablaDeSimbolos.Instance.ObtenerSimbolos(Parser.tokensAceptados);
 
            
             // Lab A 

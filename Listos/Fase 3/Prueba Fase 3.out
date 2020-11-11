@@ -47,9 +47,10 @@
  int         line 8 cols 17-20 is T_int
  m1         line 8 cols 21-22 is T_Identifier
  ;         line 8 cols 24-24 is ;
- int         line 8 cols 32-35 is T_int
- m2         line 8 cols 36-37 is T_Identifier
- ;         line 8 cols 39-39 is ;
+ static         line 8 cols 32-38 is T_static
+ int         line 8 cols 39-42 is T_int
+ m2         line 8 cols 43-44 is T_Identifier
+ ;         line 8 cols 46-46 is ;
  int         line 9 cols 17-20 is T_int
  m3         line 9 cols 21-22 is T_Identifier
  ;         line 9 cols 24-24 is ;

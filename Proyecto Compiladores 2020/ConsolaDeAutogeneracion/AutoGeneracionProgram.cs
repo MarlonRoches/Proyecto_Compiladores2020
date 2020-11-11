@@ -17,6 +17,16 @@ namespace ConsolaDeAutogeneracion
             var lineaee = lector.ReadLine();
             var diccinoarioGramatica = "";
             var contador = 0;
+
+            //Terminales 
+            var terminales = "ident↓;↓(↓)↓void↓static↓class↓{↓}↓interface↓[]↓,↓int↓double↓boolean↓string↓extends↓implements↓if↓while↓for↓break↓return↓System↓.↓out↓println↓else↓-↓/↓%↓>↓>=↓!=↓||↓!↓New↓=↓this↓intConstant↓stringConstant↓boolConstant↓doubleConstant↓null".Split('↓');
+            var SalidaTerminales = "";
+            foreach (var item in terminales)
+            {
+                SalidaTerminales += $"case \"{item}\":\n";
+                SalidaTerminales += $"\n";
+                SalidaTerminales += $"break;\n";
+            }
             while ((lineaee = lector.ReadLine())!=null)
             {
 
