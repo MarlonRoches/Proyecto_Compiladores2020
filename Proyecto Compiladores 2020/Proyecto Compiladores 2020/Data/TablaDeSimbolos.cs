@@ -20,12 +20,18 @@ namespace Proyecto_Compiladores_2020.Data
 		}
 		static int scoopingLevel = 0;
 		static int ScoopingActual = 0;
-		static Dictionary<string, Simbolo> CargaDeSimbolos = new Dictionary<string, Simbolo>();
-        //private static Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|static|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
-		
+		static Dictionary<string, Simbolo> Simbolos = new Dictionary<string, Simbolo>();
+		//private static Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|static|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
+
 		/// Tipos de Sentencias
 		////Declaraciones
-		////* variables, staticas, metodos
+		///types (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string)
+		////* variables, staticas, clases
+		private static Regex Simples = new Regex(@"^(([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
+        private static Regex Estaticas = new Regex(@"^static (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
+        private static Regex Clases = new Regex(@"^class ([a-z]|[A-Z]|([0-9]))+ extends ([a-z]|[A-Z]|([0-9]))+ implements ([a-z]|[A-Z]|([0-9]))+( , ([a-z]|[A-Z]|([0-9]))*)*$");
+		///metodos
+        private static Regex Metodos = new Regex(@"^(void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+ \( (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+( , (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+)* \)$");
 		//-> asignacion de tipos, metodos y parametros
 		/////*Operaciones
 		//-> Regex o gramatica especial
@@ -34,7 +40,30 @@ namespace Proyecto_Compiladores_2020.Data
 
 		public void ObtenerSimbolos(List<KeyValuePair<string, string>> tokensAceptados)
 		{
+			var cadena = "";
+			for (int i = 0; i < tokensAceptados.Count; i++)
+			{
+				cadena += $" {tokensAceptados[i].Value}";
+				cadena = cadena.Trim();
+			}
+
 			var actual = 0;
+			while (cadena!="")
+			{
+				var aux = "";
+				while (tokensAceptados[actual].Key != ";" || tokensAceptados[actual].Key != ";")
+				{
+					aux += $" {tokensAceptados[actual].Value}";
+					aux = aux.Trim();
+					actual++;
+				}
+				aux += $" {tokensAceptados[actual].Value}";
+				aux = aux.Trim();
+				actual++;
+				IdentificarDeclaracion(aux);
+			}
+			
+
 			while (actual < tokensAceptados.Count)
 			{
 				//mientras no se nos acaben las lineas
@@ -46,7 +75,7 @@ namespace Proyecto_Compiladores_2020.Data
 						break;
 
 					case ";":
-
+						actual++;
 						break;
 					case "(":
 
@@ -59,7 +88,7 @@ namespace Proyecto_Compiladores_2020.Data
 						break;
 
 					case "static":
-						while (tokensAceptados[actual].Key != ";")
+						while (tokensAceptados[actual].Key != ";"||tokensAceptados[actual].Key != ";")
 						{
 							Symbol += $" {tokensAceptados[actual].Value}";
 							Symbol = Symbol.Trim();
@@ -91,29 +120,36 @@ namespace Proyecto_Compiladores_2020.Data
 
 						break;
 					case "int":
-						while (tokensAceptados[actual].Key != ";")
+						while (tokensAceptados[actual].Key != ";" && tokensAceptados[actual].Key != ")")
 						{
 							Symbol += $" {tokensAceptados[actual].Value}";
 							Symbol = Symbol.Trim();
 							actual++;
 						}
-
+						//agregamos el siguiente simbolo
+						Symbol += $" {tokensAceptados[actual].Value}";
+						Symbol = Symbol.Trim();
+						actual++;
+						CargarSimboloADiccionario(Symbol);
 						break;
 					case "double":
-						while (tokensAceptados[actual].Key != ";")
-						{
-							Symbol += $" {tokensAceptados[actual].Value}";
-							Symbol = Symbol.Trim();
-							actual++;
-						}
+						//while (tokensAceptados[actual].Key != ";")
+						//{
+						//	Symbol += $" {tokensAceptados[actual].Value}";
+						//	Symbol = Symbol.Trim();
+						//	actual++;
+						//}
 						break;
 					case "boolean":
-						do
-						{
-							Symbol += $" {tokensAceptados[actual].Value}";
-							Symbol = Symbol.Trim();
-							actual++;
-						} while (tokensAceptados[actual].Key != ";");
+						//while (tokensAceptados[actual].Key != ";")
+						//{
+						//	Symbol += $" {tokensAceptados[actual].Value}";
+						//	Symbol = Symbol.Trim();
+						//	actual++;
+						//}
+						//Symbol += $" {tokensAceptados[actual].Value}";
+						//Symbol = Symbol.Trim();
+						//actual++;
 						break;
 					case "string":
 						while (tokensAceptados[actual].Key != ";")
@@ -220,17 +256,51 @@ namespace Proyecto_Compiladores_2020.Data
 
 			var xd = 0;
 		}
-		void CargarSimboloADiccionario()
+		void CargarSimboloADiccionario(string Symbolo)
 		{
+			if (Simbolos.ContainsKey($"{Symbolo}↓{ScoopingActual}"))
+			{
+			}
+			else
+			{
+				//crear simbolo
+				if (Symbolo.Split(' ')[Symbolo.Split(' ').Length-1] ==";")
+				{//es una instancia
+
+				}
+				else if (Symbolo.Split(' ')[Symbolo.Split(' ').Length - 1] == ")")
+				{//es un metodo
+
+				}
+				var NuevoSimbolo = new Simbolo();
+				
+			}
+		}
+		bool IdentificarDeclaracion(string Sentencia)
+		{
+			if (Simples.IsMatch(Sentencia))
+			{
+				//variables simples
+				return true;
+
+			}
+			else if (Estaticas.IsMatch(Sentencia))
+			{
+				//variable estatica
+				return true;
+
+			}
+			else
+			{
+				return false;
+
+			}
 
 		}
-		bool IdentificarSymbolo(string Sentencia)
-		{
-			return true;
-		}
 
-		void ObtenerOperaciones()
+		void IdentificarFuncion()
 		{ 
+
 		}
 		void CalcularOperaciones()
 		{ 
