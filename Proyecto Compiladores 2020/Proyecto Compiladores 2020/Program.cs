@@ -52,7 +52,7 @@ namespace Proyecto_Compiladores_2020
 
 
 
-            Parser.Instance.Parse(GrammarValidation.tokenList, Data.Data.LineaColumna);
+            Parser.Instance.Parse(Lexer.tokenList, Data.Data.LineaColumna);
             TablaDeSimbolos.Instance.ObtenerSimbolos(Parser.tokensAceptados);
 
            

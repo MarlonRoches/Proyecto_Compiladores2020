@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Proyecto_Compiladores_2020.Data
 {
-    class Simbolo
+    class Variables
     {
+        public string Nombre;
         public string tipo;
+        public bool Estatica;
+        public bool Array;
         public string val;
-        public string Accesibilidad;
-
+        public int Accesibilidad;
     }
 }

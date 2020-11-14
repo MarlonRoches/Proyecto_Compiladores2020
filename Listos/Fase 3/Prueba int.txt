@@ -1,10 +1,8 @@
-static boolean jose ;
-jose inenso;
-string iunable ;
-int[] jose ;
-boolean i ;
-boolean inmplements;
-static int zerafina;
-static double Zerafina;
-static double Zerafina ;
+class holaMundo extends lol implements heredar , compresion
+{
+	int f1(int a, int b, int c)
+	{ 	   
+		
+	}
+}
 

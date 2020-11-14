@@ -18,20 +18,27 @@ namespace Proyecto_Compiladores_2020.Data
 				return _instance;
 			}
 		}
+		/// <summary>
+		/// Contador del nivel en base a llaves
+		/// </summary>
 		static int scoopingLevel = 0;
+		/// <summary>
+		/// Contador Del Interno
+		/// </summary>
 		static int ScoopingActual = 0;
-		static Dictionary<string, Simbolo> Simbolos = new Dictionary<string, Simbolo>();
-		//private static Regex Keywords = new Regex(@"^(void|int|double|boolean|string|class|static|interface|null|this|extends|implements|for|while|if|else|return|break|New|System|out|println)$");
+		static Dictionary<string, Variables> Variables = new Dictionary<string, Variables>();
+		static Dictionary<string, Variables> Metodos = new Dictionary<string, Variables>();
 
 		/// Tipos de Sentencias
 		////Declaraciones
 		///types (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string)
 		////* variables, staticas, clases
-		private static Regex Simples = new Regex(@"^(([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
-        private static Regex Estaticas = new Regex(@"^static (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
-        private static Regex Clases = new Regex(@"^class ([a-z]|[A-Z]|([0-9]))+ extends ([a-z]|[A-Z]|([0-9]))+ implements ([a-z]|[A-Z]|([0-9]))+( , ([a-z]|[A-Z]|([0-9]))*)*$");
+		private static Regex RgxSimples = new Regex(@"^(([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
+        private static Regex RgxEstaticas = new Regex(@"^static (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
+        private static Regex RgxClases = new Regex(@"^class ([a-z]|[A-Z]|([0-9]))+( extends ([a-z]|[A-Z]|([0-9]))+)?( implements ([a-z]|[A-Z]|([0-9]))+( , ([a-z]|[A-Z]|([0-9]))*)*)?$$");
 		///metodos
-        private static Regex Metodos = new Regex(@"^(void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+ \( (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+( , (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+)* \)$");
+        private static Regex RgxMetodos = new Regex(@"^(void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+ \( (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+( , (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+)* \)$");
+		private static Stack<int> Accesibilidad = new Stack<int>();
 		//-> asignacion de tipos, metodos y parametros
 		/////*Operaciones
 		//-> Regex o gramatica especial
@@ -40,6 +47,7 @@ namespace Proyecto_Compiladores_2020.Data
 
 		public void ObtenerSimbolos(List<KeyValuePair<string, string>> tokensAceptados)
 		{
+			Accesibilidad.Push(ScoopingActual);
 			var cadena = "";
 			for (int i = 0; i < tokensAceptados.Count; i++)
 			{
@@ -51,16 +59,40 @@ namespace Proyecto_Compiladores_2020.Data
 			while (cadena!="")
 			{
 				var aux = "";
-				while (tokensAceptados[actual].Key != ";" || tokensAceptados[actual].Key != ";")
+				while (tokensAceptados[actual].Key != ";" && tokensAceptados[actual].Key != ")" && tokensAceptados[actual].Key != "{" && tokensAceptados[actual].Key != "}")
 				{
 					aux += $" {tokensAceptados[actual].Value}";
 					aux = aux.Trim();
 					actual++;
 				}
-				aux += $" {tokensAceptados[actual].Value}";
-				aux = aux.Trim();
-				actual++;
-				IdentificarDeclaracion(aux);
+				if (tokensAceptados[actual].Key == "{")
+				{
+					IdentificarDeclaracion(aux);
+
+					scoopingLevel++;
+					ScoopingActual++;
+
+					actual++;
+
+				}
+				else if (tokensAceptados[actual].Key == "}")
+				{
+					IdentificarDeclaracion(aux);
+					scoopingLevel++;
+					ScoopingActual--;
+
+					actual++;
+
+				}
+				else
+				{
+					aux += $" {tokensAceptados[actual].Value}";
+					aux = aux.Trim();
+					actual++;
+					IdentificarDeclaracion(aux);
+					cadena = cadena.Replace(aux, "").Trim();
+				}
+				
 			}
 			
 
@@ -258,7 +290,7 @@ namespace Proyecto_Compiladores_2020.Data
 		}
 		void CargarSimboloADiccionario(string Symbolo)
 		{
-			if (Simbolos.ContainsKey($"{Symbolo}↓{ScoopingActual}"))
+			if (Variables.ContainsKey($"{Symbolo}↓{ScoopingActual}"))
 			{
 			}
 			else
@@ -272,21 +304,87 @@ namespace Proyecto_Compiladores_2020.Data
 				{//es un metodo
 
 				}
-				var NuevoSimbolo = new Simbolo();
+				var NuevoSimbolo = new Variables();
 				
 			}
 		}
 		bool IdentificarDeclaracion(string Sentencia)
 		{
-			if (Simples.IsMatch(Sentencia))
+			if (RgxSimples.IsMatch(Sentencia))
 			{
+				var sim = new Variables();
 				//variables simples
+				var arreglo = Sentencia.Split();
+				var tipo = arreglo[0];
+				
+				if (arreglo[1] == "[]")
+				{
+					sim.Nombre = arreglo[2];
+					sim.Array = true;
+				}
+				else
+				{
+					sim.Nombre = arreglo[1];
+					sim.Array = false;
+				}
+				sim.tipo = tipo;
+				
+				//validar arreglo
+				//agrega
+				sim.Accesibilidad = ScoopingActual;
+				sim.val = null;
+				sim.Estatica = false;
+				guardarSimbolo(sim);
 				return true;
 
 			}
-			else if (Estaticas.IsMatch(Sentencia))
+			else if (RgxEstaticas.IsMatch(Sentencia))
 			{
 				//variable estatica
+				var arreglo = Sentencia.Split();
+				var tipo = arreglo[1];
+				var nombre = arreglo[2];
+				var sim = new Variables();
+				sim.tipo = tipo;
+				sim.Nombre = nombre;
+				sim.Accesibilidad = ScoopingActual;
+				sim.val = null;
+				sim.Estatica = true;
+				guardarSimbolo(sim);
+				return true;
+
+			}
+			else if (RgxClases.IsMatch(Sentencia))
+			{
+				var clases = new Clase();
+				var splited = Sentencia.Replace(" , "," ").Split(' ');
+				clases.Nombre = splited[1];
+				if (Sentencia.Contains("extends"))
+				{
+					clases.HeredaDe = splited[3];
+				}
+				if (Sentencia.Contains("implements"))
+				{
+					var inicio = Sentencia.IndexOf("implements");
+					var parteAEliminar ="";
+					for (int i = 0; i < inicio; i++)
+					{
+						parteAEliminar += Sentencia[i];
+					}
+					var saux = Sentencia.Replace(parteAEliminar, "").Replace("implements ", "").Split(',');
+
+					for (int i = 0; i < saux.Length; i++)
+					{
+						clases.Interfaz.Add(saux[i].Trim());
+					}
+					var stop = 0;	
+				}
+
+				return true	;
+
+			}
+			else if (RgxMetodos.IsMatch(Sentencia))
+			{
 				return true;
 
 			}
@@ -298,9 +396,16 @@ namespace Proyecto_Compiladores_2020.Data
 
 		}
 
-		void IdentificarFuncion()
-		{ 
-
+		void guardarSimbolo(Variables Sym)
+		{
+			if (Variables.ContainsKey(Sym.Nombre))
+			{
+				Console.WriteLine($"Una funcion o variable ya fue declarada con el nobre \"{Sym.Nombre}\"");
+			}
+			else
+			{
+				Variables.Add(Sym.Nombre, Sym);
+			}
 		}
 		void CalcularOperaciones()
 		{ 

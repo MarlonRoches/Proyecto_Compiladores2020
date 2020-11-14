@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace Proyecto_Compiladores_2020.Data
 {
 
-    class GrammarValidation
+    class Lexer
     {
-        private static GrammarValidation _instance = null;
-        public static GrammarValidation Instance
+        private static Lexer _instance = null;
+        public static Lexer Instance
         {
             get
             {
-                if (_instance == null) _instance = new GrammarValidation();
+                if (_instance == null) _instance = new Lexer();
                 return _instance;
             }
         }
