@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+//0
 namespace Proyecto_Compiladores_2020.Data
-{
+{//1
 	public class TablaDeSimbolos
-	{
+	{//2
 		private static TablaDeSimbolos _instance = null;
 		public static TablaDeSimbolos Instance
-		{
+		{//3
 			get
-			{
+			{//4
 				if (_instance == null) _instance = new TablaDeSimbolos();
 				return _instance;
 			}
-		}
+		}//3
 		/// <summary>
 		/// Contador del nivel en base a llaves
 		/// </summary>
@@ -46,7 +46,7 @@ namespace Proyecto_Compiladores_2020.Data
 		//////* Calculo de operaciones
 
 		public void ObtenerSimbolos(List<KeyValuePair<string, string>> tokensAceptados)
-		{
+		{//5
 			Accesibilidad.Push(ScoopingActual);
 			var cadena = "";
 			for (int i = 0; i < tokensAceptados.Count; i++)
@@ -55,7 +55,7 @@ namespace Proyecto_Compiladores_2020.Data
 				cadena = cadena.Trim();
 			}
 
-			var actual = 0;
+			var actual = 0;		
 			while (cadena!="")
 			{
 				var aux = "";
@@ -68,12 +68,9 @@ namespace Proyecto_Compiladores_2020.Data
 				if (tokensAceptados[actual].Key == "{")
 				{
 					IdentificarDeclaracion(aux);
-
 					scoopingLevel++;
 					ScoopingActual++;
-
 					actual++;
-
 				}
 				else if (tokensAceptados[actual].Key == "}")
 				{
@@ -385,6 +382,8 @@ namespace Proyecto_Compiladores_2020.Data
 			}
 			else if (RgxMetodos.IsMatch(Sentencia))
 			{
+				//diccionario clases[clase actual].metodos.add(nombre defuncion); 
+				//metodos generales.add[nombre, clase funcion]
 				return true;
 
 			}
