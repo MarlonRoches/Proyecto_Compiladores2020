@@ -10,5 +10,7 @@ namespace Proyecto_Compiladores_2020.Data.Simbolos
     {
         public string Nombre;
         public string Ambito;
+        public Dictionary<string, Metodo> Metodos = new Dictionary<string, Metodo>();
+
     }
 }

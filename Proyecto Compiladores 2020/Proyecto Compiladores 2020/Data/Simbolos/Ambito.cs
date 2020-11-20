@@ -9,7 +9,7 @@ namespace Proyecto_Compiladores_2020.Data.Simbolos
     class Ambito
     {
         string NombreDeAmbito;
-        bool Accesible;
+        bool Accesible = false;
         public Dictionary<string, Variables> Variables = new Dictionary<string, Variables>();
         public Dictionary<string, Variables> Metodos = new Dictionary<string, Variables>();
         public Dictionary<string, Interfaz> Interfaces = new Dictionary<string, Interfaz>();

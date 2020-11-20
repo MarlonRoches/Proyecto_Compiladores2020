@@ -27,8 +27,11 @@ namespace Proyecto_Compiladores_2020.Data
 		/// Contador Del Interno
 		/// </summary>
 		static int ScoopingActual = 0;
+		
+		static Dictionary<string, Ambito> RegistroDeAmbitos = new Dictionary<string, Ambito>();
+
 		static Dictionary<string, Variables> Variables = new Dictionary<string, Variables>();
-		static Dictionary<string, Variables> Metodos = new Dictionary<string, Variables>();
+		static Dictionary<string, Metodo> Metodos = new Dictionary<string, Metodo>();
 		static Dictionary<string, Interfaz> Interfaces = new Dictionary<string, Interfaz>();
 		static Dictionary<string, Clase> Clases = new Dictionary<string, Clase>();
 
@@ -44,6 +47,7 @@ namespace Proyecto_Compiladores_2020.Data
 		///metodos
         private static Regex RgxInterfaz = new Regex(@"^interface ([a-z]|[A-Z]|([0-9]))+$");
 		private static Stack<string> PilaDeAmbitos = new Stack<string>();
+		private static Stack<string> PilaDeTipoDeSentencia = new Stack<string>();
 		//-> asignacion de tipos, metodos y parametros
 		/////*Operaciones
 		//-> Regex o gramatica especial
@@ -53,6 +57,8 @@ namespace Proyecto_Compiladores_2020.Data
 		public void ObtenerSimbolos(List<KeyValuePair<string, string>> tokensAceptados)
 		{//5
 			PilaDeAmbitos.Push("Global");
+			PilaDeTipoDeSentencia.Push("Global");
+
 			var cadena = "";
 			for (int i = 0; i < tokensAceptados.Count; i++)
 			{
@@ -102,16 +108,26 @@ namespace Proyecto_Compiladores_2020.Data
 					ScoopingActual--;
 					//cerramos un ambito y lo sacamos de la pila
 					PilaDeAmbitos.Pop();
+					PilaDeTipoDeSentencia.Pop();
 					actual++;
 
 				}
 				else
 				{
-					aux += $" {tokensAceptados[actual].Value}";
-					aux = aux.Trim();
-					actual++;
-					IdentificarDeclaracion(aux);
-					cadena = cadena.Replace(aux, "").Trim();
+					if (aux==";")
+					{
+						cadena = cadena.Remove(0, cadena.IndexOf(";")+1).Trim();
+
+					}
+					else
+					{
+						aux += $" {tokensAceptados[actual].Value}";
+						aux = aux.Trim();
+						actual++;
+						IdentificarDeclaracion(aux);
+						cadena = cadena.Replace(aux, "").Trim();
+
+					}
 				}
 				
 			}
@@ -214,6 +230,7 @@ namespace Proyecto_Compiladores_2020.Data
 						clases.Interfaces.Add(saux[i].Trim());
 					}
 					PilaDeAmbitos.Push(clases.Nombre);
+					PilaDeTipoDeSentencia.Push("Clase");
 					var stop = 0;	
 				}
 				GuardarClase(clases);
@@ -262,13 +279,31 @@ namespace Proyecto_Compiladores_2020.Data
 
 
 				}
-				PilaDeAmbitos.Push(MetodoActual.Nombre);
+				GuardarMetodo(MetodoActual);
+				if (PilaDeTipoDeSentencia.Peek()=="Interfaz")
+				{
+
+				}
+				else
+				{
+					PilaDeTipoDeSentencia.Push("Metodo");
+
+				}
 
 				return true;
 
 			}
 			else if (RgxInterfaz.IsMatch(Sentencia))
 			{
+				var InterfazActual = new Interfaz()
+				{
+					Nombre = Sentencia.Trim().Split(' ')[1], Ambito = PilaDeAmbitos.Peek()
+				};
+				
+				PilaDeAmbitos.Push(InterfazActual.Nombre);
+				GuardarInterfaz(InterfazActual);
+				PilaDeTipoDeSentencia.Push("Interfaz");
+
 				return true;
 			}else
 			{
@@ -291,14 +326,31 @@ namespace Proyecto_Compiladores_2020.Data
 		}
 		void GuardarMetodo(Metodo MetodoAGuardar_)
 		{
-			if (Clases.ContainsKey(MetodoAGuardar_.Nombre))
+			if (Metodos.ContainsKey(MetodoAGuardar_.Nombre))
 			{
-				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
+				Console.WriteLine($"El Metodo ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
 
 			}
 			else
 			{
+				if (PilaDeTipoDeSentencia.Peek() == "Interfaz")
+				{//en lugar de cuardarlo en el diccionario principal se guarda en la lista de prototipos
+					if (Interfaces[MetodoAGuardar_.Ambito].Metodos.ContainsKey(MetodoAGuardar_.Nombre))
+					{
+						Console.WriteLine($"Un Prototipo de la Interfaz {Interfaces[MetodoAGuardar_.Ambito].Nombre} ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
 
+					}
+					else
+					{
+						Interfaces[MetodoAGuardar_.Ambito].Metodos.Add(MetodoAGuardar_.Nombre, MetodoAGuardar_);
+
+					}
+				}
+				else
+				{
+					PilaDeAmbitos.Push(MetodoAGuardar_.Nombre);
+					Metodos.Add(MetodoAGuardar_.Ambito, MetodoAGuardar_);
+				}
 			}
 		}
 		//------------------------------------- QUE NO SE TE OLVIDE ------------------------
@@ -306,13 +358,14 @@ namespace Proyecto_Compiladores_2020.Data
 		// hacer la llamada a el ambito mas cercano
 		void GuardarInterfaz(Interfaz InterfazA_Guardar_)
 		{
-			if (Clases.ContainsKey(InterfazA_Guardar_.Nombre))
+			if (Interfaces.ContainsKey(InterfazA_Guardar_.Nombre))
 			{
 				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{InterfazA_Guardar_.Nombre}\" en el ambito {InterfazA_Guardar_.Ambito}");
 
 			}
 			else
 			{
+				Interfaces.Add(InterfazA_Guardar_.Nombre, InterfazA_Guardar_);
 
 			}
 		}
