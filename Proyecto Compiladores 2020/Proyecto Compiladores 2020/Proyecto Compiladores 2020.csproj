@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Simbolos\Ambito.cs" />
     <Compile Include="Data\Simbolos\Clase.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\Lexer.cs" />

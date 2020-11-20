@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proyecto_Compiladores_2020.Data.Simbolos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,8 @@ namespace Proyecto_Compiladores_2020.Data
 		static int ScoopingActual = 0;
 		static Dictionary<string, Variables> Variables = new Dictionary<string, Variables>();
 		static Dictionary<string, Variables> Metodos = new Dictionary<string, Variables>();
+		static Dictionary<string, Interfaz> Interfaces = new Dictionary<string, Interfaz>();
+		static Dictionary<string, Clase> Clases = new Dictionary<string, Clase>();
 
 		/// Tipos de Sentencias
 		////Declaraciones
@@ -40,7 +43,7 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex RgxMetodos = new Regex(@"^(void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+ \( (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+( , (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+)* \)$");
 		///metodos
         private static Regex RgxInterfaz = new Regex(@"^interface ([a-z]|[A-Z]|([0-9]))+$");
-		private static Stack<string> Ambito = new Stack<string>();
+		private static Stack<string> PilaDeAmbitos = new Stack<string>();
 		//-> asignacion de tipos, metodos y parametros
 		/////*Operaciones
 		//-> Regex o gramatica especial
@@ -49,7 +52,7 @@ namespace Proyecto_Compiladores_2020.Data
 
 		public void ObtenerSimbolos(List<KeyValuePair<string, string>> tokensAceptados)
 		{//5
-			Ambito.Push("Global");
+			PilaDeAmbitos.Push("Global");
 			var cadena = "";
 			for (int i = 0; i < tokensAceptados.Count; i++)
 			{
@@ -97,7 +100,8 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					scoopingLevel++;
 					ScoopingActual--;
-
+					//cerramos un ambito y lo sacamos de la pila
+					PilaDeAmbitos.Pop();
 					actual++;
 
 				}
@@ -162,10 +166,10 @@ namespace Proyecto_Compiladores_2020.Data
 				
 				//validar arreglo
 				//agrega
-				sim.Ambito = Ambito.Peek();
+				sim.Ambito = PilaDeAmbitos.Peek();
 				sim.val = null;
 				sim.Estatica = false;
-				guardarSimbolo(sim);
+				GuardarVariable(sim);
 				return true;
 
 			}
@@ -178,10 +182,10 @@ namespace Proyecto_Compiladores_2020.Data
 				var sim = new Variables();
 				sim.tipo = tipo;
 				sim.Nombre = nombre;
-				sim.Ambito = Ambito.Peek();
+				sim.Ambito = PilaDeAmbitos.Peek();
 				sim.val = null;
 				sim.Estatica = true;
-				guardarSimbolo(sim);
+				GuardarVariable(sim);
 				return true;
 
 			}
@@ -190,6 +194,7 @@ namespace Proyecto_Compiladores_2020.Data
 				var clases = new Clase();
 				var splited = Sentencia.Replace(" , "," ").Split(' ');
 				clases.Nombre = splited[1];
+				clases.Ambito = PilaDeAmbitos.Peek();
 				if (Sentencia.Contains("extends"))
 				{
 					clases.HeredaDe = splited[3];
@@ -208,10 +213,10 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						clases.Interfaces.Add(saux[i].Trim());
 					}
-					Ambito.Push(clases.Nombre);
+					PilaDeAmbitos.Push(clases.Nombre);
 					var stop = 0;	
 				}
-
+				GuardarClase(clases);
 				return true	;
 
 			}
@@ -221,8 +226,9 @@ namespace Proyecto_Compiladores_2020.Data
 				{
 					Tipo = Sentencia.Split(' ')[0],
 					Nombre= Sentencia.Split(' ')[1],
-					Ambito = Ambito.Peek()
+					Ambito = PilaDeAmbitos.Peek()
 				};
+				MetodoActual.Ambito = PilaDeAmbitos.Peek();
 				var ParametrosDeMetodo = Sentencia.Remove(0, Sentencia.IndexOf('(')).Trim().Replace("(","").Replace(")", "").Replace(" , ", ",").Split(',');
 				//diccionario clases[clase actual].metodos.add(nombre defuncion); 
 				//metodos generales.add[nombre, clase funcion]
@@ -256,6 +262,8 @@ namespace Proyecto_Compiladores_2020.Data
 
 
 				}
+				PilaDeAmbitos.Push(MetodoActual.Nombre);
+
 				return true;
 
 			}
@@ -270,15 +278,54 @@ namespace Proyecto_Compiladores_2020.Data
 
 		}
 
-		void guardarSimbolo(Variables Sym)
+		void GuardarVariable(Variables VariableAGuardar_)
 		{
-			if (Variables.ContainsKey(Sym.Nombre))
+			if (Variables.ContainsKey(VariableAGuardar_.Nombre))
 			{
-				Console.WriteLine($"Una funcion o variable ya fue declarada con el nobre \"{Sym.Nombre}\"");
+				Console.WriteLine($"Una variable ya fue declarada con el nobre \"{VariableAGuardar_.Nombre}\" en el ambito {VariableAGuardar_.Ambito}");
 			}
 			else
 			{
-				Variables.Add(Sym.Nombre, Sym);
+				Variables.Add(VariableAGuardar_.Nombre, VariableAGuardar_);
+			}
+		}
+		void GuardarMetodo(Metodo MetodoAGuardar_)
+		{
+			if (Clases.ContainsKey(MetodoAGuardar_.Nombre))
+			{
+				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
+
+			}
+			else
+			{
+
+			}
+		}
+		//------------------------------------- QUE NO SE TE OLVIDE ------------------------
+		//guardar por ambitos
+		// hacer la llamada a el ambito mas cercano
+		void GuardarInterfaz(Interfaz InterfazA_Guardar_)
+		{
+			if (Clases.ContainsKey(InterfazA_Guardar_.Nombre))
+			{
+				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{InterfazA_Guardar_.Nombre}\" en el ambito {InterfazA_Guardar_.Ambito}");
+
+			}
+			else
+			{
+
+			}
+		}
+		void GuardarClase( Clase ClaseA_Guardar_)
+		{
+			if (Clases.ContainsKey(ClaseA_Guardar_.Nombre))
+			{
+				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{ClaseA_Guardar_.Nombre}\" en el ambito {ClaseA_Guardar_.Ambito}");
+
+			}
+			else
+			{
+				Clases.Add(ClaseA_Guardar_.Nombre, ClaseA_Guardar_);
 			}
 		}
 		void CalcularOperaciones()
