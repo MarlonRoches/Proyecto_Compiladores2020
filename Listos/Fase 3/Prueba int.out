@@ -40,14 +40,15 @@
  f1         line 11 cols 13-14 is T_Identifier
  (         line 11 cols 16-16 is (
  int         line 11 cols 16-19 is T_int
- a         line 11 cols 20-20 is T_Identifier
- ,         line 11 cols 22-22 is ,
- int         line 11 cols 23-26 is T_int
- b         line 11 cols 27-27 is T_Identifier
- ,         line 11 cols 29-29 is ,
- int         line 11 cols 30-33 is T_int
- c         line 11 cols 34-34 is T_Identifier
- )         line 11 cols 36-36 is )
+ []         line 11 cols 20-21 is []
+ a         line 11 cols 22-22 is T_Identifier
+ ,         line 11 cols 24-24 is ,
+ int         line 11 cols 25-28 is T_int
+ b         line 11 cols 29-29 is T_Identifier
+ ,         line 11 cols 31-31 is ,
+ int         line 11 cols 32-35 is T_int
+ c         line 11 cols 36-36 is T_Identifier
+ )         line 11 cols 38-38 is )
  {         line 12 cols 10-10 is {
  }         line 14 cols 10-10 is }
  }         line 15 cols 2-2 is }

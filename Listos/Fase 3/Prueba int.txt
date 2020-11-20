@@ -8,7 +8,7 @@ static double Zerafina;
 static double Zerafina ;
 class holaMundo extends lol implements heredar , compresion
 {
-	int f1(int a, int b, int c)
+	int f1(int[] a, int b, int c)
 	{ 	   
 		
 	}

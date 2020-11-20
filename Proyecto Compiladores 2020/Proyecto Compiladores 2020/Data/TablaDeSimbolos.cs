@@ -38,7 +38,9 @@ namespace Proyecto_Compiladores_2020.Data
         private static Regex RgxClases = new Regex(@"^class ([a-z]|[A-Z]|([0-9]))+( extends ([a-z]|[A-Z]|([0-9]))+)?( implements ([a-z]|[A-Z]|([0-9]))+( , ([a-z]|[A-Z]|([0-9]))*)*)?$$");
 		///metodos
         private static Regex RgxMetodos = new Regex(@"^(void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+ \( (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+( , (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+)* \)$");
-		private static Stack<int> Accesibilidad = new Stack<int>();
+		///metodos
+        private static Regex RgxInterfaz = new Regex(@"^interface ([a-z]|[A-Z]|([0-9]))+$");
+		private static Stack<string> Ambito = new Stack<string>();
 		//-> asignacion de tipos, metodos y parametros
 		/////*Operaciones
 		//-> Regex o gramatica especial
@@ -47,7 +49,7 @@ namespace Proyecto_Compiladores_2020.Data
 
 		public void ObtenerSimbolos(List<KeyValuePair<string, string>> tokensAceptados)
 		{//5
-			Accesibilidad.Push(ScoopingActual);
+			Ambito.Push("Global");
 			var cadena = "";
 			for (int i = 0; i < tokensAceptados.Count; i++)
 			{
@@ -67,14 +69,32 @@ namespace Proyecto_Compiladores_2020.Data
 				}
 				if (tokensAceptados[actual].Key == "{")
 				{
-					IdentificarDeclaracion(aux);
+					if (aux == "")
+					{//solo encontro la llave
+						cadena = cadena.Remove(0,cadena.IndexOf("{")+1).Trim();
+					}
+					else
+					{
+						IdentificarDeclaracion(aux);
+						cadena = cadena.Replace(aux + " {", "").Trim();
+
+					}
 					scoopingLevel++;
 					ScoopingActual++;
 					actual++;
 				}
 				else if (tokensAceptados[actual].Key == "}")
 				{
-					IdentificarDeclaracion(aux);
+					if (aux == "")
+					{//solo encontro la llave
+						cadena = cadena.Remove(0, cadena.IndexOf("}") + 1).Trim();
+					}
+					else
+					{
+						IdentificarDeclaracion(aux);
+						cadena = cadena.Replace(aux + " {", "").Trim();
+
+					}
 					scoopingLevel++;
 					ScoopingActual--;
 
@@ -91,193 +111,6 @@ namespace Proyecto_Compiladores_2020.Data
 				}
 				
 			}
-			
-
-			while (actual < tokensAceptados.Count)
-			{
-				//mientras no se nos acaben las lineas
-				var Symbol = "";
-				switch (tokensAceptados[actual].Key)
-				{
-					case "ident":
-
-						break;
-
-					case ";":
-						actual++;
-						break;
-					case "(":
-
-						break;
-					case ")":
-
-						break;
-					case "void":
-
-						break;
-
-					case "static":
-						while (tokensAceptados[actual].Key != ";"||tokensAceptados[actual].Key != ";")
-						{
-							Symbol += $" {tokensAceptados[actual].Value}";
-							Symbol = Symbol.Trim();
-							actual++;
-						}
-
-						break;
-					case "class":
-
-						break;
-					case "{":
-						//encontramos nuevo scooping
-						ScoopingActual++;
-						//Entramos a otro nivel
-						scoopingLevel++;
-						break;
-					case "}":
-						//Salimos de nivel a otro nivel
-						ScoopingActual--;
-
-						break;
-					case "interface":
-
-						break;
-					case "[]":
-
-						break;
-					case ",":
-
-						break;
-					case "int":
-						while (tokensAceptados[actual].Key != ";" && tokensAceptados[actual].Key != ")")
-						{
-							Symbol += $" {tokensAceptados[actual].Value}";
-							Symbol = Symbol.Trim();
-							actual++;
-						}
-						//agregamos el siguiente simbolo
-						Symbol += $" {tokensAceptados[actual].Value}";
-						Symbol = Symbol.Trim();
-						actual++;
-						CargarSimboloADiccionario(Symbol);
-						break;
-					case "double":
-						//while (tokensAceptados[actual].Key != ";")
-						//{
-						//	Symbol += $" {tokensAceptados[actual].Value}";
-						//	Symbol = Symbol.Trim();
-						//	actual++;
-						//}
-						break;
-					case "boolean":
-						//while (tokensAceptados[actual].Key != ";")
-						//{
-						//	Symbol += $" {tokensAceptados[actual].Value}";
-						//	Symbol = Symbol.Trim();
-						//	actual++;
-						//}
-						//Symbol += $" {tokensAceptados[actual].Value}";
-						//Symbol = Symbol.Trim();
-						//actual++;
-						break;
-					case "string":
-						while (tokensAceptados[actual].Key != ";")
-						{
-							Symbol += $" {tokensAceptados[actual].Value}";
-							Symbol = Symbol.Trim();
-							actual++;
-						}
-						break;
-					case "extends":
-
-						break;
-					case "implements":
-
-						break;
-					case "if":
-
-						break;
-					case "while":
-
-						break;
-					case "for":
-
-						break;
-					case "break":
-
-						break;
-					case "return":
-
-						break;
-					case "System":
-
-						break;
-					case ".":
-
-						break;
-					case "out":
-
-						break;
-					case "println":
-
-						break;
-					case "else":
-
-						break;
-					case "-":
-
-						break;
-					case "/":
-
-						break;
-					case "%":
-
-						break;
-					case ">":
-
-						break;
-					case ">=":
-
-						break;
-					case "!=":
-
-						break;
-					case "||":
-
-						break;
-					case "!":
-
-						break;
-					case "New":
-
-						break;
-					case "=":
-
-						break;
-					case "this":
-
-						break;
-					case "intConstant":
-
-						break;
-					case "stringConstant":
-
-						break;
-					case "boolConstant":
-
-						break;
-					case "doubleConstant":
-
-						break;
-					case "null":
-
-						break;
-					default:
-						break;
-				}
-
-			}
-
 			//variable simples int, string, boolean , ident , 
 			//staticas
 			//scoopear por {}
@@ -285,6 +118,7 @@ namespace Proyecto_Compiladores_2020.Data
 
 			var xd = 0;
 		}
+		
 		void CargarSimboloADiccionario(string Symbolo)
 		{
 			if (Variables.ContainsKey($"{Symbolo}↓{ScoopingActual}"))
@@ -309,8 +143,8 @@ namespace Proyecto_Compiladores_2020.Data
 		{
 			if (RgxSimples.IsMatch(Sentencia))
 			{
-				var sim = new Variables();
 				//variables simples
+				var sim = new Variables();
 				var arreglo = Sentencia.Split();
 				var tipo = arreglo[0];
 				
@@ -328,7 +162,7 @@ namespace Proyecto_Compiladores_2020.Data
 				
 				//validar arreglo
 				//agrega
-				sim.Accesibilidad = ScoopingActual;
+				sim.Ambito = Ambito.Peek();
 				sim.val = null;
 				sim.Estatica = false;
 				guardarSimbolo(sim);
@@ -344,7 +178,7 @@ namespace Proyecto_Compiladores_2020.Data
 				var sim = new Variables();
 				sim.tipo = tipo;
 				sim.Nombre = nombre;
-				sim.Accesibilidad = ScoopingActual;
+				sim.Ambito = Ambito.Peek();
 				sim.val = null;
 				sim.Estatica = true;
 				guardarSimbolo(sim);
@@ -352,7 +186,7 @@ namespace Proyecto_Compiladores_2020.Data
 
 			}
 			else if (RgxClases.IsMatch(Sentencia))
-			{
+			{//CLASES
 				var clases = new Clase();
 				var splited = Sentencia.Replace(" , "," ").Split(' ');
 				clases.Nombre = splited[1];
@@ -372,8 +206,9 @@ namespace Proyecto_Compiladores_2020.Data
 
 					for (int i = 0; i < saux.Length; i++)
 					{
-						clases.Interfaz.Add(saux[i].Trim());
+						clases.Interfaces.Add(saux[i].Trim());
 					}
+					Ambito.Push(clases.Nombre);
 					var stop = 0;	
 				}
 
@@ -381,13 +216,53 @@ namespace Proyecto_Compiladores_2020.Data
 
 			}
 			else if (RgxMetodos.IsMatch(Sentencia))
-			{
+			{//METODOS
+				var MetodoActual = new Metodo()
+				{
+					Tipo = Sentencia.Split(' ')[0],
+					Nombre= Sentencia.Split(' ')[1],
+					Ambito = Ambito.Peek()
+				};
+				var ParametrosDeMetodo = Sentencia.Remove(0, Sentencia.IndexOf('(')).Trim().Replace("(","").Replace(")", "").Replace(" , ", ",").Split(',');
 				//diccionario clases[clase actual].metodos.add(nombre defuncion); 
 				//metodos generales.add[nombre, clase funcion]
+				foreach (var item in ParametrosDeMetodo)
+				{
+					var ParametroActual = new Variables()
+					{
+						tipo = item.Trim().Split(' ')[0],
+						Ambito = MetodoActual.Ambito
+
+					};
+					if (item.Trim().Contains("[]"))
+					{//es un parametro tipo array
+						ParametroActual.Array = true;
+						ParametroActual.Nombre = item.Trim().Split(' ')[2];
+					}
+					else
+					{//es un parametro normal
+						ParametroActual.Nombre = item.Trim().Split(' ')[1];
+					}
+
+					if (MetodoActual.Parametros.ContainsKey(ParametroActual.Nombre))
+					{//parametro de nombre repetido
+
+					}
+					else
+					{
+						MetodoActual.Parametros.Add(ParametroActual.Nombre, ParametroActual);
+
+					}
+
+
+				}
 				return true;
 
 			}
-			else
+			else if (RgxInterfaz.IsMatch(Sentencia))
+			{
+				return true;
+			}else
 			{
 				return false;
 
@@ -410,5 +285,200 @@ namespace Proyecto_Compiladores_2020.Data
 		{ 
 		
 		}
+
+
+		#region Antes
+
+
+		//void Antes()
+		//{
+		//	var actual = 0;
+		//	tokensAceptados
+		//	while (actual < tokensAceptados.Count)
+		//	{
+		//		//mientras no se nos acaben las lineas
+		//		var Symbol = "";
+		//		switch (tokensAceptados[actual].Key)
+		//		{
+		//			case "ident":
+
+		//				break;
+
+		//			case ";":
+		//				actual++;
+		//				break;
+		//			case "(":
+
+		//				break;
+		//			case ")":
+
+		//				break;
+		//			case "void":
+
+		//				break;
+
+		//			case "static":
+		//				while (tokensAceptados[actual].Key != ";" || tokensAceptados[actual].Key != ";")
+		//				{
+		//					Symbol += $" {tokensAceptados[actual].Value}";
+		//					Symbol = Symbol.Trim();
+		//					actual++;
+		//				}
+
+		//				break;
+		//			case "class":
+
+		//				break;
+		//			case "{":
+		//				//encontramos nuevo scooping
+		//				ScoopingActual++;
+		//				//Entramos a otro nivel
+		//				scoopingLevel++;
+		//				break;
+		//			case "}":
+		//				//Salimos de nivel a otro nivel
+		//				ScoopingActual--;
+
+		//				break;
+		//			case "interface":
+
+		//				break;
+		//			case "[]":
+
+		//				break;
+		//			case ",":
+
+		//				break;
+		//			case "int":
+		//				while (tokensAceptados[actual].Key != ";" && tokensAceptados[actual].Key != ")")
+		//				{
+		//					Symbol += $" {tokensAceptados[actual].Value}";
+		//					Symbol = Symbol.Trim();
+		//					actual++;
+		//				}
+		//				//agregamos el siguiente simbolo
+		//				Symbol += $" {tokensAceptados[actual].Value}";
+		//				Symbol = Symbol.Trim();
+		//				actual++;
+		//				CargarSimboloADiccionario(Symbol);
+		//				break;
+		//			case "double":
+		//				//while (tokensAceptados[actual].Key != ";")
+		//				//{
+		//				//	Symbol += $" {tokensAceptados[actual].Value}";
+		//				//	Symbol = Symbol.Trim();
+		//				//	actual++;
+		//				//}
+		//				break;
+		//			case "boolean":
+		//				//while (tokensAceptados[actual].Key != ";")
+		//				//{
+		//				//	Symbol += $" {tokensAceptados[actual].Value}";
+		//				//	Symbol = Symbol.Trim();
+		//				//	actual++;
+		//				//}
+		//				//Symbol += $" {tokensAceptados[actual].Value}";
+		//				//Symbol = Symbol.Trim();
+		//				//actual++;
+		//				break;
+		//			case "string":
+		//				while (tokensAceptados[actual].Key != ";")
+		//				{
+		//					Symbol += $" {tokensAceptados[actual].Value}";
+		//					Symbol = Symbol.Trim();
+		//					actual++;
+		//				}
+		//				break;
+		//			case "extends":
+
+		//				break;
+		//			case "implements":
+
+		//				break;
+		//			case "if":
+
+		//				break;
+		//			case "while":
+
+		//				break;
+		//			case "for":
+
+		//				break;
+		//			case "break":
+
+		//				break;
+		//			case "return":
+
+		//				break;
+		//			case "System":
+
+		//				break;
+		//			case ".":
+
+		//				break;
+		//			case "out":
+
+		//				break;
+		//			case "println":
+
+		//				break;
+		//			case "else":
+
+		//				break;
+		//			case "-":
+
+		//				break;
+		//			case "/":
+
+		//				break;
+		//			case "%":
+
+		//				break;
+		//			case ">":
+
+		//				break;
+		//			case ">=":
+
+		//				break;
+		//			case "!=":
+
+		//				break;
+		//			case "||":
+
+		//				break;
+		//			case "!":
+
+		//				break;
+		//			case "New":
+
+		//				break;
+		//			case "=":
+
+		//				break;
+		//			case "this":
+
+		//				break;
+		//			case "intConstant":
+
+		//				break;
+		//			case "stringConstant":
+
+		//				break;
+		//			case "boolConstant":
+
+		//				break;
+		//			case "doubleConstant":
+
+		//				break;
+		//			case "null":
+
+		//				break;
+		//			default:
+		//				break;
+		//		}
+
+		//	}
+		//}
+		#endregion
 	}
 }

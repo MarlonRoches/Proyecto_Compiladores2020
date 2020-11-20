@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Proyecto_Compiladores_2020.Data
 {
-    class Variables
-    {
+    class Metodo
+    { 
+        public string Tipo;
         public string Nombre;
-        public string tipo;
-        public bool Estatica;
-        public bool Array;
-        public string val;
-        public int Accesibilidad;
+        public Dictionary<string, Variables> Parametros = new Dictionary<string, Variables>();
+        public string Ambito;
+
     }
 }
