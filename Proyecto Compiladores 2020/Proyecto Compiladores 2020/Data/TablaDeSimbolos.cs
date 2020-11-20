@@ -34,7 +34,9 @@ namespace Proyecto_Compiladores_2020.Data
 		static Dictionary<string, Metodo> Metodos = new Dictionary<string, Metodo>();
 		static Dictionary<string, Interfaz> Interfaces = new Dictionary<string, Interfaz>();
 		static Dictionary<string, Clase> Clases = new Dictionary<string, Clase>();
-
+		///FALTA PASARLO TODO A EL QUE VA POR AMBITOS
+		///FALTA N LOS STMT
+		///FALTAN VALIDAR LOS EXPR
 		/// Tipos de Sentencias
 		////Declaraciones
 		///types (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string)
