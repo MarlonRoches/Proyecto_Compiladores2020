@@ -11,6 +11,7 @@ Es un analizador léxico para una mini compilador creado en C# para el lenguaje 
 
 - [Fase 1](#fase-1).
 - [Fase 2](#fase-2).
+- [Fase 3](#fase-3).
 - [Objetivo](#objetivo-general).
 - [Estructura Lexicográfica](#estructura-lexicográfica-%EF%B8%8F).
 - [Laboratorio A](#laboratorio-a).
@@ -301,6 +302,31 @@ boolean flag;boolean []flagArr;
 ### Manejo de Errores
 
 Según el libro del dragón, nos da a entender que el manejo de errores o recuperación de errores en un analizar sintáctico se da al momento de encontrar un token en el cual no tenga relación con la gramática dada, al momento de encontrar un error, ese token se manda a imprimir como una cadena errónea y se elimina de la entrada.  El analizador seguirá analizando el siguiente token hasta que uno tenga relación con la gramática, si el siguiente token no tiene ninguna relación con la gramática, este se tomara como un error también hasta que el analizador encontré un token correcto este seguirá con su análisis normal.
+
+# Mini-Java (Analizador Semántico)
+## Fase 3
+
+#### Objetivo General 
+La tercera fase del proyecto consistirá en generar la tabla de símbolos, realizar la asignación de valores a variables y constantes, 
+comprobar los tipos de ciertas expresiones para los lenguajes que están trabajando.
+
+#### Tabla de símbolos
+La tercera fase debe generar la tabla de símbolos para el lenguaje mini C# o mini Java. Como la tabla se va generando y eliminando en forma dinámica, se deberá ir manejando y generando un archivo de salida que contenga la tabla completa. La estructura de la tabla se deja a discreción del alumno, pero se calificará la presentación de la misma, así como la mejor manera de almacenar y representar los elementos en la tabla.
+
+#### Asignación de variables y constantes
+Durante esta fase también debe realizarse las operaciones y la asignación de valores de las constantes y 
+variables en el lenguaje. De tal manera que, si tenemos una definición de constante de la siguiente forma:
+
+                const int a;
+                a = 35 * 2;
+                
+#### Estrategia de Manejo de errores
+
+
+                
+#### Comprobación de tipos
+El compilador debe evaluar los tipos de las variables, constantes y parámetros de los procedimientos y funciones.
+Deberá indicar si las operaciones de expresiones, asignación y paso de parámetros está permitida en el lenguaje según los tipos de dato que se manejen.
 
 ## Programadores ✒️
     ○ Marlon Roches
