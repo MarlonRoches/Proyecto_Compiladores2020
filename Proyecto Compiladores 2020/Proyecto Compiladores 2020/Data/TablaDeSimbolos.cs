@@ -30,7 +30,7 @@ namespace Proyecto_Compiladores_2020.Data
 		/// Contador Del Interno
 		/// </summary>
 		static int ScoopingActual = 0;
-		
+
 		static Dictionary<string, Ambito> RegistroDeAmbitos = new Dictionary<string, Ambito>();
 
 		static Dictionary<string, Variables> Variables = new Dictionary<string, Variables>();
@@ -45,22 +45,31 @@ namespace Proyecto_Compiladores_2020.Data
 		///types (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string)
 		////* variables, staticas, clases
 		private static Regex RgxSimples = new Regex(@"^(([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
-        private static Regex RgxEstaticas = new Regex(@"^static (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
-        private static Regex RgxClases = new Regex(@"^class ([a-z]|[A-Z]|([0-9]))+( extends ([a-z]|[A-Z]|([0-9]))+)?( implements ([a-z]|[A-Z]|([0-9]))+( , ([a-z]|[A-Z]|([0-9]))*)*)?$$");
+		private static Regex RgxEstaticas = new Regex(@"^static (([a-z]|[A-Z]|([0-9]))+|int|double|boolean|string) (\[\] )?([a-z]|[A-Z]|([0-9]))* ;$");
+		private static Regex RgxClases = new Regex(@"^class ([a-z]|[A-Z]|([0-9]))+( extends ([a-z]|[A-Z]|([0-9]))+)?( implements ([a-z]|[A-Z]|([0-9]))+( , ([a-z]|[A-Z]|([0-9]))*)*)?$$");
 		///metodos
-        private static Regex RgxMetodos = new Regex(@"^(void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+ \( (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+( , (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+)* \)$");
+		private static Regex RgxMetodos = new Regex(@"^(void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+ \( (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+( , (void|int|double|boolean|string|([a-z]|[A-Z]|([0-9]))+) (\[\] )?([a-z]|[A-Z]|([0-9]))+)* \)$");
 		///metodos
-        private static Regex RgxInterfaz = new Regex(@"^interface ([a-z]|[A-Z]|([0-9]))+$");
+		private static Regex RgxInterfaz = new Regex(@"^interface ([a-z]|[A-Z]|([0-9]))+$");
+
+		//RGX de Operaciones
+		private static Regex Asignacion = new Regex(@"^([a-z]|[A-Z]|([0-9]))+ = .+( ;)?$");
 		private static Stack<string> PilaDeAmbitos = new Stack<string>();
 		private static Stack<string> PilaDeTipoDeSentencia = new Stack<string>();
+		//string lol = "\"";
 		//-> asignacion de tipos, metodos y parametros
 		/////*Operaciones
 		//-> Regex o gramatica especial
-
+		private static Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
+		private static Regex Boolean = new Regex("true|false");
+		private static Regex Identifier = new Regex(@"^([A-Z]|[a-z]|[$])([A-Z]|[a-z]|[$]|[0-9])*$");
+		private static Regex Number = new Regex(@"^([0-9])+$");
+		private static Dictionary<string, string> Cadenas;
 		//////* Calculo de operaciones
 
 		public void TamblaDeSimbolosFase3(List<KeyValuePair<string, string>> tokensAceptados)
 		{//5
+			Cadenas = TextValidation.Cadenas;
 			AbrirUnAmbito("Global");
 			PilaDeTipoDeSentencia.Push("Global");
 			var cadena = "";
@@ -70,8 +79,8 @@ namespace Proyecto_Compiladores_2020.Data
 				cadena = cadena.Trim();
 			}
 
-			var actual = 0;		
-			while (cadena!="")
+			var actual = 0;
+			while (cadena != "")
 			{
 				var aux = "";
 				while (tokensAceptados[actual].Key != ";" && tokensAceptados[actual].Key != ")" && tokensAceptados[actual].Key != "{" && tokensAceptados[actual].Key != "}")
@@ -84,12 +93,12 @@ namespace Proyecto_Compiladores_2020.Data
 				{
 					if (aux == "")
 					{//solo encontro la llave
-						cadena = cadena.Remove(0,cadena.IndexOf("{")+1).Trim();
+						cadena = cadena.Remove(0, cadena.IndexOf("{") + 1).Trim();
 					}
 					else
 					{
 						IdentificarDeclaracion(aux);
-						
+
 						cadena = QuitarTokensDeLaCadena(cadena, aux + " {");
 
 					}
@@ -106,14 +115,14 @@ namespace Proyecto_Compiladores_2020.Data
 					else
 					{
 						IdentificarDeclaracion(aux);
-						
+
 						cadena = QuitarTokensDeLaCadena(cadena, aux + " {");
 
 					}
 					scoopingLevel++;
 					ScoopingActual--;
 					//cerramos un ambito y lo sacamos de la pila
-					if ((PilaDeAmbitos.Peek()== "Global"))
+					if ((PilaDeAmbitos.Peek() == "Global"))
 					{
 
 					}
@@ -129,9 +138,9 @@ namespace Proyecto_Compiladores_2020.Data
 				}
 				else
 				{
-					if (aux==";")
+					if (aux == ";")
 					{
-						cadena = cadena.Remove(0, cadena.IndexOf(";")+1).Trim();
+						cadena = cadena.Remove(0, cadena.IndexOf(";") + 1).Trim();
 
 					}
 					else
@@ -140,12 +149,12 @@ namespace Proyecto_Compiladores_2020.Data
 						aux = aux.Trim();
 						actual++;
 						IdentificarDeclaracion(aux);
-						
+
 						cadena = QuitarTokensDeLaCadena(cadena, aux);
 
 					}
 				}
-				
+
 			}
 			var xd = JsonConvert.SerializeObject(RegistroDeAmbitos);
 			// Create a Workbook object
@@ -173,7 +182,7 @@ namespace Proyecto_Compiladores_2020.Data
 				var VariableAGuardar = new Variables();
 				var arreglo = Sentencia.Split();
 				var tipo = arreglo[0];
-				
+
 				if (arreglo[1] == "[]")
 				{
 					VariableAGuardar.Nombre = arreglo[2];
@@ -185,7 +194,7 @@ namespace Proyecto_Compiladores_2020.Data
 					VariableAGuardar.Array = false;
 				}
 				VariableAGuardar.tipo = tipo;
-				
+
 				//validar arreglo
 				//agrega
 				VariableAGuardar.Ambito = PilaDeAmbitos.Peek();
@@ -214,7 +223,7 @@ namespace Proyecto_Compiladores_2020.Data
 			else if (RgxClases.IsMatch(Sentencia))
 			{//CLASES
 				var clases = new Clase();
-				var splited = Sentencia.Replace(" , "," ").Split(' ');
+				var splited = Sentencia.Replace(" , ", " ").Split(' ');
 				clases.Nombre = splited[1];
 				clases.Ambito = PilaDeAmbitos.Peek();
 				if (Sentencia.Contains("extends"))
@@ -224,7 +233,7 @@ namespace Proyecto_Compiladores_2020.Data
 				if (Sentencia.Contains("implements"))
 				{
 					var inicio = Sentencia.IndexOf("implements");
-					var parteAEliminar ="";
+					var parteAEliminar = "";
 					for (int i = 0; i < inicio; i++)
 					{
 						parteAEliminar += Sentencia[i];
@@ -235,14 +244,14 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						clases.Interfaces.Add(saux[i].Trim());
 					}
-					
-					var stop = 0;	
+
+					var stop = 0;
 				}
 				//GuardarClase(clases);
 				GuardarClaseEnAmbito(clases);
 				AbrirUnAmbito(clases.Nombre);
 				PilaDeTipoDeSentencia.Push("Clase");
-				return true	;
+				return true;
 
 			}
 			else if (RgxMetodos.IsMatch(Sentencia))
@@ -250,11 +259,11 @@ namespace Proyecto_Compiladores_2020.Data
 				var MetodoActual = new Metodo()
 				{
 					Tipo = Sentencia.Split(' ')[0],
-					Nombre= Sentencia.Split(' ')[1],
+					Nombre = Sentencia.Split(' ')[1],
 					Ambito = PilaDeAmbitos.Peek()
 				};
 				MetodoActual.Ambito = PilaDeAmbitos.Peek();
-				var ParametrosDeMetodo = Sentencia.Remove(0, Sentencia.IndexOf('(')).Trim().Replace("(","").Replace(")", "").Replace(" , ", ",").Split(',');
+				var ParametrosDeMetodo = Sentencia.Remove(0, Sentencia.IndexOf('(')).Trim().Replace("(", "").Replace(")", "").Replace(" , ", ",").Split(',');
 				//diccionario clases[clase actual].metodos.add(nombre defuncion); 
 				//metodos generales.add[nombre, clase funcion]
 				foreach (var item in ParametrosDeMetodo)
@@ -288,7 +297,7 @@ namespace Proyecto_Compiladores_2020.Data
 
 				}
 				GuardarMetodo(MetodoActual);
-				if (PilaDeTipoDeSentencia.Peek()=="Interfaz")
+				if (PilaDeTipoDeSentencia.Peek() == "Interfaz")
 				{
 
 				}
@@ -316,19 +325,133 @@ namespace Proyecto_Compiladores_2020.Data
 				}
 				else
 				{//Error en Apertura de Ambito por que ya existia en el actual
-					
+
 
 				}
 
 				return true;
-			}else
+			}
+			else
 			{
+				if (Asignacion.IsMatch(Sentencia))
+				{
+					var SimboloAAsignar = Sentencia.Split('=')[0].Trim();
+					var VariableResultante = BuscarVariable(SimboloAAsignar);
+					if (VariableResultante == null)
+					{
+						Console.WriteLine($"La instruccion no se ejecuto por que la variable \"{SimboloAAsignar}\" no existe en ningun ambito.");
+						return true;
+					}
+					else
+					{// ComprobarTipos
+						var Operacion = Sentencia.Split('=')[1].Trim();
+						var TipoGeneralDeLaOperacion = ComprobarTipos(VariableResultante, Operacion);
+
+						if (VariableResultante.tipo == TipoGeneralDeLaOperacion.Key)
+						{
+							//tipos diferentes
+						}
+						else
+						{
+							//operar
+
+						}
+					}
+				}
+
 				return false;
 
 			}
 
 		}
+		KeyValuePair<string, string> ComprobarTipos(Variables AAsginar, string sentencia)
+		{
+			var splited = sentencia.Split(' ');
+			var stack = new Stack<KeyValuePair<string, string>>();
+			for (int i = 0; i < splited.Length; i++)
+			{
+				if (splited[i] == ";")
+				{
+					break;
+				}
+				else
+				{
+					if (splited[i].Contains('▄'))
+					{
+						var cadena = Cadenas[splited[i].Trim()];
+						stack.Push(new KeyValuePair<string, string>("string", cadena));
+					}
+					else if (Number.IsMatch(splited[i]))
+					{
+						stack.Push(new KeyValuePair<string, string>("int", splited[i]));
 
+					}
+					else if (Boolean.IsMatch(splited[i]))
+					{
+						stack.Push(new KeyValuePair<string, string>("boolean", splited[i]));
+
+					}
+					else if (Identifier.IsMatch(splited[i]))
+					{
+						stack.Push(new KeyValuePair<string, string>("ident", BuscarVariable(splited[i]).val));
+
+					}
+				}
+			}
+			var tipoGeneral = stack.Peek().Key;
+			var resultado = new KeyValuePair<string, string>();
+			foreach (var item in stack)
+			{
+				if (item.Key != tipoGeneral)
+				{
+					return new KeyValuePair<string, string>(null, null);
+				}
+			}
+			switch (tipoGeneral)
+			{
+				case "int":
+					OperarNumeros(splited);
+					break;
+				case "string":
+					break;
+				case "boolean":
+					break;
+				default:
+					break;
+			}
+
+			return resultado;
+		}
+
+		string OperarNumeros(string[] Sentencia)
+		{
+			for (int i = 0; i < Sentencia.Length; i++)
+			{
+				if (Sentencia[i]== ";")
+				{
+
+				}
+			}
+
+			return null;
+		}
+		Variables BuscarVariable(string VariableABuscar)
+		{
+			var ambito = "";
+			for (int i = 0; i < PilaDeAmbitos.Count; i++)
+			{
+				var actual = PilaDeAmbitos.ElementAt(i);
+				if (RegistroDeAmbitos[actual].Variables.ContainsKey(VariableABuscar))
+				{
+					if (RegistroDeAmbitos[actual].Variables[VariableABuscar].Accesible)
+					{
+						return RegistroDeAmbitos[actual].Variables[VariableABuscar]; 
+					}
+					
+				}
+			}
+			return null;
+		}
 		void GuardarMetodo(Metodo MetodoAGuardar_)
 		{
 			if (RegistroDeAmbitos[PilaDeAmbitos.Peek()].Metodos.ContainsKey(MetodoAGuardar_.Nombre))
@@ -368,7 +491,7 @@ namespace Proyecto_Compiladores_2020.Data
 			}
 		}
 		//------------------------------------- QUE NO SE TE OLVIDE ------------------------
-		//guardar por ambitos
+		
 		// hacer la llamada a el ambito mas cercano
 		void GuardarClaseEnAmbito(Clase Metodo)
 		{

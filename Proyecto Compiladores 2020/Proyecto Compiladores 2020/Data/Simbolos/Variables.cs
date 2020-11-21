@@ -14,5 +14,6 @@ namespace Proyecto_Compiladores_2020.Data
         public bool Array;
         public string val;
         public string Ambito;
+        public bool Accesible=true;
     }
 }

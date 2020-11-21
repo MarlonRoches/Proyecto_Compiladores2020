@@ -12,20 +12,29 @@ interface Derly {
 }
 
 
-static double Zerafina;
+static string Zerafina;
 string iunable ;
 int[] jose ;
 boolean i ;
 class holaMundo extends lol implements heredar , compresion
 {
+	static boolean Zerafina ;
 	static double Zerafina ;
-	static double Zerafina ;
+
+
 	int f1(int[] a, int b, int c)
 	{ 	   
-		static double Zerafina ;
+		int numero;
+		numero = 5 / 6;
+		numero = 5 / 6 - this.Zerafina % holaMundo.f1(x,y,z);		
+		static int Zerafina ;
+		
+			Zerafina = "Soy Zeraphina";
+		
+
 	}
 
-			int f1(int[] a, int b, int c)
+	int f1(int[] a, int b, int c)
 	{ 	   
 		static double Zerafina ;
 	}
