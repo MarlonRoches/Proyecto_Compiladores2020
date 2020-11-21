@@ -52,8 +52,8 @@ namespace Proyecto_Compiladores_2020
 
 
 
-            ExprSintaxValidation.Instance.Parser(GrammarValidation.tokenList, Data.Data.LineaColumna);
-
+            Parser.Instance.Parse(Lexer.tokenList, Data.Data.LineaColumna);
+            TablaDeSimbolos.Instance.TamblaDeSimbolosFase3(Parser.tokensAceptados);
 
            
             // Lab A 

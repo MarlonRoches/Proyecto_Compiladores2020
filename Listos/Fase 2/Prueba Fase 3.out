@@ -1,0 +1,75 @@
+ class         line 1 cols 1-6 is T_class
+ Program         line 1 cols 8-14 is T_Identifier
+ {         line 1 cols 17-17 is {
+ int         line 2 cols 1-4 is T_int
+ f1         line 2 cols 5-6 is T_Identifier
+ (         line 2 cols 8-8 is (
+ int         line 2 cols 8-11 is T_int
+ a         line 2 cols 12-12 is T_Identifier
+ ,         line 2 cols 14-14 is ,
+ int         line 2 cols 15-18 is T_int
+ b         line 2 cols 19-19 is T_Identifier
+ ,         line 2 cols 21-21 is ,
+ int         line 2 cols 22-25 is T_int
+ c         line 2 cols 26-26 is T_Identifier
+ )         line 2 cols 28-28 is )
+ {         line 2 cols 29-29 is {
+ if         line 3 cols 17-19 is T_if
+ (         line 3 cols 21-21 is (
+ a         line 3 cols 21-21 is T_Identifier
+ >         line 3 cols 23-23 is >
+ b         line 3 cols 23-23 is T_Identifier
+ )         line 3 cols 25-25 is )
+ c         line 3 cols 26-26 is T_Identifier
+ =         line 3 cols 28-28 is =
+ 2         line 3 cols 28-29 is T_IntConstant (value = 2)
+ ;         line 3 cols 30-30 is ;
+ else         line 3 cols 31-35 is T_else
+ c         line 3 cols 36-36 is T_Identifier
+ =         line 3 cols 38-38 is =
+ 3         line 3 cols 38-39 is T_IntConstant (value = 3)
+ ;         line 3 cols 40-40 is ;
+ }         line 4 cols 10-10 is }
+ void         line 5 cols 9-13 is T_void
+ main         line 5 cols 14-17 is T_Identifier
+ (         line 5 cols 19-19 is (
+ string         line 5 cols 20-26 is T_string
+ args         line 5 cols 27-30 is T_Identifier
+ )         line 5 cols 32-32 is )
+ {         line 5 cols 33-33 is {
+ int         line 6 cols 17-20 is T_int
+ m1         line 6 cols 21-22 is T_Identifier
+ ;         line 6 cols 24-24 is ;
+ int         line 6 cols 32-35 is T_int
+ m2         line 6 cols 36-37 is T_Identifier
+ ;         line 6 cols 39-39 is ;
+ int         line 7 cols 17-20 is T_int
+ m3         line 7 cols 21-22 is T_Identifier
+ ;         line 7 cols 24-24 is ;
+ Parser         line 8 cols 18-23 is T_Identifier
+ MyParser         line 8 cols 25-32 is T_Identifier
+ ;         line 8 cols 34-34 is ;
+ MyParser         line 9 cols 17-24 is T_Identifier
+ .         line 9 cols 26-26 is .
+ f1         line 9 cols 26-27 is T_Identifier
+ (         line 9 cols 29-29 is (
+ 1         line 9 cols 29-30 is T_IntConstant (value = 1)
+ ,         line 9 cols 31-31 is ,
+ 2         line 9 cols 31-32 is T_IntConstant (value = 2)
+ ,         line 9 cols 33-33 is ,
+ m3         line 9 cols 33-34 is T_Identifier
+ )         line 9 cols 36-36 is )
+ ;         line 9 cols 37-37 is ;
+ MyParser         line 10 cols 17-24 is T_Identifier
+ .         line 10 cols 26-26 is .
+ f1         line 10 cols 26-27 is T_Identifier
+ (         line 10 cols 29-29 is (
+ 1         line 10 cols 29-30 is T_IntConstant (value = 1)
+ ,         line 10 cols 31-31 is ,
+"2.2"  line 10 cols 31-36 is (value = "2.2"
+ ,         line 10 cols 37-37 is ,
+ m3         line 10 cols 37-38 is T_Identifier
+ )         line 10 cols 40-40 is )
+ ;         line 10 cols 41-41 is ;
+ }         line 11 cols 10-10 is }
+ }         line 12 cols 2-2 is }

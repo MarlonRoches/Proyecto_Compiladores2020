@@ -1,0 +1,17 @@
+ int         line 1 cols 1-4 is T_int
+ lol         line 1 cols 5-7 is T_Identifier
+ ;         line 1 cols 9-9 is ;
+ int         line 2 cols 1-4 is T_int
+ f1         line 2 cols 5-6 is T_Identifier
+ (         line 2 cols 8-8 is (
+ int         line 2 cols 8-11 is T_int
+ a         line 2 cols 12-12 is T_Identifier
+ ,         line 2 cols 14-14 is ,
+ int         line 2 cols 15-18 is T_int
+ b         line 2 cols 19-19 is T_Identifier
+ ,         line 2 cols 21-21 is ,
+ int         line 2 cols 22-25 is T_int
+ c         line 2 cols 26-26 is T_Identifier
+ )         line 2 cols 28-28 is )
+ {         line 3 cols 10-10 is {
+ }         line 5 cols 10-10 is }

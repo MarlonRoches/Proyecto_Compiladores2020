@@ -1,32 +1,81 @@
-Program			-> Decl Program’
-Program’		-> Program | ε
-Decl			-> VariableDecl | FunctionDecl
-VariableDecl	-> Variable ;
-Variable		-> Type ident
-Type			-> int Type’ | double Type’| bool Type’| string Type’ | ident Type’ 
-Type’			-> []| ε
-FuntionDecl		-> Type ident ( Formals ) Stmt* | void  ident ( Formals ) Stmt
-Formals			-> Variable Variable’ , |  ε
-Variable’		-> Formals | ε
-Stmt			-> if Stmt | While Stmt | Expr ; | ϵ
-IfStmt			-> if ( Expr ) Stmt if Stmt’
-IfStmt’			-> else Stmt | ε
-WhileStmt		-> while ( Expr ) Stmt
-Expr 			-> B Expr'
-Expr'			-> || B Expr' | ϵ
-B				-> C B'
-B'				-> && C | ϵ
-C				-> D C'
-C'				-> == D C' | !=D C' | ϵ
-D				-> E D' 
-D'				-> <E D' | <=E D' | >E D' | >=E D' | ϵ  
-E				-> F E'
-E'				-> +F E' | -F E' | ϵ 
-F				-> G F' 
-F'				-> *G F' | /G F' | %G F' | ϵ 
-G				-> !Expr | -Expr | H
-H				-> I H' 
-H'				-> [Expr] Igual' H' | .ident Igual' H' | ϵ
-I 				-> (Expr) | New(ident) | Constant | ident Igual' | this 
-Igual' 			-> = Expr | ϵ
-Constant		-> intCostant | doubleConstant | boolConstant | stringConstant | null
+//COMBINACION
+Start->Program
+Program->Decl Program
+Program->Decl
+Decl->Type ident ;
+Decl->Type ident ( Formals ) StmtBlock
+Decl->void ident ( Formals ) StmtBlock
+Decl->static CnsTp ident ;
+Decl->class ident Heritage HeritageI { FieldP }
+Decl->interface ident { Proto }
+Type->CnsTp
+Type->ident
+Type->Type []
+Formals->Type ident , Formals
+Formals->Type ident
+StmtBlock->{ COMBINACION }
+COMBINACION->Type ident ; COMBINACION
+COMBINACION->''
+COMBINACION->static CnsTp ident ; COMBINACION
+COMBINACION->''
+COMBINACION->Stmt COMBINACION
+COMBINACION->''
+CnsTp->int
+CnsTp->double
+CnsTp->boolean
+CnsTp->string
+Heritage->extends ident
+Heritage->''
+HeritageI->implements ident HeritageD
+HeritageI->''
+HeritageD->, ident HeritageD
+HeritageD->''
+FieldP->Field FieldP
+FieldP->''
+Field->Type ident ;
+Field->Type ident ( Formals ) StmtBlock
+Field->void ident ( Formals ) StmtBlock
+Field->static CnsTp ident ;
+Proto->Prototype Proto
+Proto->''
+Prototype->Type ident ( Formals ) ;
+Prototype->void ident ( Formals ) ;
+Stmt->Expr ;
+Stmt->;
+Stmt->if ( Expr ) Stmt ElseStmt
+Stmt->while ( Expr ) Stmt
+Stmt->for ( Expr ; Expr ; Expr ) Stmt
+Stmt->break ;
+Stmt->return Expr ;
+Stmt->System . out . println ( Expr ExPrint ) ;
+Stmt->StmtBlock
+ElseStmt->else Stmt
+ElseStmt->''
+ExPrint->, Expr ExPrint
+ExPrint->''
+Expr->Expr - Expr
+Expr->Expr / Expr
+Expr->Expr % Expr
+Expr->- Expr
+Expr->Expr > Expr
+Expr->Expr >= Expr
+Expr->Expr != Expr
+Expr->Expr || Expr
+Expr->! Expr
+Expr->New ( ident )
+Expr->ident ( Actuals )
+Expr->Expr . ident ( Actuals )
+Expr->Expr . ident
+Expr->ident
+Expr->Expr . ident = Expr
+Expr->ident = Expr
+Expr->Constant
+Expr->this
+Expr->( Expr )
+Actuals->Expr , Actuals
+Actuals->Expr
+Constant->intConstant
+Constant->stringConstant
+Constant->boolConstant
+Constant->doubleConstant
+Constant->null

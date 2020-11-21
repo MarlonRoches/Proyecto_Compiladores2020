@@ -43,7 +43,11 @@ namespace Proyecto_Compiladores_2020.Data
             var OutPut = new FileStream(pathNew, FileMode.Create);
             var writer = new StreamWriter(OutPut);
             code = code.TrimEnd();
+            var auxCode = code;
+            //Sustituimos el codigo
 
+
+             
             foreach (var item in Reservadas_Sustitucion.Keys)
             {
                 code = code.Replace($"{item}", $"{Reservadas_Sustitucion[item]}"); //revisar esta parte
@@ -68,6 +72,7 @@ namespace Proyecto_Compiladores_2020.Data
                 int ColEnd = 1;
                 var indexer = 0;
                 var LineaActual = codigoArray[i].Replace("\r", "");
+                //clacificacion de tokens
                 while (LineaActual != "")
                 {
                     //se rompe hasta que no tenga nada o encuentre un id
@@ -107,7 +112,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.Cyan;
                                     writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
                                     LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                    GrammarValidation.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
+                                    Lexer.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
                                     ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart}-{ColEnd} is T_{DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtKey;
                                     ColEnd = 0;
@@ -123,7 +128,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkRed;
                                     writer.WriteLine($" {DiccionarioInvertido[item.ToString()]}         line {line} cols {colStart + 1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
                                     LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                    GrammarValidation.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
+                                    Lexer.Instance.pushIntoList(DiccionarioInvertido[item.ToString()], DiccionarioInvertido[item.ToString()]);
                                     ///Console.WriteLine($" {DiccionarioInvertido[item.ToString()]}    line {line} cols {colStart+1}-{ColEnd} is {DiccionarioInvertido[item.ToString()]}");
                                     colStart += lenghtOperator;
                                     ColEnd = 0;
@@ -173,7 +178,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.BackgroundColor = ConsoleColor.White;
                                     writer.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
                                     LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                    GrammarValidation.Instance.pushIntoList("stringConstant", Cadena);
+                                    Lexer.Instance.pushIntoList("stringConstant", Cadena);
                                     ///Console.WriteLine($"{TextValidation.Instance.GetString(Cadena)}  line {line} cols {colStart}-{ColEnd} is (value = {TextValidation.Instance.GetString(Cadena)}");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.White;
@@ -298,7 +303,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
                                     LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                    GrammarValidation.Instance.pushIntoList("boolConstant", idActual);
+                                    Lexer.Instance.pushIntoList("boolConstant", idActual);
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Boolean");
                                     colStart += lenghtBoolean;
                                     ColEnd = 0;
@@ -329,7 +334,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     {
                                         writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
                                         LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                        GrammarValidation.Instance.pushIntoList("ident", idActual);
+                                        Lexer.Instance.pushIntoList("ident", idActual);
 
                                         ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Identifier");
 
@@ -352,7 +357,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
                                     LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                    GrammarValidation.Instance.pushIntoList("hexagecimalConstant", idActual);
+                                    Lexer.Instance.pushIntoList("hexagecimalConstant", idActual);
 
                                     //Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_HexConstant (value = {idActual}");
                                     colStart += lenghtDoubleRegx;
@@ -369,7 +374,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
                                     LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                    GrammarValidation.Instance.pushIntoList("doubleConstant", idActual);
+                                    Lexer.Instance.pushIntoList("doubleConstant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_Double ( value = {idActual})");
                                     colStart += lenghtDouble;
@@ -385,7 +390,7 @@ namespace Proyecto_Compiladores_2020.Data
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     writer.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                     LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                    GrammarValidation.Instance.pushIntoList("intConstant", idActual);
+                                    Lexer.Instance.pushIntoList("intConstant", idActual);
 
                                     ///Console.WriteLine($" {idActual}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                     colStart += lenghtInteger;
@@ -421,7 +426,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_Identifier (value = {idActual})");
                                             LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                            GrammarValidation.Instance.pushIntoList("ident", fact);
+                                            Lexer.Instance.pushIntoList("ident", fact);
 
                                             ///Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 
@@ -445,7 +450,7 @@ namespace Proyecto_Compiladores_2020.Data
 
                                             writer.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
                                             LineaColumna.Add($"line {line} cols {colStart}-{ColEnd}");
-                                            GrammarValidation.Instance.pushIntoList("intConstant", fact);
+                                            Lexer.Instance.pushIntoList("intConstant", fact);
 
                                             /// Console.WriteLine($" {fact}         line {line} cols {colStart}-{ColEnd} is T_IntConstant (value = {idActual})");
 

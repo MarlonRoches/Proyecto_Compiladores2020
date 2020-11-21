@@ -1,5 +1,8 @@
 git config user.name "MarlonRoches"
 git config user.email "roches856@gmail.com"
 
+git config user.name "marcelaestrada"
+git config user.email "marcelaestradarl@gmail.com"
+
 git config user.name "Alex1182118"
 git config user.email "alex.gabrielvillatoro@gmail.com"

@@ -1,0 +1,59 @@
+
+
+
+interface Derly {
+	void jose ( double jose ) ;
+	void joseGei(double Zerafina) ;
+	Type nuevo ( string Zerafina, double jose);
+}
+static boolean jose ;
+jose inenso;
+interface Derly { 
+
+}
+
+
+static string Zerafina;
+string iunable ;
+int[] jose ;
+boolean i ;
+class holaMundo extends lol implements heredar , compresion
+{
+	static boolean Zerafina ;
+	
+	void Inicio(int a, int b, int c)
+	{
+		if (a>b) c=2; else c=3	;
+	}
+
+	int f1(int a, int NumeroX, int c)
+		{ 	   
+		holaMundo Objeto;
+		Objeto.Inicio(1, "2",4);
+		f1(15,true,69);
+		Zerafina = "Soy Zeraphina";
+		Zerafina = 16;
+		Zerafina = true;
+		int numero;
+		int numero2;
+		int B;
+		int A;
+		int C;
+		NumeroX=8;
+		A=50;
+		C=2;
+
+		numero2 = A/(B-C);
+		numero = 5 / numero2;
+		numero = 5 / 6 - Zerafina % 6;		
+		
+		
+
+	}
+
+	int f1(int[] a, int b, int c)
+	{ 	   
+		static double Zerafina ;
+	}
+}
+static int zerafina;
