@@ -56,11 +56,10 @@ namespace Proyecto_Compiladores_2020.Data
 
 		//////* Calculo de operaciones
 
-		public void ObtenerSimbolos(List<KeyValuePair<string, string>> tokensAceptados)
+		public void TamblaDeSimbolosFase3(List<KeyValuePair<string, string>> tokensAceptados)
 		{//5
-			PilaDeAmbitos.Push("Global");
+			AbrirUnAmbito("Global");
 			PilaDeTipoDeSentencia.Push("Global");
-
 			var cadena = "";
 			for (int i = 0; i < tokensAceptados.Count; i++)
 			{
@@ -87,7 +86,8 @@ namespace Proyecto_Compiladores_2020.Data
 					else
 					{
 						IdentificarDeclaracion(aux);
-						cadena = cadena.Replace(aux + " {", "").Trim();
+						
+						cadena = QuitarTokensDeLaCadena(cadena, aux + " {");
 
 					}
 					scoopingLevel++;
@@ -103,12 +103,14 @@ namespace Proyecto_Compiladores_2020.Data
 					else
 					{
 						IdentificarDeclaracion(aux);
-						cadena = cadena.Replace(aux + " {", "").Trim();
+						
+						cadena = QuitarTokensDeLaCadena(cadena, aux + " {");
 
 					}
 					scoopingLevel++;
 					ScoopingActual--;
 					//cerramos un ambito y lo sacamos de la pila
+					RegistroDeAmbitos[PilaDeAmbitos.Peek()].Accesible = false;
 					PilaDeAmbitos.Pop();
 					PilaDeTipoDeSentencia.Pop();
 					actual++;
@@ -127,18 +129,16 @@ namespace Proyecto_Compiladores_2020.Data
 						aux = aux.Trim();
 						actual++;
 						IdentificarDeclaracion(aux);
-						cadena = cadena.Replace(aux, "").Trim();
+						
+						cadena = QuitarTokensDeLaCadena(cadena, aux);
 
 					}
 				}
 				
 			}
-			//variable simples int, string, boolean , ident , 
-			//staticas
-			//scoopear por {}
-			//class leer hasta encontrar )
-
 			var xd = 0;
+
+			v
 		}
 		
 		void CargarSimboloADiccionario(string Symbolo)
@@ -166,28 +166,28 @@ namespace Proyecto_Compiladores_2020.Data
 			if (RgxSimples.IsMatch(Sentencia))
 			{
 				//variables simples
-				var sim = new Variables();
+				var VariableAGuardar = new Variables();
 				var arreglo = Sentencia.Split();
 				var tipo = arreglo[0];
 				
 				if (arreglo[1] == "[]")
 				{
-					sim.Nombre = arreglo[2];
-					sim.Array = true;
+					VariableAGuardar.Nombre = arreglo[2];
+					VariableAGuardar.Array = true;
 				}
 				else
 				{
-					sim.Nombre = arreglo[1];
-					sim.Array = false;
+					VariableAGuardar.Nombre = arreglo[1];
+					VariableAGuardar.Array = false;
 				}
-				sim.tipo = tipo;
+				VariableAGuardar.tipo = tipo;
 				
 				//validar arreglo
 				//agrega
-				sim.Ambito = PilaDeAmbitos.Peek();
-				sim.val = null;
-				sim.Estatica = false;
-				GuardarVariable(sim);
+				VariableAGuardar.Ambito = PilaDeAmbitos.Peek();
+				VariableAGuardar.val = null;
+				VariableAGuardar.Estatica = false;
+				GuardarVariableEnAmbito(VariableAGuardar);
 				return true;
 
 			}
@@ -197,13 +197,13 @@ namespace Proyecto_Compiladores_2020.Data
 				var arreglo = Sentencia.Split();
 				var tipo = arreglo[1];
 				var nombre = arreglo[2];
-				var sim = new Variables();
-				sim.tipo = tipo;
-				sim.Nombre = nombre;
-				sim.Ambito = PilaDeAmbitos.Peek();
-				sim.val = null;
-				sim.Estatica = true;
-				GuardarVariable(sim);
+				var VariableAGuardar = new Variables();
+				VariableAGuardar.tipo = tipo;
+				VariableAGuardar.Nombre = nombre;
+				VariableAGuardar.Ambito = PilaDeAmbitos.Peek();
+				VariableAGuardar.val = null;
+				VariableAGuardar.Estatica = true;
+				GuardarVariableEnAmbito(VariableAGuardar);
 				return true;
 
 			}
@@ -231,11 +231,13 @@ namespace Proyecto_Compiladores_2020.Data
 					{
 						clases.Interfaces.Add(saux[i].Trim());
 					}
-					PilaDeAmbitos.Push(clases.Nombre);
-					PilaDeTipoDeSentencia.Push("Clase");
+					
 					var stop = 0;	
 				}
-				GuardarClase(clases);
+				//GuardarClase(clases);
+				GuardarClaseEnAmbito(clases);
+				AbrirUnAmbito(clases.Nombre);
+				PilaDeTipoDeSentencia.Push("Clase");
 				return true	;
 
 			}
@@ -288,7 +290,8 @@ namespace Proyecto_Compiladores_2020.Data
 				}
 				else
 				{
-					PilaDeTipoDeSentencia.Push("Metodo");
+					//AbrirUnAmbito(MetodoActual.Nombre);
+					//PilaDeTipoDeSentencia.Push("Metodo");
 
 				}
 
@@ -301,9 +304,9 @@ namespace Proyecto_Compiladores_2020.Data
 				{
 					Nombre = Sentencia.Trim().Split(' ')[1], Ambito = PilaDeAmbitos.Peek()
 				};
-				
-				PilaDeAmbitos.Push(InterfazActual.Nombre);
-				GuardarInterfaz(InterfazActual);
+
+				AbrirUnAmbito(InterfazActual.Nombre);
+				GuardarInterfazEnAmbito(InterfazActual);
 				PilaDeTipoDeSentencia.Push("Interfaz");
 
 				return true;
@@ -315,20 +318,9 @@ namespace Proyecto_Compiladores_2020.Data
 
 		}
 
-		void GuardarVariable(Variables VariableAGuardar_)
-		{
-			if (Variables.ContainsKey(VariableAGuardar_.Nombre))
-			{
-				Console.WriteLine($"Una variable ya fue declarada con el nobre \"{VariableAGuardar_.Nombre}\" en el ambito {VariableAGuardar_.Ambito}");
-			}
-			else
-			{
-				Variables.Add(VariableAGuardar_.Nombre, VariableAGuardar_);
-			}
-		}
 		void GuardarMetodo(Metodo MetodoAGuardar_)
 		{
-			if (Metodos.ContainsKey(MetodoAGuardar_.Nombre))
+			if (RegistroDeAmbitos[PilaDeAmbitos.Peek()].Metodos.ContainsKey(MetodoAGuardar_.Nombre))
 			{
 				Console.WriteLine($"El Metodo ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
 
@@ -337,21 +329,22 @@ namespace Proyecto_Compiladores_2020.Data
 			{
 				if (PilaDeTipoDeSentencia.Peek() == "Interfaz")
 				{//en lugar de cuardarlo en el diccionario principal se guarda en la lista de prototipos
-					if (Interfaces[MetodoAGuardar_.Ambito].Metodos.ContainsKey(MetodoAGuardar_.Nombre))
+
+					if (RegistroDeAmbitos[PilaDeAmbitos.Peek()].Interfaces[MetodoAGuardar_.Ambito].Metodos.ContainsKey(MetodoAGuardar_.Nombre))
 					{
-						Console.WriteLine($"Un Prototipo de la Interfaz {Interfaces[MetodoAGuardar_.Ambito].Nombre} ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
+						Console.WriteLine($"Un Prototipo de la Interfaz {RegistroDeAmbitos[PilaDeAmbitos.Peek()].Interfaces[MetodoAGuardar_.Ambito].Nombre} ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
 
 					}
 					else
 					{
-						Interfaces[MetodoAGuardar_.Ambito].Metodos.Add(MetodoAGuardar_.Nombre, MetodoAGuardar_);
+						RegistroDeAmbitos[PilaDeAmbitos.Peek()].Interfaces[MetodoAGuardar_.Ambito].Metodos.Add(MetodoAGuardar_.Nombre, MetodoAGuardar_);
 
 					}
 				}
 				else
 				{
-					PilaDeAmbitos.Push(MetodoAGuardar_.Nombre);
-					Metodos.Add(MetodoAGuardar_.Ambito, MetodoAGuardar_);
+					AbrirUnAmbito(MetodoAGuardar_.Nombre);
+					PilaDeTipoDeSentencia.Push("Metodo");
 				}
 			}
 		}
@@ -383,12 +376,64 @@ namespace Proyecto_Compiladores_2020.Data
 				Clases.Add(ClaseA_Guardar_.Nombre, ClaseA_Guardar_);
 			}
 		}
+
+		void GuardarClaseEnAmbito(Clase Metodo)
+		{
+			if (!RegistroDeAmbitos[PilaDeAmbitos.Peek()].Variables.ContainsKey(Metodo.Nombre))
+			{
+				RegistroDeAmbitos[PilaDeAmbitos.Peek()].Clases.Add(Metodo.Nombre, Metodo);
+			}
+			else
+			{
+				Console.WriteLine($"Una variable ya fue declarada con el nobre \"{Metodo.Nombre}\" en el ambito {PilaDeAmbitos.Peek()}");
+
+			}
+
+		}
+
+		void GuardarInterfazEnAmbito(Interfaz Interfaz)
+		{
+			if (!RegistroDeAmbitos[PilaDeAmbitos.Peek()].Variables.ContainsKey(Interfaz.Nombre))
+			{
+				RegistroDeAmbitos[PilaDeAmbitos.Peek()].Interfaces.Add(Interfaz.Nombre, Interfaz);
+			}
+			else
+			{
+				Console.WriteLine($"Una variable ya fue declarada con el nobre \"{Interfaz.Nombre}\" en el ambito {PilaDeAmbitos.Peek()}");
+
+			}
+
+		}
+		void GuardarVariableEnAmbito(Variables variables)
+		{
+			if (!RegistroDeAmbitos[PilaDeAmbitos.Peek()].Variables.ContainsKey(variables.Nombre))
+			{
+				RegistroDeAmbitos[PilaDeAmbitos.Peek()].Variables.Add(variables.Nombre,variables);
+			}
+			else
+			{
+				Console.WriteLine($"Una variable ya fue declarada con el nobre \"{variables.Nombre}\" en el ambito {PilaDeAmbitos.Peek()}");
+
+			}
+
+		}
+
 		void CalcularOperaciones()
 		{ 
 		
 		}
 
+		string QuitarTokensDeLaCadena(string originial, string AAquitar)
+		{
+			var nueva = originial.Remove(0,AAquitar.Length).Trim();
+			return nueva;
+		}
 
+		void AbrirUnAmbito(string NombreDelAmbito)
+		{
+			PilaDeAmbitos.Push(NombreDelAmbito);
+			RegistroDeAmbitos.Add(PilaDeAmbitos.Peek(), new Ambito());
+		}
 		#region Antes
 
 

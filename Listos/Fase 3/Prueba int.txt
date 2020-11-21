@@ -1,8 +1,4 @@
-interface Derly {
-	void jose ( double jose ) ;
-	void jose (double Zerafina) ;
-	Type nuevo ( string Zerafina, double jose);
-}
+
 static boolean jose ;
 jose inenso;
 string iunable ;
@@ -10,10 +6,15 @@ int[] jose ;
 boolean i ;
 static int zerafina;
 static double Zerafina;
-static double Zerafina ;
+interface Derly {
+	void jose ( double jose ) ;
+	void jose (double Zerafina) ;
+	Type nuevo ( string Zerafina, double jose);
+}
 class holaMundo extends lol implements heredar , compresion
 {
-	
+
+	static double Zerafina ;
 	int f1(int[] a, int b, int c)
 	{ 	   
 		

@@ -53,7 +53,7 @@ namespace Proyecto_Compiladores_2020
 
 
             Parser.Instance.Parse(Lexer.tokenList, Data.Data.LineaColumna);
-            TablaDeSimbolos.Instance.ObtenerSimbolos(Parser.tokensAceptados);
+            TablaDeSimbolos.Instance.TamblaDeSimbolosFase3(Parser.tokensAceptados);
 
            
             // Lab A 
