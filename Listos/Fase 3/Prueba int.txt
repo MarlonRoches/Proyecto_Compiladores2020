@@ -26,8 +26,11 @@ class holaMundo extends lol implements heredar , compresion
 		if (a>b) c=2; else c=3	;
 	}
 
-	int f1(int[] a, int NumeroX, int c)
-	{ 	   
+	int f1(int a, int NumeroX, int c)
+		{ 	   
+		holaMundo Objeto;
+		Objeto.Inicio(1, "2",4);
+		f1(15,true,69);
 		Zerafina = "Soy Zeraphina";
 		Zerafina = 16;
 		Zerafina = true;

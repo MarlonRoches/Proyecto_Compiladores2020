@@ -68,6 +68,8 @@ namespace Proyecto_Compiladores_2020.Data
 		private static Regex Number = new Regex(@"^([0-9])+$");
 
 		private static Regex RgxStmts= new Regex(@"^(if|while|for|System \. out \. println) \( .+ \)$");
+		private static Regex RgxClaseMetodoCall= new Regex(@"^([a-z]|[A-Z]|([0-9]))+ \. ([a-z]|[A-Z]|([0-9]))+ \( .+ \)( \;)?$");
+		private static Regex RgxMetodoCall= new Regex(@"^([a-z]|[A-Z]|([0-9]))+ \( .+ \)( \;)?$");
 
 		private static Dictionary<string, string> Cadenas;
 		//////* Calculo de operaciones
@@ -372,11 +374,131 @@ namespace Proyecto_Compiladores_2020.Data
 					var resultado =VerificarParametrosDeSTMT(parametros);
 					if (resultado.Key != null)
 					{
+						Console.WriteLine($"El simbolo \"{resultado.Key}\" es tipo {resultado.Value} y no hay convercion hacia tipos diferentes dentro de las sentencias.");
 
 					}
 					else
 					{
 
+					}
+				}
+				else if(RgxClaseMetodoCall.IsMatch(Sentencia))
+				{
+					var aux = Sentencia.Remove(0, Sentencia.IndexOf('.')+1).Trim();
+					//obtencion de info de parametros
+					if (!RegistroDeAmbitos.ContainsKey(aux.Substring(0, aux.IndexOf("(")).Trim()))
+					{
+
+						Console.WriteLine($"El metodo no existe en ningun ambito{aux.Substring(0, aux.IndexOf("(")).Trim()}");
+						return false;
+					}
+					else
+					{
+						var ParametrosDeInstancia = RegistroDeAmbitos[aux.Substring(0, aux.IndexOf("(")).Trim()].Metodos[aux.Substring(0, aux.IndexOf("(")).Trim()].Parametros;
+						var ParametrosEnviados = aux.Remove(0, aux.IndexOf("(")).Trim().Replace("(", "").Replace(")", "").Replace(" , ", ",").Split(',');
+						var listaDeTipos = new List<string>();
+						foreach (var item in ParametrosEnviados)
+						{
+							if (Number.IsMatch(item.Trim()))
+							{
+								listaDeTipos.Add("int");
+							}
+							else if (item.Contains("▄"))
+							{
+								listaDeTipos.Add("string");
+
+							}
+							else if (Boolean.IsMatch(item.Trim()))
+							{
+								listaDeTipos.Add("boolean");
+
+							}
+							else
+							{//es un tipo abstracto y tenemos que ir a traerlo
+								var encontrado = BuscarVariables(item.Trim());
+								if (encontrado == null)
+								{
+									encontrado = BuscarEnParametros(item.Trim());
+								}
+							}
+						}
+						if (listaDeTipos.Count != ParametrosDeInstancia.Count)
+						{
+							Console.WriteLine($"No se enviaron los mismos parametros para la instancia {Sentencia}");
+						}
+						else
+						{
+							for (int i = 0; i < listaDeTipos.Count; i++)
+							{
+								if (listaDeTipos[i] != ParametrosDeInstancia.ElementAt(i).Value.tipo)
+								{
+									Console.WriteLine($"Se envio como parametrop un {listaDeTipos[i]} y se esperaba un {ParametrosDeInstancia.ElementAt(i).Value.tipo}");
+
+								}
+
+							}
+						}
+						return true;
+					}
+				}
+				else if (RgxMetodoCall.IsMatch(Sentencia))
+				{
+					var aux = Sentencia;
+					//obtencion de info de parametros
+					if (!RegistroDeAmbitos.ContainsKey(aux.Substring(0, aux.IndexOf("(")).Trim()))
+					{
+
+						Console.WriteLine($"El metodo no existe en ningun ambito{aux.Substring(0, aux.IndexOf("(")).Trim()}");
+						return false;
+					}
+					else
+					{
+
+						var ParametrosDeInstancia = RegistroDeAmbitos[aux.Substring(0, aux.IndexOf("(")).Trim()].Metodos[aux.Substring(0, aux.IndexOf("(")).Trim()].Parametros;
+						var ParametrosEnviados = aux.Remove(0, aux.IndexOf("(")).Trim().Replace("(", "").Replace(")", "").Replace(" , ", ",").Split(',');
+						var listaDeTipos = new List<string>();
+						foreach (var item in ParametrosEnviados)
+						{
+							if (Number.IsMatch(item.Trim()))
+							{
+								listaDeTipos.Add("int");
+							}
+							else if (item.Contains("▄"))
+							{
+								listaDeTipos.Add("string");
+
+							}
+							else if (Boolean.IsMatch(item.Trim()))
+							{
+								listaDeTipos.Add("boolean");
+
+							}
+							else
+							{//es un tipo abstracto y tenemos que ir a traerlo
+								var encontrado = BuscarVariables(item.Trim());
+								if (encontrado == null)
+								{
+									encontrado = BuscarEnParametros(item.Trim());
+								}
+							}
+						}
+						if (listaDeTipos.Count != ParametrosDeInstancia.Count)
+						{
+							Console.WriteLine($"No se enviaron los mismos parametros para la instancia {Sentencia}");
+						}
+						else
+						{
+							for (int i = 0; i < listaDeTipos.Count; i++)
+							{
+								if (listaDeTipos[i] != ParametrosDeInstancia.ElementAt(i).Value.tipo)
+								{
+									Console.WriteLine($"Se envio como parametrop un {listaDeTipos[i]} y se esperaba un {ParametrosDeInstancia.ElementAt(i).Value.tipo}");
+
+								}
+
+							}
+						}
+						return true;
 					}
 				}
 
