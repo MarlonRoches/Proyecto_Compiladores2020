@@ -321,8 +321,11 @@ variables en el lenguaje. De tal manera que, si tenemos una definición de const
                 a = 35 * 2;
                 
 #### Estrategia de Manejo de errores
-
-
+Se valida las operaciones aritmeticas en base a la gramatica dada.
+Se valido que no se puede hacer concatenaciones de strings ya que en la gramatica no lo permite.
+Solo se valida los parametros para los if, while, for, etc. Para saber que tipo de dato tiene que tener esos parametros.
+Se abren y se cierran ambitos en las cosas de heredación, etc. Menos los ciclos, en estos solo se validan.
+Cada sentencia y validos se valida por separado.
                 
 #### Comprobación de tipos
 El compilador debe evaluar los tipos de las variables, constantes y parámetros de los procedimientos y funciones.
