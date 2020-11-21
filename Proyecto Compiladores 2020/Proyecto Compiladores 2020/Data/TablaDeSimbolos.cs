@@ -181,6 +181,8 @@ namespace Proyecto_Compiladores_2020.Data
 			// Save Excel file
 			workbook.Save("TablaDeSimbolos.xlsx");
 		}
+
+
 		bool IdentificarDeclaracion(string Sentencia)
 		{
 			if (RgxSimples.IsMatch(Sentencia))
