@@ -64,107 +64,136 @@
  boolean         line 16 cols 16-23 is T_boolean
  Zerafina         line 16 cols 25-32 is T_Identifier
  ;         line 16 cols 35-35 is ;
- static         line 17 cols 9-15 is T_static
- int         line 17 cols 16-19 is T_int
- Zerafina         line 17 cols 21-28 is T_Identifier
- ;         line 17 cols 31-31 is ;
- int         line 19 cols 9-12 is T_int
- f1         line 19 cols 13-14 is T_Identifier
- (         line 19 cols 16-16 is (
- int         line 19 cols 16-19 is T_int
- []         line 19 cols 20-21 is []
- a         line 19 cols 22-22 is T_Identifier
- ,         line 19 cols 24-24 is ,
- int         line 19 cols 25-28 is T_int
- b         line 19 cols 29-29 is T_Identifier
- ,         line 19 cols 31-31 is ,
- int         line 19 cols 32-35 is T_int
- c         line 19 cols 36-36 is T_Identifier
- )         line 19 cols 38-38 is )
- {         line 20 cols 10-10 is {
- Zerafina         line 21 cols 18-25 is T_Identifier
- =         line 21 cols 28-28 is =
-"Soy Zeraphina"  line 21 cols 29-44 is (value = "Soy Zeraphina"
- ;         line 21 cols 45-45 is ;
- Zerafina         line 22 cols 2-9 is T_Identifier
- =         line 22 cols 12-12 is =
- 16         line 22 cols 13-15 is T_IntConstant (value = 16)
- ;         line 22 cols 16-16 is ;
- int         line 23 cols 17-20 is T_int
- numero         line 23 cols 21-26 is T_Identifier
- ;         line 23 cols 28-28 is ;
- int         line 24 cols 17-20 is T_int
- numero2         line 24 cols 21-27 is T_Identifier
- ;         line 24 cols 29-29 is ;
- int         line 25 cols 1-4 is T_int
- B         line 25 cols 5-5 is T_Identifier
- ;         line 25 cols 7-7 is ;
- int         line 26 cols 1-4 is T_int
- A         line 26 cols 5-5 is T_Identifier
- ;         line 26 cols 7-7 is ;
- int         line 27 cols 1-4 is T_int
- C         line 27 cols 5-5 is T_Identifier
- ;         line 27 cols 7-7 is ;
- B         line 28 cols 1-1 is T_Identifier
- =         line 28 cols 3-3 is =
- 8         line 28 cols 3-4 is T_IntConstant (value = 8)
- ;         line 28 cols 5-5 is ;
- A         line 29 cols 1-1 is T_Identifier
- =         line 29 cols 3-3 is =
- 9         line 29 cols 3-4 is T_IntConstant (value = 9)
- ;         line 29 cols 5-5 is ;
- C         line 30 cols 1-1 is T_Identifier
- =         line 30 cols 3-3 is =
- 1         line 30 cols 3-4 is T_IntConstant (value = 1)
- ;         line 30 cols 5-5 is ;
- numero2         line 31 cols 18-24 is T_Identifier
- =         line 31 cols 27-27 is =
- A         line 31 cols 28-28 is T_Identifier
- -         line 31 cols 30-30 is -
- B         line 31 cols 30-30 is T_Identifier
- -         line 31 cols 32-32 is -
- C         line 31 cols 32-32 is T_Identifier
- ;         line 31 cols 34-34 is ;
- numero         line 32 cols 18-23 is T_Identifier
- =         line 32 cols 26-26 is =
- 5         line 32 cols 28-29 is T_IntConstant (value = 5)
- /         line 32 cols 31-31 is /
- numero2         line 32 cols 32-38 is T_Identifier
- ;         line 32 cols 40-40 is ;
- numero         line 33 cols 18-23 is T_Identifier
- =         line 33 cols 26-26 is =
- 5         line 33 cols 28-29 is T_IntConstant (value = 5)
- /         line 33 cols 31-31 is /
- 6         line 33 cols 33-34 is T_IntConstant (value = 6)
- -         line 33 cols 36-36 is -
- this         line 33 cols 37-41 is T_this
- .         line 33 cols 42-42 is .
- Zerafina         line 33 cols 43-50 is T_Identifier
- %         line 33 cols 53-53 is %
- 6         line 33 cols 54-55 is T_IntConstant (value = 6)
- ;         line 33 cols 56-56 is ;
- }         line 36 cols 10-10 is }
- int         line 37 cols 9-12 is T_int
- f1         line 37 cols 13-14 is T_Identifier
- (         line 37 cols 16-16 is (
- int         line 37 cols 16-19 is T_int
- []         line 37 cols 20-21 is []
- a         line 37 cols 22-22 is T_Identifier
- ,         line 37 cols 24-24 is ,
- int         line 37 cols 25-28 is T_int
- b         line 37 cols 29-29 is T_Identifier
- ,         line 37 cols 31-31 is ,
- int         line 37 cols 32-35 is T_int
- c         line 37 cols 36-36 is T_Identifier
- )         line 37 cols 38-38 is )
- {         line 38 cols 10-10 is {
- static         line 39 cols 17-23 is T_static
- double         line 39 cols 24-30 is T_double
- Zerafina         line 39 cols 32-39 is T_Identifier
- ;         line 39 cols 42-42 is ;
+ void         line 18 cols 9-13 is T_void
+ Inicio         line 18 cols 14-19 is T_Identifier
+ (         line 18 cols 21-21 is (
+ int         line 18 cols 21-24 is T_int
+ a         line 18 cols 25-25 is T_Identifier
+ ,         line 18 cols 27-27 is ,
+ int         line 18 cols 28-31 is T_int
+ b         line 18 cols 32-32 is T_Identifier
+ ,         line 18 cols 34-34 is ,
+ int         line 18 cols 35-38 is T_int
+ c         line 18 cols 39-39 is T_Identifier
+ )         line 18 cols 41-41 is )
+ {         line 19 cols 10-10 is {
+ if         line 20 cols 17-19 is T_if
+ (         line 20 cols 21-21 is (
+ a         line 20 cols 21-21 is T_Identifier
+ >         line 20 cols 23-23 is >
+ b         line 20 cols 23-23 is T_Identifier
+ )         line 20 cols 25-25 is )
+ c         line 20 cols 26-26 is T_Identifier
+ =         line 20 cols 28-28 is =
+ 2         line 20 cols 28-29 is T_IntConstant (value = 2)
+ ;         line 20 cols 30-30 is ;
+ else         line 20 cols 31-35 is T_else
+ c         line 20 cols 36-36 is T_Identifier
+ =         line 20 cols 38-38 is =
+ 3         line 20 cols 38-39 is T_IntConstant (value = 3)
+ ;         line 20 cols 48-48 is ;
+ }         line 21 cols 10-10 is }
+ int         line 22 cols 9-12 is T_int
+ f1         line 22 cols 13-14 is T_Identifier
+ (         line 22 cols 16-16 is (
+ int         line 22 cols 16-19 is T_int
+ []         line 22 cols 20-21 is []
+ a         line 22 cols 22-22 is T_Identifier
+ ,         line 22 cols 24-24 is ,
+ int         line 22 cols 25-28 is T_int
+ NumeroX         line 22 cols 29-35 is T_Identifier
+ ,         line 22 cols 37-37 is ,
+ int         line 22 cols 38-41 is T_int
+ c         line 22 cols 42-42 is T_Identifier
+ )         line 22 cols 44-44 is )
+ {         line 23 cols 10-10 is {
+ Zerafina         line 24 cols 18-25 is T_Identifier
+ =         line 24 cols 28-28 is =
+"Soy Zeraphina"  line 24 cols 29-44 is (value = "Soy Zeraphina"
+ ;         line 24 cols 45-45 is ;
+ Zerafina         line 25 cols 18-25 is T_Identifier
+ =         line 25 cols 28-28 is =
+ 16         line 25 cols 29-31 is T_IntConstant (value = 16)
+ ;         line 25 cols 32-32 is ;
+ Zerafina         line 26 cols 18-25 is T_Identifier
+ =         line 26 cols 28-28 is =
+ true         line 26 cols 29-33 is T_Boolean
+ ;         line 26 cols 34-34 is ;
+ int         line 27 cols 17-20 is T_int
+ numero         line 27 cols 21-26 is T_Identifier
+ ;         line 27 cols 28-28 is ;
+ int         line 28 cols 17-20 is T_int
+ numero2         line 28 cols 21-27 is T_Identifier
+ ;         line 28 cols 29-29 is ;
+ int         line 29 cols 17-20 is T_int
+ B         line 29 cols 21-21 is T_Identifier
+ ;         line 29 cols 23-23 is ;
+ int         line 30 cols 17-20 is T_int
+ A         line 30 cols 21-21 is T_Identifier
+ ;         line 30 cols 23-23 is ;
+ int         line 31 cols 17-20 is T_int
+ C         line 31 cols 21-21 is T_Identifier
+ ;         line 31 cols 23-23 is ;
+ NumeroX         line 32 cols 17-23 is T_Identifier
+ =         line 32 cols 25-25 is =
+ 8         line 32 cols 25-26 is T_IntConstant (value = 8)
+ ;         line 32 cols 27-27 is ;
+ A         line 33 cols 17-17 is T_Identifier
+ =         line 33 cols 19-19 is =
+ 50         line 33 cols 19-21 is T_IntConstant (value = 50)
+ ;         line 33 cols 22-22 is ;
+ C         line 34 cols 17-17 is T_Identifier
+ =         line 34 cols 19-19 is =
+ 2         line 34 cols 19-20 is T_IntConstant (value = 2)
+ ;         line 34 cols 21-21 is ;
+ numero2         line 35 cols 18-24 is T_Identifier
+ =         line 35 cols 27-27 is =
+ A         line 35 cols 28-28 is T_Identifier
+ /         line 35 cols 30-30 is /
+ (         line 35 cols 31-31 is (
+ B         line 35 cols 31-31 is T_Identifier
+ -         line 35 cols 33-33 is -
+ C         line 35 cols 33-33 is T_Identifier
+ )         line 35 cols 35-35 is )
+ ;         line 35 cols 36-36 is ;
+ numero         line 36 cols 18-23 is T_Identifier
+ =         line 36 cols 26-26 is =
+ 5         line 36 cols 28-29 is T_IntConstant (value = 5)
+ /         line 36 cols 31-31 is /
+ numero2         line 36 cols 32-38 is T_Identifier
+ ;         line 36 cols 40-40 is ;
+ numero         line 37 cols 18-23 is T_Identifier
+ =         line 37 cols 26-26 is =
+ 5         line 37 cols 28-29 is T_IntConstant (value = 5)
+ /         line 37 cols 31-31 is /
+ 6         line 37 cols 33-34 is T_IntConstant (value = 6)
+ -         line 37 cols 36-36 is -
+ Zerafina         line 37 cols 38-45 is T_Identifier
+ %         line 37 cols 48-48 is %
+ 6         line 37 cols 49-50 is T_IntConstant (value = 6)
+ ;         line 37 cols 51-51 is ;
  }         line 40 cols 10-10 is }
- }         line 41 cols 2-2 is }
- static         line 42 cols 1-7 is T_static
- int         line 42 cols 8-11 is T_int
- zerafina         line 42 cols 12-19 is T_Identifier
- ;         line 42 cols 21-21 is ;
+ int         line 41 cols 9-12 is T_int
+ f1         line 41 cols 13-14 is T_Identifier
+ (         line 41 cols 16-16 is (
+ int         line 41 cols 16-19 is T_int
+ []         line 41 cols 20-21 is []
+ a         line 41 cols 22-22 is T_Identifier
+ ,         line 41 cols 24-24 is ,
+ int         line 41 cols 25-28 is T_int
+ b         line 41 cols 29-29 is T_Identifier
+ ,         line 41 cols 31-31 is ,
+ int         line 41 cols 32-35 is T_int
+ c         line 41 cols 36-36 is T_Identifier
+ )         line 41 cols 38-38 is )
+ {         line 42 cols 10-10 is {
+ static         line 43 cols 17-23 is T_static
+ double         line 43 cols 24-30 is T_double
+ Zerafina         line 43 cols 32-39 is T_Identifier
+ ;         line 43 cols 42-42 is ;
+ }         line 44 cols 10-10 is }
+ }         line 45 cols 2-2 is }
+ static         line 46 cols 1-7 is T_static
+ int         line 46 cols 8-11 is T_int
+ zerafina         line 46 cols 12-19 is T_Identifier
+ ;         line 46 cols 21-21 is ;

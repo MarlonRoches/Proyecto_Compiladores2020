@@ -9,6 +9,7 @@ interface Derly {
 static boolean jose ;
 jose inenso;
 interface Derly { 
+
 }
 
 
@@ -19,25 +20,29 @@ boolean i ;
 class holaMundo extends lol implements heredar , compresion
 {
 	static boolean Zerafina ;
-	static int Zerafina ;
 	
-	int f1(int[] a, int b, int c)
+	void Inicio(int a, int b, int c)
+	{
+		if (a>b) c=2; else c=3	;
+	}
+
+	int f1(int[] a, int NumeroX, int c)
 	{ 	   
 		Zerafina = "Soy Zeraphina";
-Zerafina = 16;
-
+		Zerafina = 16;
+		Zerafina = true;
 		int numero;
 		int numero2;
-int B;
-int A;
-int C;
-B=8;
-A=9;
-C=1;
+		int B;
+		int A;
+		int C;
+		NumeroX=8;
+		A=50;
+		C=2;
 
-		numero2 = A-B-C;
+		numero2 = A/(B-C);
 		numero = 5 / numero2;
-		numero = 5 / 6 - this.Zerafina % 6;		
+		numero = 5 / 6 - Zerafina % 6;		
 		
 		
 

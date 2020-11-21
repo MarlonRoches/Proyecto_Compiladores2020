@@ -66,6 +66,9 @@ namespace Proyecto_Compiladores_2020.Data
 		private static Regex Boolean = new Regex("true|false");
 		private static Regex Identifier = new Regex(@"^([a-z]|[A-Z]|([0-9]))+$");
 		private static Regex Number = new Regex(@"^([0-9])+$");
+
+		private static Regex RgxStmts= new Regex(@"^(if|while|for|System \. out \. println) \( .+ \)$");
+
 		private static Dictionary<string, string> Cadenas;
 		//////* Calculo de operaciones
 
@@ -174,7 +177,7 @@ namespace Proyecto_Compiladores_2020.Data
 			JsonUtility.ImportData(jsonInput, worksheet.Cells, 0, 0, options);
 
 			// Save Excel file
-			workbook.Save("Import-Data-JSON-To-Excel.xlsx");
+			workbook.Save("TablaDeSimbolos.xlsx");
 		}
 		bool IdentificarDeclaracion(string Sentencia)
 		{
@@ -338,7 +341,7 @@ namespace Proyecto_Compiladores_2020.Data
 				if (Asignacion.IsMatch(Sentencia))
 				{
 					var SimboloAAsignar = Sentencia.Split('=')[0].Trim();
-					var VariableResultante = BuscarVariable(SimboloAAsignar);
+					var VariableResultante = BuscarVariables(SimboloAAsignar);
 					if (VariableResultante == null)
 					{
 						Console.WriteLine($"La instruccion no se ejecuto por que la variable \"{SimboloAAsignar}\" no existe en ningun ambito.");
@@ -347,7 +350,7 @@ namespace Proyecto_Compiladores_2020.Data
 					else
 					{// ComprobarTipos
 						var Operacion = Sentencia.Split('=')[1].Trim();
-						var TipoGeneralDeLaOperacion = ComprobarTipos(VariableResultante, Operacion);
+						var TipoGeneralDeLaOperacion = ComprobarTiposParaAsignacion(VariableResultante, Operacion);
 
 						if (VariableResultante.tipo == TipoGeneralDeLaOperacion.Key)
 						{
@@ -357,8 +360,23 @@ namespace Proyecto_Compiladores_2020.Data
 						else
 						{
 							//tipos diferentes
-
+							Console.WriteLine($"La instruccion no se ejecuto por que la variable \"{VariableResultante.Nombre}\" es tipo {VariableResultante.tipo} y no hay convercion hacia tipo {TipoGeneralDeLaOperacion.Key} para {TipoGeneralDeLaOperacion.Value}.");
 						}
+					}
+				}
+				else if (RgxStmts.IsMatch(Sentencia))
+				{
+					var StmtTipo = Sentencia.Substring(0,Sentencia.IndexOf("(")).Trim();
+					var parametros = Sentencia.Remove(0,Sentencia.IndexOf("(")).Trim();
+
+					var resultado =VerificarParametrosDeSTMT(parametros);
+					if (resultado.Key != null)
+					{
+
+					}
+					else
+					{
+
 					}
 				}
 
@@ -367,7 +385,85 @@ namespace Proyecto_Compiladores_2020.Data
 			}
 
 		}
-		KeyValuePair<string, string> ComprobarTipos(Variables AAsginar, string sentencia)
+
+		KeyValuePair<string, string> VerificarParametrosDeSTMT(string Parametros_)
+		{
+			var splited = Parametros_.Split(' ');
+			var stack = new Stack<KeyValuePair<string, string>>();
+			var operacion = "";
+			for (int i = 0; i < splited.Length; i++)
+			{
+				if (splited[i] == ";")
+				{
+					break;
+				}
+				else
+				{
+					if (splited[i].Contains('▄'))
+					{
+						var cadena = Cadenas[splited[i].Trim()];
+						stack.Push(new KeyValuePair<string, string>("string", cadena)); operacion += $" {cadena}";
+						operacion = operacion.Trim(); ;
+					}
+					else if (Number.IsMatch(splited[i]))
+					{
+						stack.Push(new KeyValuePair<string, string>("int", splited[i])); operacion += $" {splited[i]}";
+						operacion = operacion.Trim(); ;
+
+					}
+					else if (Boolean.IsMatch(splited[i]))
+					{
+						stack.Push(new KeyValuePair<string, string>("boolean", splited[i]));
+						operacion += $" {splited[i]}";
+						operacion = operacion.Trim(); ;
+
+					}
+					else if (Identifier.IsMatch(splited[i]))
+					{
+						var Referencia = BuscarVariables(splited[i]);
+						if (Referencia== null)
+						{
+							Referencia= BuscarEnParametros(splited[i]);
+						}
+						switch (Referencia.tipo)
+						{
+							case "string":
+								stack.Push(new KeyValuePair<string, string>("string", Referencia.val == null ? "\"\"" : Referencia.val));
+								break;
+							case "boolean":
+								stack.Push(new KeyValuePair<string, string>("boolean", Referencia.val == null ? "false" : Referencia.val));
+								break;
+							case "int":
+								stack.Push(new KeyValuePair<string, string>("int", Referencia.val == null ? "0" : Referencia.val));
+
+								break;
+							default:
+								break;
+						}
+						operacion += $" {Referencia.val}";
+						operacion = operacion.Trim();
+
+					}
+					else
+					{
+						//operacion += $" {splited[i]}";
+						//operacion = operacion.Trim(); ;
+					}
+				}
+			}
+			var tipoGeneral = stack.Peek().Key;
+			var resultado = new KeyValuePair<string, string>();
+			foreach (var item in stack)
+			{
+				if (item.Key != tipoGeneral)
+				{
+					return new KeyValuePair<string, string>(item.Key, item.Value);
+				}
+			}
+			
+			return new KeyValuePair<string, string>(null, null);
+		}
+		KeyValuePair<string, string> ComprobarTiposParaAsignacion(Variables AAsginar, string sentencia)
 		{
 			var splited = sentencia.Split(' ');
 			var stack = new Stack<KeyValuePair<string, string>>();
@@ -383,7 +479,7 @@ namespace Proyecto_Compiladores_2020.Data
 					if (splited[i].Contains('▄'))
 					{
 						var cadena = Cadenas[splited[i].Trim()];
-						stack.Push(new KeyValuePair<string, string>("string", cadena)); operacion += $" {splited[i]}";
+						stack.Push(new KeyValuePair<string, string>("string", cadena)); operacion += $" {cadena}";
 						operacion = operacion.Trim(); ;
 					}
 					else if (Number.IsMatch(splited[i]))
@@ -401,7 +497,11 @@ namespace Proyecto_Compiladores_2020.Data
 					}
 					else if (Identifier.IsMatch(splited[i]))
 					{
-						var Referencia = BuscarVariable(splited[i]);
+						var Referencia = BuscarVariables(splited[i]);
+						if (Referencia == null)
+						{
+							Referencia = BuscarEnParametros(splited[i]);
+						}
 						switch (Referencia.tipo)
 						{
 							case "string":
@@ -434,7 +534,7 @@ namespace Proyecto_Compiladores_2020.Data
 			{
 				if (item.Key != tipoGeneral)
 				{
-					return new KeyValuePair<string, string>(null, null);
+					return new KeyValuePair<string, string>(item.Key, item.Value);
 				}
 			}
 			switch (tipoGeneral)
@@ -447,8 +547,14 @@ namespace Proyecto_Compiladores_2020.Data
 					return new KeyValuePair<string, string>("int", sdasd.ToString());
 					break;
 				case "string":
+
+
+					return new KeyValuePair<string, string>("string", operacion);
+
 					break;
 				case "boolean":
+					return new KeyValuePair<string, string>("boolean", operacion);
+
 					break;
 				default:
 					break;
@@ -456,31 +562,23 @@ namespace Proyecto_Compiladores_2020.Data
 
 			return resultado;
 		}
-
-		string OperarNumeros(string[] Sentencia)
+		Variables BuscarEnParametros(string VariableABuscar)
 		{
-			var contador = 0;
-			var Operando1 = 0;
-			var Resultado= 0;
-			var num = 0;
-			for (int i = 0; i < Sentencia.Length; i++)
+			var ambito = "";
+			
+				var actual =PilaDeAmbitos.Peek();
+			var listaDeParametrosdDisponibles =RegistroDeAmbitos[actual].Metodos[RegistroDeAmbitos[actual].Metodos.ElementAt(0).Key].Parametros.ToList();
+			for (int i = 0; i < listaDeParametrosdDisponibles.Count; i++)
 			{
-				if (Sentencia[i]==";")
+				if (listaDeParametrosdDisponibles[i].Key == VariableABuscar)
 				{
-					break;
-				}
-				else
-				{
-					//if (Sentencia != )
-					//{
-
-					//}
+					return listaDeParametrosdDisponibles[i].Value;
 				}
 			}
-
 			return null;
 		}
-		Variables BuscarVariable(string VariableABuscar)
+
+		Variables BuscarVariables(string VariableABuscar)
 		{
 			var ambito = "";
 			for (int i = 0; i < PilaDeAmbitos.Count; i++)
@@ -579,11 +677,6 @@ namespace Proyecto_Compiladores_2020.Data
 
 		}
 
-		void CalcularOperaciones()
-		{ 
-		
-		}
-
 		string QuitarTokensDeLaCadena(string originial, string AAquitar)
 		{
 			var nueva = originial.Remove(0,AAquitar.Length).Trim();
@@ -606,33 +699,6 @@ namespace Proyecto_Compiladores_2020.Data
 			}
 		}
 		#region Antes
-
-		void GuardarInterfaz(Interfaz InterfazA_Guardar_)
-		{
-			if (Interfaces.ContainsKey(InterfazA_Guardar_.Nombre))
-			{
-				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{InterfazA_Guardar_.Nombre}\" en el ambito {InterfazA_Guardar_.Ambito}");
-
-			}
-			else
-			{
-				Interfaces.Add(InterfazA_Guardar_.Nombre, InterfazA_Guardar_);
-
-			}
-		}
-		void GuardarClase( Clase ClaseA_Guardar_)
-		{
-			if (Clases.ContainsKey(ClaseA_Guardar_.Nombre))
-			{
-				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{ClaseA_Guardar_.Nombre}\" en el ambito {ClaseA_Guardar_.Ambito}");
-
-			}
-			else
-			{
-				Clases.Add(ClaseA_Guardar_.Nombre, ClaseA_Guardar_);
-			}
-		}
-
 
 		//void Antes()
 		//{

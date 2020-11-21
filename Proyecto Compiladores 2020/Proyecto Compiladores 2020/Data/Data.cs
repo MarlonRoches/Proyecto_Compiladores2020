@@ -47,7 +47,8 @@ namespace Proyecto_Compiladores_2020.Data
             //Sustituimos el codigo
 
 
-             foreach (var item in Reservadas_Sustitucion.Keys)
+             
+            foreach (var item in Reservadas_Sustitucion.Keys)
             {
                 code = code.Replace($"{item}", $"{Reservadas_Sustitucion[item]}"); //revisar esta parte
             }
