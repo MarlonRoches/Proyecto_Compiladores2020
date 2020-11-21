@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Aspose.Cells;
+using Aspose.Cells.Utility;
 //0
 namespace Proyecto_Compiladores_2020.Data
 {//1
@@ -110,9 +113,17 @@ namespace Proyecto_Compiladores_2020.Data
 					scoopingLevel++;
 					ScoopingActual--;
 					//cerramos un ambito y lo sacamos de la pila
-					RegistroDeAmbitos[PilaDeAmbitos.Peek()].Accesible = false;
-					PilaDeAmbitos.Pop();
-					PilaDeTipoDeSentencia.Pop();
+					if ((PilaDeAmbitos.Peek()== "Global"))
+					{
+
+					}
+					else
+					{
+						RegistroDeAmbitos[PilaDeAmbitos.Peek()].Accesible = false;
+						PilaDeAmbitos.Pop();
+						PilaDeTipoDeSentencia.Pop();
+
+					}
 					actual++;
 
 				}
@@ -136,30 +147,23 @@ namespace Proyecto_Compiladores_2020.Data
 				}
 				
 			}
-			var xd = 0;
+			var xd = JsonConvert.SerializeObject(RegistroDeAmbitos);
+			// Create a Workbook object
+			Workbook workbook = new Workbook();
+			Worksheet worksheet = workbook.Worksheets[0];
 
-			v
-		}
-		
-		void CargarSimboloADiccionario(string Symbolo)
-		{
-			if (Variables.ContainsKey($"{Symbolo}↓{ScoopingActual}"))
-			{
-			}
-			else
-			{
-				//crear simbolo
-				if (Symbolo.Split(' ')[Symbolo.Split(' ').Length-1] ==";")
-				{//es una instancia
+			// Read JSON File
+			string jsonInput = xd;
 
-				}
-				else if (Symbolo.Split(' ')[Symbolo.Split(' ').Length - 1] == ")")
-				{//es un metodo
+			// Set JsonLayoutOptions
+			JsonLayoutOptions options = new JsonLayoutOptions();
+			options.ArrayAsTable = true;
 
-				}
-				var NuevoSimbolo = new Variables();
-				
-			}
+			// Import JSON Data
+			JsonUtility.ImportData(jsonInput, worksheet.Cells, 0, 0, options);
+
+			// Save Excel file
+			workbook.Save("Import-Data-JSON-To-Excel.xlsx");
 		}
 		bool IdentificarDeclaracion(string Sentencia)
 		{
@@ -258,7 +262,7 @@ namespace Proyecto_Compiladores_2020.Data
 					var ParametroActual = new Variables()
 					{
 						tipo = item.Trim().Split(' ')[0],
-						Ambito = MetodoActual.Ambito
+						Ambito = MetodoActual.Nombre
 
 					};
 					if (item.Trim().Contains("[]"))
@@ -305,9 +309,16 @@ namespace Proyecto_Compiladores_2020.Data
 					Nombre = Sentencia.Trim().Split(' ')[1], Ambito = PilaDeAmbitos.Peek()
 				};
 
-				AbrirUnAmbito(InterfazActual.Nombre);
-				GuardarInterfazEnAmbito(InterfazActual);
-				PilaDeTipoDeSentencia.Push("Interfaz");
+				if (AbrirUnAmbito(InterfazActual.Nombre))
+				{
+					GuardarInterfazEnAmbito(InterfazActual);
+					PilaDeTipoDeSentencia.Push("Interfaz");
+				}
+				else
+				{//Error en Apertura de Ambito por que ya existia en el actual
+					
+
+				}
 
 				return true;
 			}else
@@ -330,53 +341,35 @@ namespace Proyecto_Compiladores_2020.Data
 				if (PilaDeTipoDeSentencia.Peek() == "Interfaz")
 				{//en lugar de cuardarlo en el diccionario principal se guarda en la lista de prototipos
 
-					if (RegistroDeAmbitos[PilaDeAmbitos.Peek()].Interfaces[MetodoAGuardar_.Ambito].Metodos.ContainsKey(MetodoAGuardar_.Nombre))
+					if (RegistroDeAmbitos[PilaDeAmbitos.Peek()].Metodos.ContainsKey(MetodoAGuardar_.Nombre))
 					{
 						Console.WriteLine($"Un Prototipo de la Interfaz {RegistroDeAmbitos[PilaDeAmbitos.Peek()].Interfaces[MetodoAGuardar_.Ambito].Nombre} ya fue declarada con el nobre \"{MetodoAGuardar_.Nombre}\" en el ambito {MetodoAGuardar_.Ambito}");
 
 					}
 					else
-					{
-						RegistroDeAmbitos[PilaDeAmbitos.Peek()].Interfaces[MetodoAGuardar_.Ambito].Metodos.Add(MetodoAGuardar_.Nombre, MetodoAGuardar_);
+					{//al ambito de la interfaz le agregamos la 0
+						RegistroDeAmbitos[PilaDeAmbitos.Peek()].Metodos.Add(MetodoAGuardar_.Nombre, MetodoAGuardar_);
 
 					}
 				}
 				else
 				{
-					AbrirUnAmbito(MetodoAGuardar_.Nombre);
-					PilaDeTipoDeSentencia.Push("Metodo");
+					if (AbrirUnAmbito(MetodoAGuardar_.Nombre))
+					{
+						RegistroDeAmbitos[PilaDeAmbitos.Peek()].Metodos.Add(MetodoAGuardar_.Nombre, MetodoAGuardar_);
+						PilaDeTipoDeSentencia.Push("Metodo");
+
+					}
+					else
+					{
+
+					}
 				}
 			}
 		}
 		//------------------------------------- QUE NO SE TE OLVIDE ------------------------
 		//guardar por ambitos
 		// hacer la llamada a el ambito mas cercano
-		void GuardarInterfaz(Interfaz InterfazA_Guardar_)
-		{
-			if (Interfaces.ContainsKey(InterfazA_Guardar_.Nombre))
-			{
-				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{InterfazA_Guardar_.Nombre}\" en el ambito {InterfazA_Guardar_.Ambito}");
-
-			}
-			else
-			{
-				Interfaces.Add(InterfazA_Guardar_.Nombre, InterfazA_Guardar_);
-
-			}
-		}
-		void GuardarClase( Clase ClaseA_Guardar_)
-		{
-			if (Clases.ContainsKey(ClaseA_Guardar_.Nombre))
-			{
-				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{ClaseA_Guardar_.Nombre}\" en el ambito {ClaseA_Guardar_.Ambito}");
-
-			}
-			else
-			{
-				Clases.Add(ClaseA_Guardar_.Nombre, ClaseA_Guardar_);
-			}
-		}
-
 		void GuardarClaseEnAmbito(Clase Metodo)
 		{
 			if (!RegistroDeAmbitos[PilaDeAmbitos.Peek()].Variables.ContainsKey(Metodo.Nombre))
@@ -429,12 +422,48 @@ namespace Proyecto_Compiladores_2020.Data
 			return nueva;
 		}
 
-		void AbrirUnAmbito(string NombreDelAmbito)
+		bool AbrirUnAmbito(string NombreDelAmbito)
 		{
-			PilaDeAmbitos.Push(NombreDelAmbito);
-			RegistroDeAmbitos.Add(PilaDeAmbitos.Peek(), new Ambito());
+			if (RegistroDeAmbitos.ContainsKey(NombreDelAmbito))
+			{
+				Console.WriteLine($"El Ambito {NombreDelAmbito} ya se declaró previamente en el Ambito {PilaDeAmbitos.Peek()}");
+				return false;
+			}
+			else
+			{
+				PilaDeAmbitos.Push(NombreDelAmbito);
+				RegistroDeAmbitos.Add(PilaDeAmbitos.Peek(), new Ambito());
+
+				return true;
+			}
 		}
 		#region Antes
+
+		void GuardarInterfaz(Interfaz InterfazA_Guardar_)
+		{
+			if (Interfaces.ContainsKey(InterfazA_Guardar_.Nombre))
+			{
+				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{InterfazA_Guardar_.Nombre}\" en el ambito {InterfazA_Guardar_.Ambito}");
+
+			}
+			else
+			{
+				Interfaces.Add(InterfazA_Guardar_.Nombre, InterfazA_Guardar_);
+
+			}
+		}
+		void GuardarClase( Clase ClaseA_Guardar_)
+		{
+			if (Clases.ContainsKey(ClaseA_Guardar_.Nombre))
+			{
+				Console.WriteLine($"Una clase ya fue declarada con el nobre \"{ClaseA_Guardar_.Nombre}\" en el ambito {ClaseA_Guardar_.Ambito}");
+
+			}
+			else
+			{
+				Clases.Add(ClaseA_Guardar_.Nombre, ClaseA_Guardar_);
+			}
+		}
 
 
 		//void Antes()
