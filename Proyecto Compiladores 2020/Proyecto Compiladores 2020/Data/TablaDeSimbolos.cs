@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Aspose.Cells;
 using Aspose.Cells.Utility;
+using System.Data;
+using Z.Expressions;
 //0
 namespace Proyecto_Compiladores_2020.Data
 {//1
@@ -349,11 +351,12 @@ namespace Proyecto_Compiladores_2020.Data
 
 						if (VariableResultante.tipo == TipoGeneralDeLaOperacion.Key)
 						{
-							//tipos diferentes
+							//operar
+							RegistroDeAmbitos[VariableResultante.Ambito].Variables[VariableResultante.Nombre].val = TipoGeneralDeLaOperacion.Value;
 						}
 						else
 						{
-							//operar
+							//tipos diferentes
 
 						}
 					}
@@ -368,6 +371,7 @@ namespace Proyecto_Compiladores_2020.Data
 		{
 			var splited = sentencia.Split(' ');
 			var stack = new Stack<KeyValuePair<string, string>>();
+			var operacion = "";
 			for (int i = 0; i < splited.Length; i++)
 			{
 				if (splited[i] == ";")
@@ -379,22 +383,48 @@ namespace Proyecto_Compiladores_2020.Data
 					if (splited[i].Contains('▄'))
 					{
 						var cadena = Cadenas[splited[i].Trim()];
-						stack.Push(new KeyValuePair<string, string>("string", cadena));
+						stack.Push(new KeyValuePair<string, string>("string", cadena)); operacion += $" {splited[i]}";
+						operacion = operacion.Trim(); ;
 					}
 					else if (Number.IsMatch(splited[i]))
 					{
-						stack.Push(new KeyValuePair<string, string>("int", splited[i]));
+						stack.Push(new KeyValuePair<string, string>("int", splited[i])); operacion += $" {splited[i]}";
+						operacion = operacion.Trim(); ;
 
 					}
 					else if (Boolean.IsMatch(splited[i]))
 					{
-						stack.Push(new KeyValuePair<string, string>("boolean", splited[i]));
+						stack.Push(new KeyValuePair<string, string>("boolean", splited[i])); 
+						operacion += $" {splited[i]}";
+						operacion = operacion.Trim(); ;
 
 					}
 					else if (Identifier.IsMatch(splited[i]))
 					{
-						stack.Push(new KeyValuePair<string, string>("ident", BuscarVariable(splited[i]).val));
+						var Referencia = BuscarVariable(splited[i]);
+						switch (Referencia.tipo)
+						{
+							case "string":
+						stack.Push(new KeyValuePair<string, string>("string", Referencia.val==null ? "\"\"": Referencia.val));
+								break;
+							case "boolean":
+						stack.Push(new KeyValuePair<string, string>("boolean", Referencia.val == null ? "false" : Referencia.val));
+								break;
+							case "int":
+						stack.Push(new KeyValuePair<string, string>("int", Referencia.val == null ? "0" : Referencia.val));
 
+								break;
+							default:
+								break;
+						}
+						operacion += $" {Referencia.val}";
+						operacion = operacion.Trim();
+
+					}
+					else
+					{
+						operacion += $" {splited[i]}";
+						operacion = operacion.Trim(); ;
 					}
 				}
 			}
@@ -410,7 +440,11 @@ namespace Proyecto_Compiladores_2020.Data
 			switch (tipoGeneral)
 			{
 				case "int":
-					OperarNumeros(splited);
+					DataTable dt = new DataTable();
+					var limiea=sentencia.Replace(";", "").Trim();
+					//int answer = (int)dt.Compute(sentencia.Replace(";","").Replace(" ", "").Trim(), ""); ;
+					var sdasd =Eval.Execute<int>(operacion);
+					return new KeyValuePair<string, string>("int", sdasd.ToString());
 					break;
 				case "string":
 					break;
@@ -425,11 +459,22 @@ namespace Proyecto_Compiladores_2020.Data
 
 		string OperarNumeros(string[] Sentencia)
 		{
+			var contador = 0;
+			var Operando1 = 0;
+			var Resultado= 0;
+			var num = 0;
 			for (int i = 0; i < Sentencia.Length; i++)
 			{
-				if (Sentencia[i]== ";")
+				if (Sentencia[i]==";")
 				{
+					break;
+				}
+				else
+				{
+					//if (Sentencia != )
+					//{
 
+					//}
 				}
 			}
 
