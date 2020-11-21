@@ -64,7 +64,7 @@ namespace Proyecto_Compiladores_2020.Data
 		//-> Regex o gramatica especial
 		private static Regex Operadores = new Regex(@"^(\+|-|\*|/|%|<|<=|>|>=|=|==|!=|&&|\|\||!|;|,|\.|\[|\]|\(|\)|{|}|\[\]|\(\)|{})$");
 		private static Regex Boolean = new Regex("true|false");
-		private static Regex Identifier = new Regex(@"^([A-Z]|[a-z]|[$])([A-Z]|[a-z]|[$]|[0-9])*$");
+		private static Regex Identifier = new Regex(@"^([a-z]|[A-Z]|([0-9]))+$");
 		private static Regex Number = new Regex(@"^([0-9])+$");
 		private static Dictionary<string, string> Cadenas;
 		//////* Calculo de operaciones

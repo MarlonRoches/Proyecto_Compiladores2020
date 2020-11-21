@@ -19,19 +19,26 @@ boolean i ;
 class holaMundo extends lol implements heredar , compresion
 {
 	static boolean Zerafina ;
-	static double Zerafina ;
-
-
+	static int Zerafina ;
+	
 	int f1(int[] a, int b, int c)
 	{ 	   
+		Zerafina = "Soy Zeraphina";
+Zerafina = 16;
+
 		int numero;
 		int numero2;
-		numero2 = 3;
+int B;
+int A;
+int C;
+B=8;
+A=9;
+C=1;
+
+		numero2 = A-B-C;
 		numero = 5 / numero2;
-		numero = 5 / 6 - this.Zerafina % holaMundo.f1(x,y,z);		
-		static int Zerafina ;
+		numero = 5 / 6 - this.Zerafina % 6;		
 		
-			Zerafina = "Soy Zeraphina";
 		
 
 	}
